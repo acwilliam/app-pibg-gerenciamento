@@ -24,11 +24,8 @@ export class CriancaComponent {
     });
   }
 
-  excluirCadastro(nomeCrianca: string){
-
-  }
-
-  acionarResponsavel(telefoneResponsavel: string) {
-
+  atualizarItem(idCadastro: Number) {
+    console.log('atualiando cadastro ', idCadastro)
+      this.cadastroService.atualizarCadastro(idCadastro)
   }
 }

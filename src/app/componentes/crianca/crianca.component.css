@@ -4,15 +4,15 @@
   padding: 0;
   margin: 0;
   width: 100%;
+  display: 1;
 }
 
 /* Estilo de cada item de cadastro */
 .cadastro-item {
   display: flex;
-  text-align: center;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #dddddd;
+  border-bottom: 1px solid #f50a0a;
   padding: 10px 0;
   font-family: 'Inter', sans-serif;
 }
@@ -24,6 +24,7 @@
   margin: 0;
   flex: 1;
   color: #b33300;
+  text-align: center;
 }
 
 /* Estilo das labels */
@@ -73,8 +74,9 @@
   justify-content: space-between;
   padding: 10px 0;
   font-weight: bold;
-  border-bottom: 2px solid #000;
+  border-bottom: 2px solid #f50a0a;
   font-size: 20px;
+  color: #8d2626;
 }
 
 .cadastro-header div {
@@ -85,4 +87,5 @@
 .container {
   width: 80%;
   margin: 0 auto;
+  flex: flex;
 }

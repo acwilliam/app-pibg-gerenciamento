@@ -17,9 +17,13 @@ export class CadastroService {
     const cadastroCollection = this.firestore.collection<Cadastro>('cadastro');
     return cadastroCollection.add(cadastro);
   }
-  // Método para buscar cadastros
   buscarCadastro(): Observable<Cadastro[]> {
-    // Usando a API Compat para buscar documentos
-    return this.firestore.collection<Cadastro>('cadastro').valueChanges({ idField: 'id' });
+    return this.firestore.collection<Cadastro>('cadastro', ref => ref.where('selecionado', '==', true))
+      .valueChanges({ idField: 'id' });
+  }
+
+  atualizarCadastro(id: Number) {
+    const cadastroCollection = this.firestore.doc<Cadastro>(`cadastro/${id}`);
+    return cadastroCollection.update({selecionado: false})
   }
 }
