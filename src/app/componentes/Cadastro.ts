@@ -3,6 +3,8 @@ export interface Cadastro {
   nomeCrianca: string ,
   telefoneResponsavel: string,
   observacao: string,
-  horario: string
+  horario: string,
+  id: Number,
+  selecionado: boolean
 
 }

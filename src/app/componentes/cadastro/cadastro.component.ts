@@ -9,7 +9,8 @@ import { CadastroService } from '../cadastro.service';
   styleUrls: ['./cadastro.component.css']
 })
 export class CadastroComponent {
-    cadastros: Cadastro[]=[];
+  cadastros: Cadastro[]=[];
+  private counter = 0;
   constructor(
     private router: Router,
     private service: CadastroService
@@ -27,7 +28,9 @@ export class CadastroComponent {
     nomeCrianca:  '',
     telefoneResponsavel:  '',
     observacao:  '',
-    horario: this.formatDate()
+    horario: this.formatDate(),
+    id: this.generateId(),
+    selecionado: true
   }
 
   cadastrar() {
@@ -36,7 +39,8 @@ export class CadastroComponent {
       nomeResponsavel: this.cadastro.nomeResponsavel,
       nomeCrianca: this.cadastro.nomeCrianca,
       telefoneResponsavel: this.cadastro.telefoneResponsavel,
-      observacao: this.cadastro.observacao
+      observacao: this.cadastro.observacao,
+      id: this.cadastro.id
     });
 
     this.service.cadastrarCrianca(this.cadastro)
@@ -50,6 +54,10 @@ export class CadastroComponent {
 
   }
 
+  generateId(): number {
+    return ++this.counter;
+  }
+
   formatDate(): string {
     const date = new Date()
     const day = String(date.getDate()).padStart(2, '0');  // Dia com 2 dígitos
@@ -57,7 +65,6 @@ export class CadastroComponent {
     const year = date.getFullYear();
     const hours = String(date.getHours()).padStart(2, '0');  // Horas com 2 dígitos
     const minutes = String(date.getMinutes()).padStart(2, '0');  // Minutos com 2 dígitos
-    const rtorno = `${day}/${month}/${year} ${hours}:${minutes}`;
-    return rtorno;
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
   }
 }

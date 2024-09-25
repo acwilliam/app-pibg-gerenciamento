@@ -5,6 +5,7 @@
 
   <!-- Cabeçalho para as colunas -->
   <div class="cadastro-header">
+    <div>id</div>
     <div>Criança</div>
     <div>Responsável</div>
     <div>Telefone</div>
@@ -16,6 +17,7 @@
   <div *ngIf="listaCrianca.length > 0; else noCadastros">
     <ul class="cadastros-list">
       <li *ngFor="let cadastro of listaCrianca" class="cadastro-item">
+        <h3>{{ cadastro.id }}</h3>
         <h3>{{ cadastro.nomeCrianca }}</h3>
         <p>{{ cadastro.nomeResponsavel }}</p>
         <p>{{ cadastro.telefoneResponsavel }}</p>

@@ -1,5 +1,5 @@
+import { Cadastro } from './../Cadastro';
 import { Component } from '@angular/core';
-import { Cadastro } from '../Cadastro';
 import { CadastroService } from '../cadastro.service';
 
 @Component({
@@ -22,5 +22,13 @@ export class CriancaComponent {
     }, (erro) => {
       console.error('Erro ao buscar cadastros:', erro);
     });
+  }
+
+  excluirCadastro(nomeCrianca: string){
+
+  }
+
+  acionarResponsavel(telefoneResponsavel: string) {
+
   }
 }
