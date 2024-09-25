@@ -13,7 +13,6 @@ export class CadastroService {
   ) { }
 
   cadastrarCrianca(cadastro: Cadastro) {
-    // Usando a API Compat para adicionar documentos
     const cadastroCollection = this.firestore.collection<Cadastro>('cadastro');
     return cadastroCollection.add(cadastro);
   }
