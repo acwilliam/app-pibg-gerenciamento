@@ -34,7 +34,6 @@ export class CadastroComponent {
   }
 
   cadastrar() {
-    // Lógica para cadastrar os dados (ex: enviar para um backend)
     console.log('Dados a serem cadastrados:', {
       nomeResponsavel: this.cadastro.nomeResponsavel,
       nomeCrianca: this.cadastro.nomeCrianca,
