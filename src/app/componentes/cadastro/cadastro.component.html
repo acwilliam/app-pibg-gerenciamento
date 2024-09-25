@@ -1,0 +1,47 @@
+<section class="container criar-crianca ff-inter">
+    <header class="header">
+        <h2>Cadastre uma nova criança:</h2>
+    </header>
+    <form>
+      <label for="nomeResponsavel">Responsável</label>
+      <input
+        type="textarea"
+        class="input"
+        id="idNomeResponsavel"
+        name="nomeResponsavel"
+        placeholder="digite o nome do Responsável"
+        [(ngModel)]="cadastro.nomeResponsavel"
+        >
+        <label for="crianca">Criança</label>
+        <input
+          type="text"
+          class="input"
+          id="nomeCrianca"
+          name="nomeCrianca"
+          placeholder="Digite o nome da criança"
+          [(ngModel)]= "cadastro.nomeCrianca"
+          >
+        <label for="telefoneResponsavel">Telefone responsável</label>
+        <input
+          type="text"
+          class="input"
+          id="telefoneResponsavel"
+          name="telefoneResponsavel"
+          placeholder="Digite o nome o telefone do responsável"
+          [(ngModel)]= "cadastro.telefoneResponsavel"
+          >
+          <label for="observacao">Observação</label>
+        <input
+          type="text"
+          class="input"
+          id="observacao"
+          name="observacao"
+          placeholder="digite uma observacao"
+          [(ngModel)]= "cadastro.observacao"
+          >
+          <div class="acoes">
+            <button (click)="cadastrar()" class="botao"> cadastrar</button>
+            <button (click)="cancelar()" class="botao"> cancelar</button>
+          </div>
+      </form>
+  </section>

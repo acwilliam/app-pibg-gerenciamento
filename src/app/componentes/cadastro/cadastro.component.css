@@ -1,0 +1,51 @@
+ .acoes {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+  }
+  .botao {
+    margin: 5px;
+    margin-top: 70px;
+    width: 200px;
+    border: none;
+    height: 40px;
+    border-radius: 20px;
+  }
+  .criar-crianca {
+    padding: 2rem 0;
+  }
+  .criar-crianca form {
+    background: #c4ffe4;
+  
+    border: none;
+    border-radius: 10px;
+  
+    display: flex;
+    flex-direction: column;
+  
+    padding: 2rem;
+  }
+  .criar-crianca form label {
+    color: #3c23aa;
+    font-weight: bold;
+    margin: 0 0 1rem;
+  }
+  .criar-crianca form .input {
+    border: none;
+    height: 40px;
+    padding: 1rem 2rem;
+    border-radius: 20px;
+    margin: 0.5rem 0 2rem;
+  }
+  .criar-crianca form .textarea {
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 20px;
+    margin: 0.5rem 0 2rem;
+  }
+
+.criar-crianca header {
+    color: #3c23aa;
+}
+  
