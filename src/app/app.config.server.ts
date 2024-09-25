@@ -1,6 +1,6 @@
 import { mergeApplicationConfig, ApplicationConfig } from '@angular/core';
 import { provideServerRendering } from '@angular/platform-server';
-import { appConfig } from './firebase.config';
+import { appConfig } from './app.config';
 
 const serverConfig: ApplicationConfig = {
   providers: [

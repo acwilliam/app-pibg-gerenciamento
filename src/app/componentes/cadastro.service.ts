@@ -1,7 +1,7 @@
-import { Inject, Injectable } from '@angular/core';
-import { Firestore, collectionData } from '@angular/fire/firestore';
+import { Injectable } from '@angular/core';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Cadastro } from './Cadastro';
-import { addDoc, collection } from 'firebase/firestore';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,12 +9,17 @@ import { addDoc, collection } from 'firebase/firestore';
 export class CadastroService {
 
   constructor(
-    private firestore: Firestore
+    private firestore: AngularFirestore
   ) { }
 
   cadastrarCrianca(cadastro: Cadastro) {
-    console.log('erro')
-      const cadastroCollection = collection(this.firestore, 'cadastro')
-      return  addDoc(cadastroCollection, cadastro )
+    // Usando a API Compat para adicionar documentos
+    const cadastroCollection = this.firestore.collection<Cadastro>('cadastro');
+    return cadastroCollection.add(cadastro);
+  }
+  // Método para buscar cadastros
+  buscarCadastro(): Observable<Cadastro[]> {
+    // Usando a API Compat para buscar documentos
+    return this.firestore.collection<Cadastro>('cadastro').valueChanges({ idField: 'id' });
   }
 }

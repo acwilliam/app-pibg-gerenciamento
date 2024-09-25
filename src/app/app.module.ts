@@ -1,11 +1,13 @@
+import { FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
+import { AngularFireModule } from '@angular/fire/compat';
+import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
+import { environment } from '../envirionments/environment';
 import { AppComponent } from './app.component';
 import { CadastroComponent } from './componentes/cadastro/cadastro.component';
-import { FormsModule } from '@angular/forms';
 import { CriancaComponent } from './componentes/crianca/crianca.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { CriancaComponent } from './componentes/crianca/crianca.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule
   ],
   providers: [],
   bootstrap: [AppComponent]

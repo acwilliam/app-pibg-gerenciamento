@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Cadastro } from '../Cadastro';
+import { CadastroService } from '../cadastro.service';
 
 @Component({
   selector: 'app-crianca',
@@ -7,12 +8,19 @@ import { Cadastro } from '../Cadastro';
   styleUrl: './crianca.component.css'
 })
 export class CriancaComponent {
-  listaCrianca: Cadastro[] = [
-    {
-      nomeResponsavel: 'string',
-      nomeCrianca: 'string' ,
-      telefoneResponsavel: 'string',
-      observacao: 'string' 
-    }
-  ]
+  listaCrianca: Cadastro[] = []
+  constructor(private cadastroService: CadastroService) {}
+
+  ngOnInit(): void {
+    this.buscarCadastros();
+  }
+
+  buscarCadastros(): void {
+    this.cadastroService.buscarCadastro().subscribe((dados: Cadastro[]) => {
+      this.listaCrianca = dados;
+      console.log('Cadastros encontrados:', this.listaCrianca);
+    }, (erro) => {
+      console.error('Erro ao buscar cadastros:', erro);
+    });
+  }
 }

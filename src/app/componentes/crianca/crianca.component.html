@@ -1,11 +1,33 @@
 <section class="container">
-    <header class="header d-flex">
-      <h2 class="ff-inter">Meu Mural</h2>
-      <button routerLink="/cadastro" class="botao">Adicionar criança</button>
-    </header>
-    </section>
-    <ng-template #semPensamentos>
-      <div class="ff-inter sem-pensamentos">
-        <p>Ainda nao há crianças cadastradas</p>
-      </div>
-    </ng-template>
+  <header class="header d-flex">
+    <h2 class="ff-inter">Meu Mural</h2>
+  </header>
+
+  <!-- Cabeçalho para as colunas -->
+  <div class="cadastro-header">
+    <div>Criança</div>
+    <div>Responsável</div>
+    <div>Telefone</div>
+    <div>Observação</div>
+    <div>horario</div>
+  </div>
+
+  <!-- Lista de cadastros -->
+  <div *ngIf="listaCrianca.length > 0; else noCadastros">
+    <ul class="cadastros-list">
+      <li *ngFor="let cadastro of listaCrianca" class="cadastro-item">
+        <h3>{{ cadastro.nomeCrianca }}</h3>
+        <p>{{ cadastro.nomeResponsavel }}</p>
+        <p>{{ cadastro.telefoneResponsavel }}</p>
+        <p>{{ cadastro.observacao }}</p>
+        <p>{{ cadastro.horario }}</p>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Exibe essa mensagem se não houver cadastros -->
+  <ng-template #noCadastros>
+    <p>Não há crianças cadastradas no momento.</p>
+  </ng-template>
+  <button routerLink="/cadastro" class="botao">Adicionar criança</button>
+</section>
