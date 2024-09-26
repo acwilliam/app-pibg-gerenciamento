@@ -8,12 +8,14 @@ import { AppComponent } from './app.component';
 import { CadastroComponent } from './componentes/cadastro/cadastro.component';
 import { CriancaComponent } from './componentes/crianca/crianca.component';
 import { AppRoutingModule } from './app-routing.module';
+import { MensagemComponent } from './componentes/mensagem/mensagem.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CadastroComponent,
-    CriancaComponent
+    CriancaComponent,
+    MensagemComponent
   ],
   imports: [
     BrowserModule,

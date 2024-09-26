@@ -24,7 +24,6 @@
         <p>{{ cadastro.horario }}</p>
         <label>
           <input type="checkbox" [(ngModel)]="cadastro.selecionado" (ngModelChange)="atualizarItem(cadastro.id)">
-          Liberar
         </label>
       </li>
     </ul>
@@ -35,4 +34,5 @@
     <p>Não há crianças cadastradas no momento.</p>
   </ng-template>
   <button routerLink="/cadastro" class="botao">Adicionar criança</button>
+  <button routerLink="/mensagem" class="botao">Enviar Mensagem</button>
 </section>

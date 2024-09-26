@@ -1,0 +1,8 @@
+/* Estilos personalizados para o componente */
+input {
+  width: 200px;
+  margin-bottom: 10px;
+}
+button {
+  padding: 10px 20px;
+}
