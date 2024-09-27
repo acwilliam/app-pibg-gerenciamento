@@ -1,51 +1,123 @@
- .acoes {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-  }
-  .botao {
-    margin: 5px;
-    margin-top: 70px;
-    width: 200px;
-    border: none;
-    height: 40px;
-    border-radius: 20px;
-  }
-  .criar-crianca {
-    padding: 2rem 0;
-  }
-  .criar-crianca form {
-    background: #c4ffe4;
-  
-    border: none;
-    border-radius: 10px;
-  
-    display: flex;
-    flex-direction: column;
-  
-    padding: 2rem;
-  }
-  .criar-crianca form label {
-    color: #3c23aa;
-    font-weight: bold;
-    margin: 0 0 1rem;
-  }
-  .criar-crianca form .input {
-    border: none;
-    height: 40px;
-    padding: 1rem 2rem;
-    border-radius: 20px;
-    margin: 0.5rem 0 2rem;
-  }
-  .criar-crianca form .textarea {
-    border: none;
-    padding: 1rem 2rem;
-    border-radius: 20px;
-    margin: 0.5rem 0 2rem;
+/* Global Styles */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: #333;
+  background-color: #f9f9f9;
+}
+
+.container.criar-crianca {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Header Styles */
+
+.header {
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ddd;
+}
+
+.header h2 {
+  margin: 0;
+  font-weight: bold;
+  color: #337ab7;
+}
+
+/* Form Styles */
+
+form {
+  padding: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.input:focus {
+  border-color: #337ab7;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Actions Styles */
+
+.acoes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+}
+
+.botao {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #337ab7;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.botao:hover {
+  background-color: #23527c;
+}
+
+.botao[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/* Responsive Styles */
+
+@media (max-width: 400px) {
+  .container.criar-crianca {
+    margin: 20px auto;
+    padding: 10px;
   }
 
-.criar-crianca header {
-    color: #3c23aa;
+  .header {
+    padding: 5px;
+  }
+
+  label {
+    font-size: 14px;
+  }
+
+  .input {
+    font-size: 14px;
+  }
+
+  .acoes {
+    flex-wrap: wrap;
+  }
+
+  .botao {
+    font-size: 12px;
+  }
 }
-  

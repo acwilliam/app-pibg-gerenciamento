@@ -18,8 +18,8 @@ p {
 }
 
 button {
-  display: block;
-  margin: 20px auto;
+  display: inline-block;
+  margin: 20px ;
   padding: 10px 20px;
   background-color: #0056b3;
   color: white;
