@@ -33,10 +33,7 @@ export class DetalheCriancaComponent implements OnInit {
     const id: string | null = this.route.snapshot.paramMap.get('id');
     this.obterDetalhesCrianca(id!);
 
-    this.route.params.subscribe(params => {
-      this.cadastro.id = params['id'];
-      console.log('parametro',params['id'])
-    });
+
   }
 
   obterDetalhesCrianca(idCadastro: string): void {

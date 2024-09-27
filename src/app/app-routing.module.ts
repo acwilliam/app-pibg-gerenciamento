@@ -25,7 +25,10 @@ export const routes: Routes = [
     component: MensagemComponent
    },
    { path: 'detalhe-crianca/:id',
-    component: DetalheCriancaComponent },
+    component: DetalheCriancaComponent
+   },
+   { path: 'mensagem/:telefoneResponsavel',
+     component: MensagemComponent }
 ];
 
 @NgModule({
