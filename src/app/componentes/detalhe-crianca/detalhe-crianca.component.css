@@ -30,3 +30,20 @@ button {
 button:hover {
   background-color: #004494;
 }
+
+.cabecalho .logo img {
+  width: 90%;
+  max-width: 350px;
+  margin-bottom: 2rem;
+}
+.logo {
+  text-align: center; /* Centraliza o conteúdo dentro da div */
+}
+
+.logo img {
+  display: block; /* Transforma a imagem em um bloco para melhor controle */
+  margin: 0 auto; /* Centraliza a imagem horizontalmente */
+  width: 200px; /* Define a largura da imagem */
+  height: 150px; /* Define a altura da imagem */
+  border-radius: 50%; /* Transforma a imagem em um círculo */
+}

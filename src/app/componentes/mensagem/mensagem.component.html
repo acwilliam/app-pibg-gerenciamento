@@ -1,7 +1,8 @@
 <section>
 <div>
-  <input type="text" [(ngModel)]="mensagem.msg" placeholder="Digite sua mensagem">
-  <input type="text" [(ngModel)]="mensagem.numero" placeholder="Digite o número (com DDD)">
-  <button (click)="enviarMensagem()">Enviar Mensagem</button>
+  <input class="input" type="textarea" [(ngModel)]="mensagem.msg" placeholder="Digite sua mensagem">
+  <input class="input" type="textarea" [(ngModel)]="mensagem.numero" placeholder="Digite o número (com DDD)">
+  <button class="botao" (click)="enviarMensagem()">Enviar Mensagem</button>
+  <button type="button" routerLink="/listaCrianca" class="botao">Cancelar</button>
 </div>
 </section>

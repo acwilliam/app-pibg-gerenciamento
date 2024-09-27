@@ -6,3 +6,36 @@ input {
 button {
   padding: 10px 20px;
 }
+section {
+  width: 50%;
+  margin: 0 auto;
+  padding: 100px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  /* Background Imagem */
+  background-image: url(/public/background.png); /* Substitua pelo caminho correto da imagem */
+  background-repeat: no-repeat; /* Impede que a imagem se repita */
+  background-position: center; /* Centraliza a imagem */
+  background-size: contain; /* Ajusta a imagem para caber na tela sem distorcer */
+}
+.botao {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #337ab7;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-right: 1%;
+}
+
+.input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
