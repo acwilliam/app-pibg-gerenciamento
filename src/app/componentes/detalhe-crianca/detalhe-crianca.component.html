@@ -1,0 +1,12 @@
+<section *ngIf="cadastro">
+  <h2>Detalhes da Criança</h2>
+  <p><strong>Nome:</strong> {{ cadastro.nomeCrianca }}</p>
+  <p><strong>Responsável:</strong> {{ cadastro.nomeResponsavel }}</p>
+  <p><strong>Telefone:</strong> {{ cadastro.telefoneResponsavel }}</p>
+  <p><strong>Observação:</strong> {{ cadastro.observacao }}</p>
+  <p><strong>Horário:</strong> {{ cadastro.horario }}</p>
+  <p><strong>Criança Liberada:</strong> {{ cadastro.selecionado }}</p>
+
+  <button routerLink="/listaCrianca">Voltar</button>
+  <button (click)="atualizarItem()">Liberar</button>
+</section>

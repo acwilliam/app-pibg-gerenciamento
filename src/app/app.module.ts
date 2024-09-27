@@ -9,13 +9,15 @@ import { CadastroComponent } from './componentes/cadastro/cadastro.component';
 import { CriancaComponent } from './componentes/crianca/crianca.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MensagemComponent } from './componentes/mensagem/mensagem.component';
+import { DetalheCriancaComponent } from './componentes/detalhe-crianca/detalhe-crianca.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CadastroComponent,
     CriancaComponent,
-    MensagemComponent
+    MensagemComponent,
+    DetalheCriancaComponent
   ],
   imports: [
     BrowserModule,

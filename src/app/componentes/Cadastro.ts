@@ -4,7 +4,7 @@ export interface Cadastro {
   telefoneResponsavel: string,
   observacao: string,
   horario: string,
-  id: Number,
+  id: string,
   selecionado: boolean
 
 }

@@ -24,8 +24,5 @@ export class CriancaComponent {
     });
   }
 
-  atualizarItem(idCadastro: Number) {
-    console.log('atualiando cadastro ', idCadastro)
-      this.cadastroService.atualizarCadastro(idCadastro)
-  }
+
 }

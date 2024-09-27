@@ -1,0 +1,32 @@
+section {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+}
+
+p {
+  font-size: 18px;
+  margin: 10px 0;
+}
+
+button {
+  display: block;
+  margin: 20px auto;
+  padding: 10px 20px;
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #004494;
+}

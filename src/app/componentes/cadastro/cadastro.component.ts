@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { Cadastro } from '../Cadastro';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CadastroService } from '../cadastro.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-cadastro',
@@ -10,17 +11,19 @@ import { CadastroService } from '../cadastro.service';
 })
 export class CadastroComponent {
   cadastros: Cadastro[]=[];
-  private counter = 0;
   constructor(
     private router: Router,
-    private service: CadastroService
+    private service: CadastroService,
+    private route: ActivatedRoute
   ){  }
 
   ngOnInit(): void {
     this.service.buscarCadastro().subscribe(cadastros =>{
       this.cadastros = cadastros;
     })
-
+    const id = this.route.snapshot.paramMap.get('id') || uuidv4();
+    this.cadastro.id = id;
+    console.log('teste', this.cadastro.id)
   }
 
   cadastro: Cadastro = {
@@ -29,7 +32,7 @@ export class CadastroComponent {
     telefoneResponsavel:  '',
     observacao:  '',
     horario: this.formatDate(),
-    id: this.generateId(),
+    id: '',
     selecionado: true
   }
 
@@ -51,10 +54,6 @@ export class CadastroComponent {
   cancelar() {
     this.router.navigate(['/listaCrianca'])
 
-  }
-
-  generateId(): number {
-    return ++this.counter;
   }
 
   formatDate(): string {
