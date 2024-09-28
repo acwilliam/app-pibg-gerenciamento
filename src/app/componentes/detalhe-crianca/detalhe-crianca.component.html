@@ -4,12 +4,14 @@
   </div>
   <h2>Detalhes da Criança</h2>
   <p><strong>Nome:</strong> {{ cadastro.nomeCrianca }}</p>
+  <p><strong>Sexo:</strong> {{ cadastro.sexo }}</p>
   <p><strong>Responsável:</strong> {{ cadastro.nomeResponsavel }}</p>
   <p><strong>Telefone:</strong> {{ cadastro.telefoneResponsavel }}</p>
   <p><strong>Observação:</strong> {{ cadastro.observacao }}</p>
   <p><strong>Horário:</strong> {{ cadastro.horario }}</p>
+  <p><strong>Data Nascimento:</strong> {{ cadastro.dataNascimento }}</p>
   <p><strong>idade:</strong> {{ cadastro.idade }}</p>
-  <p><strong>Criança Liberada:</strong> {{ cadastro.selecionado }}</p>
+  <p><strong>Criança Liberada:</strong> {{ cadastro.selecionado ? 'Não' : 'Sim'}} </p>
 
   <button routerLink="/listaCrianca">Voltar</button>
   <button (click)="atualizarItem()">Liberar</button>

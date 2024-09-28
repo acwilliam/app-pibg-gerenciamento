@@ -18,7 +18,8 @@ export class DetalheCriancaComponent implements OnInit {
     horario: '',
     id: '',
     selecionado: false,
-    dataNascimento: ''
+    dataNascimento: '',
+    sexo:''
    }
 
   constructor(
@@ -64,7 +65,8 @@ export class DetalheCriancaComponent implements OnInit {
 
     const qrcodeData = JSON.stringify({
         nome: this.cadastro.nomeCrianca,
-        url: `https://app-pibg-gerenciamento.vercel.app/detalhe-crianca/${this.cadastro.id}`
+        url: `https://app-pibg-gerenciamento.vercel.app/detalhe-crianca/${this.cadastro.id}`,
+        idade: this.cadastro.idade
     })
     this.router.navigate(['/qrcode', qrcodeData]);
   }

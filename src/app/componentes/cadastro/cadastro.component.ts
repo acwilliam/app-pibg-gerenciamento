@@ -34,7 +34,8 @@ export class CadastroComponent {
     horario: this.formatDate(),
     id: '',
     selecionado: true,
-    dataNascimento: ''
+    dataNascimento: '',
+    sexo:''
   }
 
   cadastrar() {

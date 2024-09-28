@@ -39,12 +39,12 @@
       required
       >
 
-      <label for="observacao">Data nascimento</label>
+      <label for="nascimento">Data nascimento</label>
       <input
-        type="text"
+        type="date"
         class="input"
-        id="observacao"
-        name="observacao"
+        id="nascimento"
+        name="nascimento"
         placeholder="digite a data de nascimento dd/mm/aaaa"
         [(ngModel)]="cadastro.dataNascimento"
         >
@@ -57,7 +57,13 @@
       placeholder="Digite uma observação"
       [(ngModel)]="cadastro.observacao"
       >
-
+      <div>
+        <label for="sexo-select">Escolha o sexo:</label>
+        <select id="gender-select" name="sexo" [(ngModel)]="cadastro.sexo"> <!-- Adicione o atributo name -->
+          <option value="masculino">Masculino</option>
+          <option value="feminino">Feminino</option>
+        </select>
+      </div>
     <div class="acoes">
       <!-- Transforma o botão de submit -->
       <button type="submit" class="botao" [disabled]="!cadastroForm.valid">Cadastrar</button>
