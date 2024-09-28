@@ -33,7 +33,8 @@ export class CadastroComponent {
     observacao:  '',
     horario: this.formatDate(),
     id: '',
-    selecionado: true
+    selecionado: true,
+    dataNascimento: ''
   }
 
   cadastrar() {

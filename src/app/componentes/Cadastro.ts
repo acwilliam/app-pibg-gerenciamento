@@ -5,6 +5,7 @@ export interface Cadastro {
   observacao: string,
   horario: string,
   id: string,
-  selecionado: boolean
-
+  selecionado: boolean,
+  dataNascimento: string,
+  idade?:Number
 }

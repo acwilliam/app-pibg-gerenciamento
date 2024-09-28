@@ -1,3 +1,4 @@
+import { CacularIdadeService } from './../cacular-idade.service';
 import { Cadastro } from './../Cadastro';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,14 +17,15 @@ export class DetalheCriancaComponent implements OnInit {
     observacao: '',
     horario: '',
     id: '',
-    selecionado: false
-
+    selecionado: false,
+    dataNascimento: ''
    }
 
   constructor(
     private route: ActivatedRoute,
     private service: CadastroService,
     private router: Router,
+    private caculaIdadeService: CacularIdadeService
   ) { }
 
   ngOnInit(): void {
@@ -36,6 +38,7 @@ export class DetalheCriancaComponent implements OnInit {
     this.service.buscarCadastroPorId(idCadastro).subscribe(response => {
       console.log('Resultado da busca:', response);
       if (response) {
+        this.caculaIdadeService.calcularIdade(response)
         this.cadastro = response;
       } else {
         console.error('Cadastro não encontrado');
