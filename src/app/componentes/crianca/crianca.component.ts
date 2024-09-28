@@ -9,8 +9,13 @@ import { CadastroService } from '../cadastro.service';
 })
 export class CriancaComponent {
   listaCrianca: Cadastro[] = []
-  constructor(private cadastroService: CadastroService) {}
+  termoBusca: string = ''
+  mostrarModal = false;
+  criancaEncontrada: any;
 
+  constructor(
+    private cadastroService: CadastroService
+  ) {}
   ngOnInit(): void {
     this.buscarCadastros();
   }
@@ -24,5 +29,16 @@ export class CriancaComponent {
     });
   }
 
+  filtrarCriancas() {
+     console.log('crianca buscada',this.termoBusca)
+     this.cadastroService.buscarCadastroByName(this.termoBusca)
+      .pipe(
+      )
+      .subscribe(crianca => {
+        this.criancaEncontrada = crianca;
+        this.mostrarModal = !!crianca;
+        console.log('crianca buscada',this.criancaEncontrada)
+      });
+  }
 
 }

@@ -1,5 +1,7 @@
 <section class="container">
-
+  <input type="text" [(ngModel)]="termoBusca" placeholder="Pesquisar criança" (keyup.enter)="filtrarCriancas()">
+  <button (click)="filtrarCriancas()">Buscar</button>
+  <app-modal-detalhe-crianca *ngIf="mostrarModal" [crianca]="criancaEncontrada" (fecharModal)="mostrarModal = false"></app-modal-detalhe-crianca>
   <!-- Cabeçalho para as colunas -->
   <div class="cadastro-header">
     <div>Criança</div>

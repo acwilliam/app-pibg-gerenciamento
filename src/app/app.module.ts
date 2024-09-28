@@ -11,7 +11,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { MensagemComponent } from './componentes/mensagem/mensagem.component';
 import { DetalheCriancaComponent } from './componentes/detalhe-crianca/detalhe-crianca.component';
 import { QRCodeModule } from 'angularx-qrcode';
-import { QrcodeComponent } from './componentes/qrcode/qrcode.component'
+import { QrcodeComponent } from './componentes/qrcode/qrcode.component';
+import { ModalDetalheCriancaComponent } from './componentes/modal-detalhe-crianca/modal-detalhe-crianca.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +20,8 @@ import { QrcodeComponent } from './componentes/qrcode/qrcode.component'
     CriancaComponent,
     MensagemComponent,
     DetalheCriancaComponent,
-    QrcodeComponent
+    QrcodeComponent,
+    ModalDetalheCriancaComponent
   ],
   imports: [
     BrowserModule,
