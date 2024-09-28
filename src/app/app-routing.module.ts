@@ -4,6 +4,7 @@ import { CadastroComponent } from './componentes/cadastro/cadastro.component';
 import { CriancaComponent } from './componentes/crianca/crianca.component';
 import { MensagemComponent } from './componentes/mensagem/mensagem.component';
 import { DetalheCriancaComponent } from './componentes/detalhe-crianca/detalhe-crianca.component';
+import { QrcodeComponent } from './componentes/qrcode/qrcode.component';
 
 export const routes: Routes = [
 
@@ -28,7 +29,11 @@ export const routes: Routes = [
     component: DetalheCriancaComponent
    },
    { path: 'mensagem/:telefoneResponsavel',
-     component: MensagemComponent }
+     component: MensagemComponent
+   },
+   { path: 'qrcode/:qrcodeData',
+     component: QrcodeComponent
+   }
 ];
 
 @NgModule({

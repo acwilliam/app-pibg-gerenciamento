@@ -10,21 +10,24 @@ import { CriancaComponent } from './componentes/crianca/crianca.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MensagemComponent } from './componentes/mensagem/mensagem.component';
 import { DetalheCriancaComponent } from './componentes/detalhe-crianca/detalhe-crianca.component';
-
+import { QRCodeModule } from 'angularx-qrcode';
+import { QrcodeComponent } from './componentes/qrcode/qrcode.component'
 @NgModule({
   declarations: [
     AppComponent,
     CadastroComponent,
     CriancaComponent,
     MensagemComponent,
-    DetalheCriancaComponent
+    DetalheCriancaComponent,
+    QrcodeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    QRCodeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

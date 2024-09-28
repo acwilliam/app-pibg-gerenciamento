@@ -1,6 +1,6 @@
 import { Cadastro } from './../Cadastro';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CadastroService } from '../cadastro.service';
 
 @Component({
@@ -22,18 +22,13 @@ export class DetalheCriancaComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private service: CadastroService
+    private service: CadastroService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
-    // Pegando o ID da URL
-   // this.id = +this.route.snapshot.paramMap.get('id')!;
-    // Buscar os detalhes da criança usando o ID
-    console.log(this.route.snapshot.paramMap.get('id'))
     const id: string | null = this.route.snapshot.paramMap.get('id');
     this.obterDetalhesCrianca(id!);
-
-
   }
 
   obterDetalhesCrianca(idCadastro: string): void {
@@ -56,5 +51,18 @@ export class DetalheCriancaComponent implements OnInit {
     });
     console.log('atualiando cadastro ', this.cadastro.id)
       this.service.atualizarCadastro(this.cadastro.id)
+  }
+  qrData: string = '';
+
+  gerarQrcode() {
+    this.route.params.subscribe(params => {
+      this.cadastro.id = params['id'];
+    });
+
+    const qrcodeData = JSON.stringify({
+        nome: this.cadastro.nomeCrianca,
+        url: `https://app-pibg-gerenciamento.vercel.app/detalhe-crianca/${this.cadastro.id}`
+    })
+    this.router.navigate(['/qrcode', qrcodeData]);
   }
 }

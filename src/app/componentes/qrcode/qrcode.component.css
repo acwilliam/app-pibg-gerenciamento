@@ -1,0 +1,33 @@
+.card {
+  display: flex; /* Transforma a card em um flex container */
+  flex-direction: row; /* Define a direção dos itens como linha */
+  max-width: 500px; /* Ajuste o valor conforme necessário */
+  margin: 0 ; /* Centraliza a card horizontalmente */
+
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column; /* Define a direção dos itens como coluna */
+}
+
+.qrcode-container {
+  flex: flex; /* Ocupa todo o espaço disponível na linha */
+  text-align: left;
+}
+
+.text-container {
+  flex: 1;
+  text-align: left;
+  margin-left: 0px; /* Ajusta o espaçamento entre o QRCode e o texto */
+}
+
+.name {
+  font-size: 24px;
+  margin-bottom: 5px;
+}
+
+.divider {
+  border-bottom: 1px solid #ccc;
+  margin: 0px 0;
+}
