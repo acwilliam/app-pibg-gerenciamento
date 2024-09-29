@@ -1,9 +1,15 @@
 <ng-container *ngTemplateOutlet="modalTemplate"></ng-container>
 <ng-template #modalTemplate>
 <div class="modal-body">
-  <p>Criança: {{ crianca.nomeCrianca }}</p>
-  <p>Responsável: {{ crianca.nomeResponsavel }}</p>
-  <p>Telefone: {{ crianca.telefoneResponsavel }}</p>
-  <button  (click)="atualizarCadastro(crianca)">checkIn</button>
+  <div *ngIf="modalAberto" class="modal-overlay">
+    <div class="modal-content">
+      <h2>Detalhes da Criança</h2>
+      <p><strong>Criança: {{ crianca.nomeCrianca }}</strong></p>
+      <p><strong>Responsável: {{ crianca.nomeResponsavel }}</strong></p>
+      <p><strong>Telefone: {{ crianca.telefoneResponsavel }}</strong></p>
+      <button class="botao" (click)="atualizarCadastro(crianca)">Confirmar Check-in</button>
+      <button class="botao" (click)="fecharModal()">Fechar</button>
+    </div>
+  </div>
 </div>
 </ng-template>

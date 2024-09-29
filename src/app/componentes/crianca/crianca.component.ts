@@ -30,14 +30,14 @@ export class CriancaComponent {
   }
 
   filtrarCriancas() {
-     console.log('crianca buscada',this.termoBusca)
+     console.log('crianca buscada 1',this.termoBusca)
      this.cadastroService.buscarCadastroByName(this.termoBusca)
       .pipe(
       )
       .subscribe(crianca => {
         this.criancaEncontrada = crianca;
         this.mostrarModal = !!crianca;
-        console.log('crianca buscada',this.criancaEncontrada)
+        console.log('crianca buscada 2',this.criancaEncontrada)
       });
   }
 

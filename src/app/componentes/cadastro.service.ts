@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Cadastro } from './Cadastro';
-import { first, map, Observable } from 'rxjs';
+import { first, from, map, Observable, switchMap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
 @Injectable({
@@ -18,6 +18,7 @@ export class CadastroService {
     const cadastroCollection = this.firestore.collection<Cadastro>('cadastro');
     return cadastroCollection.add(cadastro);
   }
+
   buscarCadastro(): Observable<Cadastro[]> {
     return this.firestore.collection<Cadastro>('cadastro', ref => ref.where('selecionado', '==', true))
       .valueChanges({ idField: 'id' });
@@ -34,12 +35,6 @@ export class CadastroService {
     return this.firestore.collection<Cadastro>('cadastro').doc(idCadastro).valueChanges();
   }
 
-  /*buscarCadastroByName(nomeCrianca: string): Observable<Cadastro | undefined> {
-    console.log('buscando nome',nomeCrianca);
-    return this.firestore.collection<Cadastro>('cadastro', ref => ref.where('nomeCrianca', '==', nomeCrianca))
-      .valueChanges()
-      .pipe(first());
-  }*/
   buscarCadastroByName(nomeCrianca: string): Observable<Cadastro | undefined> {
     console.log('buscando nome', nomeCrianca);
     return this.firestore.collection<Cadastro>('cadastro', ref => ref.where('nomeCrianca', '==', nomeCrianca))
@@ -49,5 +44,20 @@ export class CadastroService {
         map((cadastros: Cadastro[]) => cadastros.length > 0 ? cadastros[0] : undefined) // Pega o primeiro cadastro ou undefined
       );
   }
-}
 
+  atualizarCadastroPorNome(nomeCrianca: string): Observable<void> {
+    console.log('Atualizando cadastro para', nomeCrianca);
+
+    return this.firestore.collection('cadastro', ref => ref.where('nomeCrianca', '==', nomeCrianca))
+    .get()
+      .pipe(
+        switchMap(snapshot => {
+          if (snapshot.empty) {
+            throw new Error('Nenhum cadastro encontrado com este nome');
+          }
+          const doc = snapshot.docs[0];
+          return from(doc.ref.update({ selecionado: true }));
+        })
+      );
+  }
+}
