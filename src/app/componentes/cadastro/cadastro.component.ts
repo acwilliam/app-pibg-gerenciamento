@@ -35,7 +35,8 @@ export class CadastroComponent {
     id: '',
     selecionado: true,
     dataNascimento: '',
-    sexo:''
+    sexo:'',
+    tipo:''
   }
 
   cadastrar() {
@@ -44,7 +45,8 @@ export class CadastroComponent {
       nomeCrianca: this.cadastro.nomeCrianca,
       telefoneResponsavel: this.cadastro.telefoneResponsavel,
       observacao: this.cadastro.observacao,
-      id: this.cadastro.id
+      id: this.cadastro.id,
+      ti: this.cadastro.tipo
     });
 
     this.service.cadastrarCrianca(this.cadastro)

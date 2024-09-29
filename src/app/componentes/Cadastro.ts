@@ -8,5 +8,6 @@ export interface Cadastro {
   selecionado: boolean,
   dataNascimento: string,
   idade?:Number,
-  sexo: string
+  sexo: string,
+  tipo?: string
 }

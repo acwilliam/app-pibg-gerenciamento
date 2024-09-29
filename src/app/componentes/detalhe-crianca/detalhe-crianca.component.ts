@@ -19,7 +19,8 @@ export class DetalheCriancaComponent implements OnInit {
     id: '',
     selecionado: false,
     dataNascimento: '',
-    sexo:''
+    sexo:'',
+    tipo:''
    }
 
   constructor(

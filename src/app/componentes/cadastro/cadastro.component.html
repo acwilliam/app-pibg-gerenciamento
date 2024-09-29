@@ -59,9 +59,16 @@
       >
       <div>
         <label for="sexo-select">Escolha o sexo:</label>
-        <select id="gender-select" name="sexo" [(ngModel)]="cadastro.sexo"> <!-- Adicione o atributo name -->
+        <select id="sexo-select" name="sexo" [(ngModel)]="cadastro.sexo"> <!-- Adicione o atributo name -->
           <option value="masculino">Masculino</option>
           <option value="feminino">Feminino</option>
+        </select>
+      </div>
+      <div>
+        <label for="tipo-select">Membro ou visitante?</label>
+        <select id="tipo-select" name="tipo" [(ngModel)]="cadastro.tipo"> <!-- Adicione o atributo name -->
+          <option value="Visitante">Visitante</option>
+          <option value="Membro">Membro</option>
         </select>
       </div>
     <div class="acoes">
