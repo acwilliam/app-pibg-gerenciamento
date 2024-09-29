@@ -47,6 +47,7 @@
         name="nascimento"
         placeholder="digite a data de nascimento dd/mm/aaaa"
         [(ngModel)]="cadastro.dataNascimento"
+        required
         >
     <label for="observacao">Observação</label>
     <input
@@ -69,6 +70,7 @@
         <select id="tipo-select" name="tipo" [(ngModel)]="cadastro.tipo"> <!-- Adicione o atributo name -->
           <option value="Visitante">Visitante</option>
           <option value="Membro">Membro</option>
+          required
         </select>
       </div>
     <div class="acoes">
