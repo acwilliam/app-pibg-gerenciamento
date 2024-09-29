@@ -23,7 +23,7 @@ export class ModalDetalheCriancaComponent {
   atualizarCadastro(crianca: Cadastro) {
     crianca.selecionado = true;
     console.log('marcado a presença')
-    this.fecharModal.closed
+
     /*this.cadastroService.atualizarCadastro(crianca)
       .subscribe(() => {
         // Atualização realizada com sucesso
