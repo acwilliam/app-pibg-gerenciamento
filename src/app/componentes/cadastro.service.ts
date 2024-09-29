@@ -15,6 +15,7 @@ export class CadastroService {
   ) { }
 
   cadastrarCrianca(cadastro: Cadastro) {
+    console.log('cadastrando com upper',cadastro)
     const cadastroCollection = this.firestore.collection<Cadastro>('cadastro');
     return cadastroCollection.add(cadastro);
   }
@@ -25,7 +26,6 @@ export class CadastroService {
   }
 
   atualizarCadastro(id: string) {
-    console.log('atualizando cadastro', id)
     const cadastroCollection = this.firestore.doc<Cadastro>(`cadastro/${id}`);
     return cadastroCollection.update({selecionado: false})
   }
@@ -46,8 +46,6 @@ export class CadastroService {
   }
 
   atualizarCadastroPorNome(nomeCrianca: string): Observable<void> {
-    console.log('Atualizando cadastro para', nomeCrianca);
-
     return this.firestore.collection('cadastro', ref => ref.where('nomeCrianca', '==', nomeCrianca))
     .get()
       .pipe(
