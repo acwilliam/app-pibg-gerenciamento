@@ -17,7 +17,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { PaginaPrincipalComponent } from './componentes/pagina-principal/pagina-principal.component';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatIconModule} from '@angular/material/icon';
 @NgModule({
   declarations: [
     AppComponent,
@@ -25,7 +28,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MensagemComponent,
     DetalheCriancaComponent,
     QrcodeComponent,
-    ListaCriancaComponent
+    ListaCriancaComponent,
+    PaginaPrincipalComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +42,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
      MatButtonModule,
      MatFormFieldModule,
      MatInputModule,
-     BrowserAnimationsModule
+     BrowserAnimationsModule,
+     MatInputModule,
+     MatMenuModule,
+     MatToolbarModule,
+     MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,71 @@
+.header {
+  background-color: #525a54;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between; /* updated to space-between */
+  align-items: center;
+}
+/* For smaller screens (e.g., mobile devices) */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column; /* stack navigation items vertically */
+  }
+  .logo {
+    width: 50%; /* reduce logo size on smaller screens */
+  }
+}
+
+/* For larger screens (e.g., desktop devices) */
+@media (min-width: 1024px) {
+  .header {
+    flex-direction: row; /* display navigation items horizontally */
+  }
+  .logo {
+    width: 80%; /* increase logo size on larger screens */
+  }
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Ocupa toda a altura da viewport */
+}
+
+.header {
+  background-color: #525a54;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo {
+  width: 80%; /* Ajuste o tamanho da imagem conforme necessário */
+  max-width: 400px;
+  margin: 2rem auto;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .header {
+    flex-direction: column;
+  }
+  .logo {
+    width: 50%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .header {
+    flex-direction: row;
+  }
+  .logo {
+    width: 80%;
+  }
+}

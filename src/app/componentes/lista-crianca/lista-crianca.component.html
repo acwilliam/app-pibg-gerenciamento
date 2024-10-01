@@ -2,9 +2,6 @@
   <mat-label>Filter</mat-label>
   <input matInput (keyup)="applyFilter($event)" placeholder="Digite o nome da criança" #input>
 </mat-form-field>
-<div class="botao">
-  <button routerLink="/cadastro">Cadastrar Crianca</button>
-</div>
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
   <!-- Position Column -->
@@ -34,6 +31,6 @@
   <tr class="mat-row" *matNoDataRow>
     <td class="mat-cell" colspan="4">Não existe criança com nome "{{input.value}}"</td>
   </tr>
-
 </table>
+<button mat-raised-button color="primary" class="button" [routerLink]="['/pagina-principal']">Voltar</button>
 

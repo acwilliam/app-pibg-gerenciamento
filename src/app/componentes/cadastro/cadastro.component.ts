@@ -44,7 +44,7 @@ export class CadastroComponent {
   }
 
   cancelar() {
-    this.router.navigate(['/lista-crianca'])
+    this.router.navigate(['/pagina-principal'])
 
   }
 

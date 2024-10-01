@@ -5,12 +5,13 @@ import { MensagemComponent } from './componentes/mensagem/mensagem.component';
 import { DetalheCriancaComponent } from './componentes/detalhe-crianca/detalhe-crianca.component';
 import { QrcodeComponent } from './componentes/qrcode/qrcode.component';
 import { ListaCriancaComponent } from './componentes/lista-crianca/lista-crianca.component';
+import { PaginaPrincipalComponent } from './componentes/pagina-principal/pagina-principal.component';
 
 export const routes: Routes = [
 
   {
    path: '',
-   redirectTo: 'cadastro',
+   redirectTo: 'pagina-principal',
    pathMatch: 'full'
   },
   {
@@ -30,9 +31,12 @@ export const routes: Routes = [
    { path: 'qrcode/:qrcodeData',
      component: QrcodeComponent
    },
-   { path:  
-    'lista-crianca',
-     component: ListaCriancaComponent }
+   { path: 'lista-crianca',
+     component: ListaCriancaComponent
+   },
+   { path: 'pagina-principal',
+    component: PaginaPrincipalComponent
+  }
 ];
 
 @NgModule({

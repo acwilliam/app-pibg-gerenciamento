@@ -50,17 +50,10 @@ section {
   display: table;
 }
 
-.botao {
-  display: inline-block;
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: bold;
+.button {
+  background-color: #333;
   color: #fff;
-  border: none;
-  border-radius: 10px;
+  padding: 10px 20px;
+  border-radius: 5px;
   cursor: pointer;
-}
-
-.botao:hover {
-  background-color: #dbe4ec;
 }
