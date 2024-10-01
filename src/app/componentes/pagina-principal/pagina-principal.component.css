@@ -45,27 +45,3 @@
   align-items: center;
 }
 
-.logo {
-  width: 80%; /* Ajuste o tamanho da imagem conforme necessário */
-  max-width: 400px;
-  margin: 2rem auto;
-}
-
-/* Media queries for responsiveness */
-@media (max-width: 768px) {
-  .header {
-    flex-direction: column;
-  }
-  .logo {
-    width: 50%;
-  }
-}
-
-@media (min-width: 1024px) {
-  .header {
-    flex-direction: row;
-  }
-  .logo {
-    width: 80%;
-  }
-}
