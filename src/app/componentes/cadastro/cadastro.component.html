@@ -17,16 +17,26 @@
       required
       >
 
-    <label for="crianca">Criança</label>
+    <label for="crianca">Nome</label>
     <input
       type="text"
       class="input"
       id="nomeCrianca"
       name="nomeCrianca"
-      placeholder="Digite o nome completo da criança"
+      placeholder="Digite o primeiro nome da criança"
       [(ngModel)]="cadastro.nomeCrianca"
       required
       >
+      <label for="sobreNomecrianca">Sobrenome</label>
+      <input
+        type="text"
+        class="input"
+        id="sobrNomeCrianca"
+        name="sobrNomeCrianca"
+        placeholder="Digite o sobrenome da crianca"
+        [(ngModel)]="cadastro.sobreNome"
+        required
+        >
 
     <label for="telefoneResponsavel">Telefone responsável</label>
     <input
@@ -70,7 +80,6 @@
         <select id="tipo-select" name="tipo" [(ngModel)]="cadastro.tipo"> <!-- Adicione o atributo name -->
           <option value="Visitante">Visitante</option>
           <option value="Membro">Membro</option>
-          required
         </select>
       </div>
     <div class="acoes">

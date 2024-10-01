@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { QrcodeService } from '../qrcode.service';
+import { CadastroService } from '../cadastro.service';
 
 @Component({
   selector: 'app-qrcode',
@@ -12,18 +13,22 @@ export class QrcodeComponent {
   qrData: string = '';
   nome: string = '';
   idade: Number = 0;
+  id:Number=0;
   constructor(
     private route: ActivatedRoute,
-    private qrcodeService: QrcodeService) {}
+    private qrcodeService: QrcodeService
+  ) {}
 
   ngOnInit() {
     const qrcodeData = this.route.snapshot.paramMap.get('qrcodeData');
     const asObject = JSON.parse(qrcodeData!)
     this.nome = asObject.nome
     this.idade = asObject.idade
+    this.id = asObject.id
     console.log('url:', asObject.url)
     console.log('nome:', asObject.nome)
     console.log('idade:', asObject.idade)
+    console.log('id:', asObject.id)
     this.qrcodeData = this.qrcodeService.generateQrcode(asObject.url);
   }
 }

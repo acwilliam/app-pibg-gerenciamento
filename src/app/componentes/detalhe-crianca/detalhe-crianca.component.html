@@ -3,6 +3,7 @@
     <img src="crianca.png" alt="Imagem de perfil">
   </div>
   <h2>Detalhes da Criança</h2>
+  <p><strong>Id:</strong> {{ cadastro.identificador }}</p>
   <p><strong>Nome:</strong> {{ cadastro.nomeCrianca }}</p>
   <p><strong>Sexo:</strong> {{ cadastro.sexo }}</p>
   <p><strong>Responsável:</strong> {{ cadastro.nomeResponsavel }}</p>
@@ -14,7 +15,7 @@
   <p><strong>tipo:</strong> {{ cadastro.tipo }}</p>
   <p><strong>Criança Liberada:</strong> {{ cadastro.selecionado ? 'Não' : 'Sim'}} </p>
 
-  <button routerLink="/listaCrianca">Voltar</button>
+  <button routerLink="/lista-crianca">Voltar</button>
   <button (click)="atualizarItem()">Liberar</button>
   <button routerLink="/mensagem/{{ cadastro.telefoneResponsavel }}" class="botao">Enviar Mensagem</button>
   <button (click)="gerarQrcode()">Imprimir Etiqueta</button>

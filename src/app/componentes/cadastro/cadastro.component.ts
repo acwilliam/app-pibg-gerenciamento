@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Cadastro } from '../Cadastro';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CadastroService } from '../cadastro.service';
-import { v4 as uuidv4 } from 'uuid';
+import { AutoIncrementIdGeradorService } from '../auto-increment-id-gerador.service';
 
 @Component({
   selector: 'app-cadastro',
@@ -14,16 +14,10 @@ export class CadastroComponent {
   constructor(
     private router: Router,
     private service: CadastroService,
-    private route: ActivatedRoute
+    private geradorId: AutoIncrementIdGeradorService
   ){  }
 
   ngOnInit(): void {
-    this.service.buscarCadastro().subscribe(cadastros =>{
-      this.cadastros = cadastros;
-    })
-    const id = this.route.snapshot.paramMap.get('id') || uuidv4();
-    this.cadastro.id = id;
-    console.log('teste', this.cadastro.id)
   }
 
   cadastro: Cadastro = {
@@ -32,31 +26,25 @@ export class CadastroComponent {
     telefoneResponsavel:  '',
     observacao:  '',
     horario: this.formatDate(),
-    id: '',
+    identificador: 0,
     selecionado: true,
     dataNascimento: '',
     sexo:'',
-    tipo:''
+    tipo:'',
+    sobreNome: ''
   }
 
   cadastrar() {
-    console.log('Dados a serem cadastrados:', {
-      nomeResponsavel: this.cadastro.nomeResponsavel,
-      nomeCrianca: this.cadastro.nomeCrianca,
-      telefoneResponsavel: this.cadastro.telefoneResponsavel,
-      observacao: this.cadastro.observacao,
-      id: this.cadastro.id,
-      ti: this.cadastro.tipo
-    });
-
+    this.cadastro.identificador = this.geradorId.gerarNumeroAleatorio()
+    console.log('###novo cadastros##', this.cadastro.identificador)
     this.service.cadastrarCrianca(this.cadastro)
-    this.router.navigate(['/listaCrianca'])
+    this.router.navigate(['/lista-crianca'])
 
 
   }
 
   cancelar() {
-    this.router.navigate(['/listaCrianca'])
+    this.router.navigate(['/lista-crianca'])
 
   }
 

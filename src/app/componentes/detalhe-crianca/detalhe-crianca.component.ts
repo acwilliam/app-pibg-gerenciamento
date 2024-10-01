@@ -16,11 +16,12 @@ export class DetalheCriancaComponent implements OnInit {
     telefoneResponsavel: '',
     observacao: '',
     horario: '',
-    id: '',
+    identificador: 0,
     selecionado: false,
     dataNascimento: '',
     sexo:'',
-    tipo:''
+    tipo:'',
+    sobreNome: ''
    }
 
   constructor(
@@ -51,24 +52,26 @@ export class DetalheCriancaComponent implements OnInit {
 
   atualizarItem() {
     this.route.params.subscribe(params => {
-      this.cadastro.id = params['id'];
+      this.cadastro.identificador = params['id'];
       console.log('parametro',params['id'])
     });
-    console.log('atualiando cadastro ', this.cadastro.id)
-      this.service.atualizarCadastro(this.cadastro.id)
+    console.log('atualiando cadastro ', this.cadastro.identificador)
+      this.service.atualizarCadastro(this.cadastro.identificador)
   }
   qrData: string = '';
 
   gerarQrcode() {
-    this.route.params.subscribe(params => {
-      this.cadastro.id = params['id'];
-    });
+    /*this.route.params.subscribe(params => {
+      this.cadastro.identificador = params['id'];
+    });*/
 
     const qrcodeData = JSON.stringify({
         nome: this.cadastro.nomeCrianca,
-        url: `https://app-pibg-gerenciamento.vercel.app/detalhe-crianca/${this.cadastro.id}`,
-        idade: this.cadastro.idade
+        url: `https://app-pibg-gerenciamento.vercel.app/detalhe-crianca/${this.cadastro.identificador}`,
+        idade: this.cadastro.idade,
+        id: this.cadastro.identificador
     })
+    console.log('enviando dados para gerar qrcode',this.cadastro)
     this.router.navigate(['/qrcode', qrcodeData]);
   }
 }

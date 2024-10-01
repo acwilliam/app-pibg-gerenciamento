@@ -4,10 +4,11 @@ export interface Cadastro {
   telefoneResponsavel: string,
   observacao: string,
   horario: string,
-  id: string,
+  identificador: Number,
   selecionado: boolean,
   dataNascimento: string,
   idade?:Number,
   sexo: string,
-  tipo?: string
+  tipo?: string,
+  sobreNome: string
 }

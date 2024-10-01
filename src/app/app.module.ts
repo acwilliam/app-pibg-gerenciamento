@@ -6,22 +6,26 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { environment } from '../envirionments/environment';
 import { AppComponent } from './app.component';
 import { CadastroComponent } from './componentes/cadastro/cadastro.component';
-import { CriancaComponent } from './componentes/crianca/crianca.component';
 import { AppRoutingModule } from './app-routing.module';
 import { MensagemComponent } from './componentes/mensagem/mensagem.component';
 import { DetalheCriancaComponent } from './componentes/detalhe-crianca/detalhe-crianca.component';
 import { QRCodeModule } from 'angularx-qrcode';
 import { QrcodeComponent } from './componentes/qrcode/qrcode.component';
-import { ModalDetalheCriancaComponent } from './componentes/modal-detalhe-crianca/modal-detalhe-crianca.component'
+import { ListaCriancaComponent } from './componentes/lista-crianca/lista-crianca.component'
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 @NgModule({
   declarations: [
     AppComponent,
     CadastroComponent,
-    CriancaComponent,
     MensagemComponent,
     DetalheCriancaComponent,
     QrcodeComponent,
-    ModalDetalheCriancaComponent
+    ListaCriancaComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +33,12 @@ import { ModalDetalheCriancaComponent } from './componentes/modal-detalhe-crianc
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    QRCodeModule
+    QRCodeModule,
+    MatTableModule,
+     MatButtonModule,
+     MatFormFieldModule,
+     MatInputModule,
+     BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
