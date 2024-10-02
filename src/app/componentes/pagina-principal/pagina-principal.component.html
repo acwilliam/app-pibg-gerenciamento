@@ -1,7 +1,10 @@
-
-  <nav class="navbar">
-    <a class="nav-link" [routerLink]="['/cadastro']"> Cadastro</a>
-    <a class="nav-link" [routerLink]="['/lista-crianca']">Lista Criança</a>
-    <a class="nav-link" href="#"> Contato</a>
+<nav class="menu">
+  <ul>
+    <li *ngFor="let item of menuItems">
+      <a [routerLink]="item.route" class="menu-item">
+        <span class="material-icons">{{item.icon}}</span>
+        <span class="menu-label">{{item.label}}</span>
+      </a>
+    </li>
+  </ul>
 </nav>
-

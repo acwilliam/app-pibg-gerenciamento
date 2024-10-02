@@ -21,6 +21,9 @@ import { PaginaPrincipalComponent } from './componentes/pagina-principal/pagina-
 import {MatMenuModule} from '@angular/material/menu';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatIconModule} from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +49,9 @@ import {MatIconModule} from '@angular/material/icon';
      MatInputModule,
      MatMenuModule,
      MatToolbarModule,
-     MatIconModule
+     MatIconModule,
+     CommonModule,
+     RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

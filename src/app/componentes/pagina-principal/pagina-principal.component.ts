@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
 
+interface MenuItem {
+  label: string;
+  route: string;
+  icon?: string;
+}
+
+
 @Component({
   selector: 'app-pagina-principal',
   templateUrl: './pagina-principal.component.html',
@@ -7,8 +14,11 @@ import { Component } from '@angular/core';
 })
 export class PaginaPrincipalComponent {
 
-  ngOnInit(): void {
-console.log('Componente cargado');
-  }
+  menuItems: MenuItem[] = [
+    { label: 'cadastro', route: '/cadastro', icon: 'home' },
+    { label: 'Crianças', route: '/lista-crianca', icon: 'shopping_basket' },
+    { label: 'Sobre', route: '/about', icon: 'info' },
+    { label: 'Contato', route: '/contact', icon: 'mail' },
+  ];
 
 }
