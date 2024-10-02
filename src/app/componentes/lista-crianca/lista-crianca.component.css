@@ -1,59 +1,103 @@
+.table-container {
+  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.search-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.filter-field {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
 table {
   width: 100%;
-}
-
-tr.example-detail-row {
-  height: 0;
-}
-
-tr.example-element-row:not(.example-expanded-row):hover {
-  background: whitesmoke;
-}
-
-tr.example-element-row:not(.example-expanded-row):active {
-  background: #efefef;
-}
-
-.example-element-row td {
-  border-bottom-width: 3;
-}
-
-.example-element-detail {
+  background-color: #fff;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  border-radius: 8px;
   overflow: hidden;
-  display: flex;
 }
 
-.example-element-diagram {
-  min-width: 80px;
-  border: 2px solid black;
-  padding: 8px;
-  font-weight: lighter;
-  margin: 8px 0;
-  height: 104px;
-}
-
-.example-element-symbol {
+th.mat-header-cell {
+  background-color: #337ab7;
+  color: white;
   font-weight: bold;
-  font-size: 40px;
-  line-height: normal;
+  padding: 15px;
 }
 
-.example-element-description {
-  padding: 16px;
+td.mat-cell {
+  padding: 12px 15px;
 }
 
-.example-element-description-attribution {
-  opacity: 0.5;
+tr.mat-row:nth-child(even) {
+  background-color: #f8f8f8;
 }
 
-section {
-  display: table;
+tr.mat-row:hover {
+  background-color: #337ab7;
 }
 
-.button {
-  background-color: #333;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 5px;
-  cursor: pointer;
+.mat-column-nomeCrianca {
+  width: 40%;
+}
+
+.mat-column-nomeResponsavel {
+  width: 35%;
+}
+
+.mat-column-telefoneResponsavel {
+  width: 25%;
+}
+
+a {
+  color: #337ab7;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+
+mat-paginator {
+  margin-top: 10px;
+}
+::ng-deep .search-field {
+  .mat-form-field-wrapper {
+    padding-bottom: 0;
+  }
+
+  .mat-form-field-flex {
+    align-items: center;
+    height: 10px; /* Altura reduzida */
+  }
+
+  .mat-form-field-outline {
+    height: 40px; /* Altura do contorno reduzida */
+  }
+
+  .mat-form-field-outline-start,
+  .mat-form-field-outline-end {
+    border-width: 1px !important; /* Linha mais fina */
+  }
+
+  .mat-form-field-infix {
+    padding: 0.5em 0;
+    border-top: 0;
+  }
+
+  .mat-form-field-label-wrapper {
+    top: -1.1em; /* Ajuste fino da posição do label */
+  }
+
+  .mat-form-field-label {
+    font-size: 14px; /* Tamanho do label reduzido */
+  }
+
+  input.mat-input-element {
+    margin-top: -0.0625em; /* Ajuste fino da posição do texto de input */
+  }
 }
