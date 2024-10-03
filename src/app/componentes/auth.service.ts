@@ -20,6 +20,7 @@ export class AuthService {
 
     try {
       const credencial = await this.auth.signInWithEmailAndPassword(usuario.email, usuario.senha)
+      this.usuarioAutenticado = true;
       return  credencial
     } catch (error) {
         throw error
