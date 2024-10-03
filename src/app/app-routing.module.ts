@@ -6,12 +6,13 @@ import { DetalheCriancaComponent } from './componentes/detalhe-crianca/detalhe-c
 import { QrcodeComponent } from './componentes/qrcode/qrcode.component';
 import { ListaCriancaComponent } from './componentes/lista-crianca/lista-crianca.component';
 import { PaginaPrincipalComponent } from './componentes/pagina-principal/pagina-principal.component';
+import { LoginUsuarioComponent } from './componentes/login-usuario/login-usuario.component';
 
 export const routes: Routes = [
 
   {
    path: '',
-   redirectTo: 'pagina-principal',
+   redirectTo: 'login',
    pathMatch: 'full'
   },
   {
@@ -36,7 +37,10 @@ export const routes: Routes = [
    },
    { path: 'pagina-principal',
     component: PaginaPrincipalComponent
-  }
+   },
+   { path: 'login',
+    component: LoginUsuarioComponent
+   }
 ];
 
 @NgModule({

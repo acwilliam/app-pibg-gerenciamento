@@ -1,4 +1,4 @@
-import { FormsModule } from '@angular/forms';
+import { FormGroup, FormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AngularFireModule } from '@angular/fire/compat';
@@ -24,6 +24,8 @@ import {MatIconModule} from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { LoginUsuarioComponent } from './componentes/login-usuario/login-usuario.component';
+
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     DetalheCriancaComponent,
     QrcodeComponent,
     ListaCriancaComponent,
-    PaginaPrincipalComponent
+    PaginaPrincipalComponent,
+    LoginUsuarioComponent
   ],
   imports: [
     BrowserModule,
@@ -53,7 +56,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
      MatIconModule,
      CommonModule,
      RouterModule,
-     MatPaginatorModule
+     MatPaginatorModule,
+     FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
