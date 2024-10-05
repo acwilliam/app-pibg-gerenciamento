@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
+import { AuthService } from '../auth.service';
 
 interface MenuItem {
   label: string;
-  route: string;
+  route?: string;
   icon?: string;
+  callback?: () => void;
 }
 
 
@@ -17,8 +19,20 @@ export class PaginaPrincipalComponent {
   menuItems: MenuItem[] = [
     { label: 'cadastro', route: '/cadastro', icon: 'home' },
     { label: 'Crianças', route: '/lista-crianca', icon: 'shopping_basket' },
-    { label: 'Sobre', route: '/about', icon: 'info' },
-    { label: 'Contato', route: '/contact', icon: 'mail' },
+    { label: 'sair', callback: () => this.logout(), icon: 'exit_to_app' },
   ];
+  menuActive = false;
 
+  constructor (private authService: AuthService ) {}
+  toggleMenu() {
+    this.menuActive = !this.menuActive;
+  }
+
+  logout() {
+    this.authService.logout();
+  }
+
+  navigateToRoute() {
+    this.menuActive = false;
+  }
 }

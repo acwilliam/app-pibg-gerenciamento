@@ -1,8 +1,26 @@
 .menu {
+  max-width: 100%;
   background-color: #337ab7;
   padding: 1rem;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  position: relative; /* added */
+}
+
+.hamburger {
+  position: absolute;
+  top: 0;
+  right: 0;
+  /*padding: 0.5rem;*/
+  background-color: #337ab7;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.hamburger .material-icons {
+  font-size: 1.5rem;
+  color: white;
 }
 
 ul {
@@ -12,6 +30,18 @@ ul {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  position: absolute; /* added */
+  top: 100%;
+  right: 0;
+  background-color: #337ab7;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  display: none; /* added */
+}
+
+.active {
+  display: block; /* added */
 }
 
 .menu-item {

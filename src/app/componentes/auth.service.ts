@@ -36,7 +36,6 @@ export class AuthService {
   }
 
   isLoggedIn(): Observable<boolean> {
-    console.log('usuario logado?')
     return this.user$.pipe(
       switchMap(user => of(!!user)),
       catchError(error => {
@@ -48,6 +47,7 @@ export class AuthService {
 
   async logout(): Promise<void> {
     await this.auth.signOut();
+    this.router.navigate(['/login'])
   }
   getCurrentUser(): Observable<firebase.User | null> {
     return this.user$;

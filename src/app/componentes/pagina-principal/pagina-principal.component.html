@@ -1,7 +1,10 @@
 <nav class="menu">
-  <ul>
+  <button class="hamburger" (click)="toggleMenu()">
+    <span class="material-icons">menu</span>
+  </button>
+  <ul [class.active]="menuActive">
     <li *ngFor="let item of menuItems">
-      <a [routerLink]="item.route" class="menu-item">
+      <a [routerLink]="item.route" class="menu-item"  (click)="item.callback ? item.callback() : navigateToRoute()" >
         <span class="material-icons">{{item.icon}}</span>
         <span class="menu-label">{{item.label}}</span>
       </a>
