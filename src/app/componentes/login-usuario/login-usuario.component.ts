@@ -24,7 +24,7 @@ export class LoginUsuarioComponent {
 
   }
 
-  fazerLogin(){
+  async fazerLogin(){
     this.authService.fazerLogin(this.usuario)
         .then(user => {
             if (user) {
