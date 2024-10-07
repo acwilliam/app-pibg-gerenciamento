@@ -3,6 +3,7 @@ body {
   background-size: cover;
   background-position: center;
   height: 100vh;
+  width: auto;
   margin: 0;
   padding: 0;
 }
@@ -74,4 +75,24 @@ ul {
 
 .menu-label {
   font-size: 1rem;
+}
+
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .menu {
+      max-width: 100%; /* Ensure full width on mobile */
+  }
+
+  ul {
+      display: none ; /* Show menu items on mobile */
+  }
+}
+
+@media (min-width: 769px) {
+  /* Adjust styles for desktop (optional) */
+  .menu {
+      max-width: 800px; /* Set a maximum width for desktop */
+      margin: 0 auto; /* Center on desktop */
+  }
 }

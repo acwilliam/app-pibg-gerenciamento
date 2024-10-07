@@ -1,11 +1,16 @@
-<div class="card">
+<body>
+<div class="card" id="printSection">
   <div class="qrcode-container">
-    <qrcode [qrdata]="qrcodeData.value" options="qrcodeData.options"></qrcode>
+    <qrcode
+     [qrdata]="qrcodeData.value"
+     [width]="120"
+     ></qrcode>
   </div>
   <div class="text-container">
-    <h2 class="name">{{id}}   {{ nome }}, {{ idade }} Anos </h2>
+    <h2 class="name"> {{ nome }}, {{ idade }} Anos </h2>
     <div class="divider"></div>
-    <p>Turma de 6 a 8 anos</p>
-    <p>07/11/2022</p>
   </div>
+
 </div>
+<button class="botao"  (click)="printContent()">Imprimir</button>
+</body>

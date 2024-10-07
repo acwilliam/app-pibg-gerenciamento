@@ -25,7 +25,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { LoginUsuarioComponent } from './componentes/login-usuario/login-usuario.component';
-
+import { NgxPrintModule } from 'ngx-print';
 
 @NgModule({
   declarations: [
@@ -57,7 +57,8 @@ import { LoginUsuarioComponent } from './componentes/login-usuario/login-usuario
      CommonModule,
      RouterModule,
      MatPaginatorModule,
-     FormsModule
+     FormsModule,
+     NgxPrintModule
   ],
   providers: [],
   bootstrap: [AppComponent]

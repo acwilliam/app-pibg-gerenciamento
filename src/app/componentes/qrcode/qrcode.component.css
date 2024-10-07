@@ -1,32 +1,50 @@
 .card {
   display: flex; /* Transforma a card em um flex container */
   flex-direction: row; /* Define a direção dos itens como linha */
-  max-width: 500px; /* Ajuste o valor conforme necessário */
+  max-width: 240px; /* Ajuste o valor conforme necessário */
   margin: 0 ; /* Centraliza a card horizontalmente */
+  font-size: 10px; /* Ajusta o tamanho da fonte */
+  margin-left: 0;
 }
 
-.card-content {
+.card {
   display: flex;
-  flex-direction: column; /* Define a direção dos itens como coluna */
+  flex-direction: inherit; /* Define a direção dos itens como coluna */
 }
 
 .qrcode-container {
-  flex: flex; /* Ocupa todo o espaço disponível na linha */
+  flex: 1; /* Ocupa todo o espaço disponível na linha */
   text-align: left;
+  width: 120px; /* Ajusta o tamanho do QRCode */
+  height: 120px; /* Ajusta o tamanho do QRCode */
 }
 
 .text-container {
   flex: 1;
   text-align: left;
-  margin-left: 0px; /* Ajusta o espaçamento entre o QRCode e o texto */
+  margin-left: 5px; /* Ajusta o espaçamento entre o QRCode e o texto */
 }
 
 .name {
-  font-size: 24px;
+  font-size: 12px;
   margin-bottom: 5px;
 }
 
 .divider {
   border-bottom: 1px solid #ccc;
   margin: 0px 0;
+}
+
+.impresso {
+  background-color: #f2f2f2;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+}
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printSection, #printSection * {
+    visibility: visible;
+  }
 }

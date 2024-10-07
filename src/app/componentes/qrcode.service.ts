@@ -9,14 +9,7 @@ export class QrcodeService {
 
   generateQrcode(data: string) {
     return {
-      value: data,
-      options: {
-        width: 100,
-        height: 100,
-        colorDark: '#000',
-        colorLight: '#fff',
-        quietZone: 1,
-      },
+      value: data
     };
   }
 

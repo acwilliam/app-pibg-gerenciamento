@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { QrcodeService } from '../qrcode.service';
-import { CadastroService } from '../cadastro.service';
+import { NgxPrintService, PrintOptions } from 'ngx-print';
 
 @Component({
   selector: 'app-qrcode',
@@ -16,7 +16,8 @@ export class QrcodeComponent {
   id:Number=0;
   constructor(
     private route: ActivatedRoute,
-    private qrcodeService: QrcodeService
+    private qrcodeService: QrcodeService,
+    private printService: NgxPrintService
   ) {}
 
   ngOnInit() {
@@ -30,5 +31,19 @@ export class QrcodeComponent {
     console.log('idade:', asObject.idade)
     console.log('id:', asObject.id)
     this.qrcodeData = this.qrcodeService.generateQrcode(asObject.url);
+  }
+
+  printContent() {
+    const printOptions: PrintOptions = {
+      printDelay: 100,
+      printSectionId: 'printSection',
+      printTitle: 'teste',
+      useExistingCss: true,
+      bodyClass: 'impresso',
+      openNewTab: false,
+      previewOnly: false,
+      closeWindow: false
+    };
+    this.printService.print(printOptions);
   }
 }
