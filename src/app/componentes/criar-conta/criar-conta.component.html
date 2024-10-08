@@ -23,6 +23,7 @@
       <span>Email</span>
       <small *ngIf="hasError('email', 'required') && cadastroForm.get('email')?.touched">Email é obrigatório.</small>
       <small *ngIf="hasError('email', 'email')">Por favor, insira um email válido.</small>
+      <small *ngIf="cadastroForm.get('email')?.hasError('pessoaExists')">Email já cadastrado.</small>
     </label>
 
     <label>

@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
 import { CriarContaService } from '../criar-conta.service';
+import { PessoaService } from '../pessoa.service';
+import { catchError, debounceTime, first, map, Observable, of, switchMap } from 'rxjs';
+import { Pessoa } from '../Pessoa';
 
 @Component({
   selector: 'app-criar-conta',
@@ -10,11 +13,17 @@ import { CriarContaService } from '../criar-conta.service';
 })
 export class CriarContaComponent implements OnInit {
   cadastroForm!: FormGroup;
-
+  pessoa: Pessoa = {
+    nome: '',
+    email: '',
+    sobrenome: '',
+    role: 'M'
+  }
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private criarContaService: CriarContaService
+    private criarContaService: CriarContaService,
+    private pessoaService: PessoaService
   ) {}
 
   ngOnInit() {
@@ -25,7 +34,7 @@ export class CriarContaComponent implements OnInit {
     return this.fb.group({
       nome: ['', [Validators.required, Validators.minLength(2)]],
       sobrenome: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email], this.pessoaExist()],
       senha: ['', [Validators.required, Validators.minLength(6)]],
       confirmarSenha: ['', [Validators.required]]
     }, { validators: this.passwordMatchValidator });
@@ -45,17 +54,42 @@ export class CriarContaComponent implements OnInit {
   }
 
   onSubmit() {
-    if (this.cadastroForm.valid) {
-      console.log(this.cadastroForm.value);
-      this.router.navigate(['/login']);
-      this.criarContaService.signup(this.cadastroForm.value.email, this.cadastroForm.value.senha)
-      window.alert('Cadastro realizado com sucesso!')
-      // Implementar lógica de envio dos dados
-
-    }
+      if (this.cadastroForm.valid) {
+        console.log(this.cadastroForm.value);
+        this.criarContaService.signup(this.cadastroForm.value.email, this.cadastroForm.value.senha)
+        this.pessoaService.cadastrarPessoa(this.parsePessoa(this.cadastroForm.value))
+        window.alert('Cadastro realizado com sucesso!')
+        this.router.navigate(['/login']);
+        }
   }
 
   hasError(controlName: string, errorName: string): boolean {
     return this.cadastroForm.get(controlName)?.hasError(errorName) || false;
+  }
+
+  pessoaExist(): AsyncValidatorFn {
+    return (control: AbstractControl): Observable<{ [key: string]: any } | null> => {
+      return of(control.value).pipe(
+        debounceTime(300),
+        switchMap((email: string) =>
+          this.pessoaService.buscarCadastroByEmail(email).pipe(
+            map(response => {
+              // Assumindo que a resposta é null se a pessoa não existir
+              return response ? { pessoaExists: true } : null;
+            }),
+            catchError(() => of(null)) // Em caso de erro, assumimos que a pessoa não existe
+          )
+        ),
+        first() // Completa o Observable após a primeira emissão
+      );
+    };
+  }
+
+  private parsePessoa(value: any): Pessoa {
+    this.pessoa.email = value.email;
+    this.pessoa.nome = value.nome;
+    this.pessoa.sobrenome = value.sobrenome;
+
+    return this.pessoa
   }
 }

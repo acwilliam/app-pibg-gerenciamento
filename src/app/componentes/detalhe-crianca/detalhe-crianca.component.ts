@@ -61,10 +61,6 @@ export class DetalheCriancaComponent implements OnInit {
   qrData: string = '';
 
   gerarQrcode() {
-    /*this.route.params.subscribe(params => {
-      this.cadastro.identificador = params['id'];
-    });*/
-
     const qrcodeData = JSON.stringify({
         nome: this.cadastro.nomeCrianca,
         url: `https://app-pibg-gerenciamento.vercel.app/detalhe-crianca/${this.cadastro.identificador}`,
