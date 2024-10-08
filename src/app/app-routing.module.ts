@@ -19,7 +19,8 @@ export const routes: Routes = [
   },
   {
     path: 'cadastro',
-    component: CadastroComponent
+    component: CadastroComponent,
+    canActivate: [AuthGuardService]
    },
    {
     path: 'mensagem',

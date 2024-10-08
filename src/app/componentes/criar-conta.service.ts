@@ -8,12 +8,12 @@ export class CriarContaService {
 
   constructor(private afAuth: AngularFireAuth) { }
 
-  async signup(email: string, password: string) {
+  signup(email: string, password: string) {
     try {
-      const userCredential = await this.afAuth.createUserWithEmailAndPassword(email, password);
-      console.log('Usuário criado com sucesso:', userCredential.user);
+      this.afAuth.createUserWithEmailAndPassword(email, password);
+      console.log('Usuário criado com sucesso');
     } catch (error) {
-      console.error('Erro ao criar usuário:', error);
+      throw new Error('Erro ao criar usuário');
     }
   }
 }

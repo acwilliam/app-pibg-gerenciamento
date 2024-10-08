@@ -3,7 +3,7 @@ import { AbstractControl, AsyncValidatorFn, FormBuilder, FormGroup, Validators }
 import { Route, Router } from '@angular/router';
 import { CriarContaService } from '../criar-conta.service';
 import { PessoaService } from '../pessoa.service';
-import { catchError, debounceTime, first, map, Observable, of, switchMap } from 'rxjs';
+import { catchError, debounceTime, first, forkJoin, map, Observable, of, switchMap } from 'rxjs';
 import { Pessoa } from '../Pessoa';
 
 @Component({
@@ -56,9 +56,8 @@ export class CriarContaComponent implements OnInit {
   onSubmit() {
       if (this.cadastroForm.valid) {
         console.log(this.cadastroForm.value);
-        this.criarContaService.signup(this.cadastroForm.value.email, this.cadastroForm.value.senha)
         this.pessoaService.cadastrarPessoa(this.parsePessoa(this.cadastroForm.value))
-        window.alert('Cadastro realizado com sucesso!')
+        this.criarContaService.signup(this.cadastroForm.value.email, this.cadastroForm.value.senha)
         this.router.navigate(['/login']);
         }
   }
@@ -74,13 +73,12 @@ export class CriarContaComponent implements OnInit {
         switchMap((email: string) =>
           this.pessoaService.buscarCadastroByEmail(email).pipe(
             map(response => {
-              // Assumindo que a resposta é null se a pessoa não existir
               return response ? { pessoaExists: true } : null;
             }),
-            catchError(() => of(null)) // Em caso de erro, assumimos que a pessoa não existe
+            catchError(() => of(null))
           )
         ),
-        first() // Completa o Observable após a primeira emissão
+        first()
       );
     };
   }
@@ -88,7 +86,7 @@ export class CriarContaComponent implements OnInit {
   private parsePessoa(value: any): Pessoa {
     this.pessoa.email = value.email;
     this.pessoa.nome = value.nome;
-    this.pessoa.sobrenome = value.sobrenome;
+    this.pessoa.sobrenome = value.sobrenome
 
     return this.pessoa
   }
