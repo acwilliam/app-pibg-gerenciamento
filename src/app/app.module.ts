@@ -1,4 +1,4 @@
-import { FormGroup, FormsModule } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AngularFireModule } from '@angular/fire/compat';
@@ -60,7 +60,8 @@ import { CriarContaComponent } from './componentes/criar-conta/criar-conta.compo
      RouterModule,
      MatPaginatorModule,
      FormsModule,
-     NgxPrintModule
+     NgxPrintModule,
+     ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,33 +1,45 @@
 <body class="corpo">
-<form class="form">
+  <form [formGroup]="cadastroForm" class="form" (ngSubmit)="onSubmit()">
     <p class="title">Cadastre-se</p>
-    <p class="message">Inscreva-se agora e tenha acesso ao nosso aplicativo. </p>
-        <div class="flex">
-        <label>
-            <input class="input" type="text" placeholder="" required="">
-            <span>Nome</span>
-        </label>
+    <p class="message">Inscreva-se agora e tenha acesso ao nosso aplicativo.</p>
 
-        <label>
-            <input class="input" type="text" placeholder="" required="">
-            <span>Sobrenome</span>
-        </label>
+    <div class="flex">
+      <label>
+        <input class="input" type="text" formControlName="nome" required>
+        <span>Nome</span>
+        <small *ngIf="hasError('nome', 'required') && cadastroForm.get('nome')?.touched">Nome é obrigatório.</small>
+        <small *ngIf="hasError('nome', 'minlength')">Nome deve ter no mínimo 2 caracteres.</small>
+      </label>
+      <label>
+        <input class="input" type="text" formControlName="sobrenome" required>
+        <span>Sobrenome</span>
+        <small *ngIf="hasError('sobrenome', 'required') && cadastroForm.get('sobrenome')?.touched">Sobrenome é obrigatório.</small>
+        <small *ngIf="hasError('sobrenome', 'minlength')">Sobrenome deve ter no mínimo 2 caracteres.</small>
+      </label>
     </div>
 
     <label>
-        <input class="input" type="email" placeholder="" required="">
-        <span>Email</span>
+      <input class="input" type="email" formControlName="email" required>
+      <span>Email</span>
+      <small *ngIf="hasError('email', 'required') && cadastroForm.get('email')?.touched">Email é obrigatório.</small>
+      <small *ngIf="hasError('email', 'email')">Por favor, insira um email válido.</small>
     </label>
 
     <label>
-        <input class="input" type="password" placeholder="" required="">
-        <span>Senha</span>
+      <input class="input" type="password" formControlName="senha" required>
+      <span>Senha</span>
+      <small *ngIf="hasError('senha', 'required') && cadastroForm.get('senha')?.touched">Senha é obrigatória.</small>
+      <small *ngIf="hasError('senha', 'minlength')">Senha deve ter no mínimo 6 caracteres.</small>
     </label>
+
     <label>
-        <input class="input" type="password" placeholder="" required="">
-        <span>Confirme senha</span>
+      <input class="input" type="password" formControlName="confirmarSenha" required>
+      <span>Confirme senha</span>
+      <small *ngIf="hasError('confirmarSenha', 'required') && cadastroForm.get('confirmarSenha')?.touched">Confirmação de senha é obrigatória.</small>
+      <small *ngIf="hasError('confirmarSenha', 'passwordMismatch')">As senhas não coincidem.</small>
     </label>
-    <button class="login-button">Enviar</button>
-    <p class="signin">Já tem uma conta ? <a [routerLink]="['/login']">Logar</a> </p>
-</form>
+
+    <button type="submit" class="login-button" [disabled]="cadastroForm.invalid">Enviar</button>
+    <p class="signin">Já tem uma conta? <a [routerLink]="['/login']">Logar</a></p>
+  </form>
 </body>

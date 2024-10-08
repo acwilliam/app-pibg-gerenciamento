@@ -136,3 +136,13 @@
     opacity: 0;
   }
 }
+small {
+  color: red;
+  font-size: 0.8em;
+  margin-top: 5px;
+  display: block;
+}
+
+input.ng-invalid.ng-touched {
+  border-color: red;
+}
