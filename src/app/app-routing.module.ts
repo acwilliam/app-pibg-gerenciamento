@@ -1,3 +1,4 @@
+import { CriarContaComponent } from './componentes/criar-conta/criar-conta.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CadastroComponent } from './componentes/cadastro/cadastro.component';
@@ -47,6 +48,9 @@ export const routes: Routes = [
    },
    { path: 'login',
     component: LoginUsuarioComponent
+   },
+   { path: 'criar-conta',
+    component: CriarContaComponent
    }
 ];
 

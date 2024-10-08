@@ -26,6 +26,7 @@ import { RouterModule } from '@angular/router';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { LoginUsuarioComponent } from './componentes/login-usuario/login-usuario.component';
 import { NgxPrintModule } from 'ngx-print';
+import { CriarContaComponent } from './componentes/criar-conta/criar-conta.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { NgxPrintModule } from 'ngx-print';
     QrcodeComponent,
     ListaCriancaComponent,
     PaginaPrincipalComponent,
-    LoginUsuarioComponent
+    LoginUsuarioComponent,
+    CriarContaComponent
   ],
   imports: [
     BrowserModule,

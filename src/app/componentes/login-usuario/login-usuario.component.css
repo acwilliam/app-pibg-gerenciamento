@@ -10,6 +10,13 @@
 
 }
 
+.corpo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+}
+
 .heading {
   text-align: center;
   font-weight: 900;

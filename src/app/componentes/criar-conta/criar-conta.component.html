@@ -1,0 +1,33 @@
+<body class="corpo">
+<form class="form">
+    <p class="title">Cadastre-se</p>
+    <p class="message">Inscreva-se agora e tenha acesso ao nosso aplicativo. </p>
+        <div class="flex">
+        <label>
+            <input class="input" type="text" placeholder="" required="">
+            <span>Nome</span>
+        </label>
+
+        <label>
+            <input class="input" type="text" placeholder="" required="">
+            <span>Sobrenome</span>
+        </label>
+    </div>
+
+    <label>
+        <input class="input" type="email" placeholder="" required="">
+        <span>Email</span>
+    </label>
+
+    <label>
+        <input class="input" type="password" placeholder="" required="">
+        <span>Senha</span>
+    </label>
+    <label>
+        <input class="input" type="password" placeholder="" required="">
+        <span>Confirme senha</span>
+    </label>
+    <button class="login-button">Enviar</button>
+    <p class="signin">Já tem uma conta ? <a [routerLink]="['/login']">Logar</a> </p>
+</form>
+</body>

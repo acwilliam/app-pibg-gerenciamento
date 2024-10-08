@@ -35,4 +35,8 @@ export class LoginUsuarioComponent {
            this.errorMessage = "Email ou senha incorretos"
         });
   }
+
+  cadastrar() {
+    this.router.navigate(['/criar-conta']);
+  }
 }
