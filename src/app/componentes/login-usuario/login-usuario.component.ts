@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Usuario } from './Usuario';
 import { Router } from '@angular/router';
+import { EmailDataService } from '../email-data.service';
 
 @Component({
   selector: 'app-login-usuario',
@@ -17,7 +18,8 @@ export class LoginUsuarioComponent {
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private emailDataService: EmailDataService
   ) { }
 
   ngOnInit() {
@@ -28,6 +30,7 @@ export class LoginUsuarioComponent {
     this.authService.fazerLogin(this.usuario)
         .then(user => {
             if (user) {
+                this.emailDataService.setEmail(this.usuario.email);
                 this.router.navigate(['/pagina-principal']);
             }
         })

@@ -34,12 +34,12 @@ export class PessoaService {
   }
 
   buscarCadastroByEmail(email: string): Observable<Pessoa | undefined> {
-    console.log('buscando nome', email);
+    console.log('buscando email', email);
     return this.firestore.collection<Pessoa>('pessoa', ref => ref.where('email', '==', email))
       .valueChanges()
       .pipe(
-        first(), // Primeiro valor emitido (array de resultados)
-        map((cadastros: Pessoa[]) => cadastros.length > 0 ? cadastros[0] : undefined) // Pega o primeiro cadastro ou undefined
+        first(),
+        map((cadastros: Pessoa[]) => cadastros.length > 0 ? cadastros[0] : undefined)
       );
   }
 
