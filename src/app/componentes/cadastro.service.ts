@@ -60,4 +60,8 @@ export class CadastroService {
       );
   }
 
+  buscarCadastrosByEmail(email: string): Observable<Cadastro[]> {
+    return this.firestore.collection<Cadastro>('cadastro', ref => ref.where('emailResponsavel', '==', email))
+      .valueChanges({ idField: 'id' });
+    }
 }

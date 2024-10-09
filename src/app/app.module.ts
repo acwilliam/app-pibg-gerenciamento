@@ -27,7 +27,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { LoginUsuarioComponent } from './componentes/login-usuario/login-usuario.component';
 import { NgxPrintModule } from 'ngx-print';
 import { CriarContaComponent } from './componentes/criar-conta/criar-conta.component';
-
+import { MatListModule } from '@angular/material/list';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +61,8 @@ import { CriarContaComponent } from './componentes/criar-conta/criar-conta.compo
      MatPaginatorModule,
      FormsModule,
      NgxPrintModule,
-     ReactiveFormsModule
+     ReactiveFormsModule,
+     MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

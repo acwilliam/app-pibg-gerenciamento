@@ -14,10 +14,14 @@ export class CadastroComponent {
   constructor(
     private router: Router,
     private service: CadastroService,
-    private geradorId: AutoIncrementIdGeradorService
+    private geradorId: AutoIncrementIdGeradorService,
+    private route: ActivatedRoute
   ){  }
 
   ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      this.cadastro.emailResponsavel = params.get('email') || '';
+    });
   }
 
   cadastro: Cadastro = {
@@ -31,14 +35,14 @@ export class CadastroComponent {
     dataNascimento: '',
     sexo:'',
     tipo:'',
-    sobreNome: ''
+    sobreNome: '',
+    emailResponsavel: ''
   }
 
   cadastrar() {
     this.cadastro.identificador = this.geradorId.gerarNumeroAleatorio()
-    console.log('###novo cadastros##', this.cadastro.identificador)
     this.service.cadastrarCrianca(this.cadastro)
-    this.router.navigate(['/lista-crianca'])
+    this.router.navigate(['/pagina-principal'])
 
 
   }

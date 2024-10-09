@@ -39,7 +39,6 @@ export class DetalheCriancaComponent implements OnInit {
   obterDetalhesCrianca(idCadastro: string): void {
     console.log(idCadastro)
     this.service.buscarCadastroPorId(idCadastro).subscribe(response => {
-      console.log('Resultado da busca:', response);
       if (response) {
         this.caculaIdadeService.calcularIdade(response)
         this.cadastro = response;
@@ -67,7 +66,6 @@ export class DetalheCriancaComponent implements OnInit {
         idade: this.cadastro.idade,
         id: this.cadastro.identificador
     })
-    console.log('enviando dados para gerar qrcode',this.cadastro)
     this.router.navigate(['/qrcode', qrcodeData]);
   }
 }

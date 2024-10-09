@@ -1,3 +1,4 @@
+import { EmailDataService } from './email-data.service';
 import { EventEmitter, Injectable } from '@angular/core';
 import { Usuario } from './login-usuario/Usuario';
 import { Router } from '@angular/router';
@@ -15,7 +16,8 @@ export class AuthService {
 
   constructor(
     private router: Router,
-    public auth: AngularFireAuth
+    public auth: AngularFireAuth,
+    private emailDataSerivce: EmailDataService
   ) {
     this.user$ = this.auth.authState.pipe(
       catchError(error => {
@@ -37,12 +39,15 @@ export class AuthService {
 
   isLoggedIn(): Observable<boolean> {
     return this.user$.pipe(
-      switchMap(user => of(!!user)),
-      catchError(error => {
-        console.error('Erro ao verificar estado de login:', error);
-        return of(false);
-      })
-    );
+      switchMap(user => {
+        if (user) {
+          const userEmail = user.email;
+          this.emailDataSerivce.setEmail(userEmail!)
+          return of(true);
+        } else {
+          return of(false);
+        }
+      }))
   }
 
   async logout(): Promise<void> {

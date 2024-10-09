@@ -34,7 +34,6 @@ export class PessoaService {
   }
 
   buscarCadastroByEmail(email: string): Observable<Pessoa | undefined> {
-    console.log('buscando email', email);
     return this.firestore.collection<Pessoa>('pessoa', ref => ref.where('email', '==', email))
       .valueChanges()
       .pipe(

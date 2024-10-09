@@ -42,7 +42,6 @@ export class ListaCriancaComponent implements OnInit, AfterViewInit{
     this.cadastroService.buscarCadastro().subscribe({
       next: (dados: Cadastro[]) => {
         this.dataSource.data = dados;
-        console.log('Cadastros encontrados:', dados);
       },
       error: (erro) => {
         console.error('Erro ao buscar cadastros:', erro);

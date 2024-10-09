@@ -52,6 +52,10 @@ export const routes: Routes = [
    },
    { path: 'criar-conta',
     component: CriarContaComponent
+   },
+   { path: 'cadastro/:email',
+    component: CadastroComponent,
+    canActivate: [AuthGuardService]
    }
 ];
 

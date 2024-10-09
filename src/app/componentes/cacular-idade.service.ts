@@ -10,7 +10,6 @@ export class CacularIdadeService {
   constructor() { }
 
   calcularIdade(cadastro: Cadastro): void {
-    console.log('data',cadastro.dataNascimento)
     const hoje = moment();
     const dataNasc = moment(cadastro.dataNascimento, 'YYYY/MM/DD'); // Ajustar o formato da data se necessário
 

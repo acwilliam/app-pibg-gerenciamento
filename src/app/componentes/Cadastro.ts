@@ -10,5 +10,6 @@ export interface Cadastro {
   idade?:Number,
   sexo: string,
   tipo?: string,
-  sobreNome: string
+  sobreNome: string,
+  emailResponsavel?: string
 }

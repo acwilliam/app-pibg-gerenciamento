@@ -1,9 +1,12 @@
+import { CacularIdadeService } from './../cacular-idade.service';
 import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { EmailDataService } from '../email-data.service';
-import { Pessoa } from '../Pessoa';
 import { PessoaService } from '../pessoa.service';
 import { catchError, map, Observable, of } from 'rxjs';
+import { CadastroService } from '../cadastro.service';
+import { Cadastro } from '../Cadastro';
+
 
 interface MenuItem {
   label: string;
@@ -20,9 +23,12 @@ interface MenuItem {
   styleUrl: './pagina-principal.component.css'
 })
 export class PaginaPrincipalComponent  {
+  children: any[] = [ ];
+  isPossuiFilhos: boolean = false
   isMembro: boolean = true;
   isAdmin: boolean = false;
   isVoluntario: boolean = false
+  emailRecebido: string = '';
   menuItems: MenuItem[] = [
     { label: 'cadastro', route: '/cadastro', icon: 'home', visible: true },
     { label: 'Crianças', route: '/lista-crianca', icon: 'shopping_basket', visible: this.isAdmin || this.isVoluntario },
@@ -33,13 +39,15 @@ export class PaginaPrincipalComponent  {
   constructor (
     private authService: AuthService,
     private emailDataService: EmailDataService,
-    private pessoaService: PessoaService
+    private pessoaService: PessoaService,
+    private cadastroService: CadastroService,
+    private caculaIdadeService: CacularIdadeService
   )  {}
 
   ngOnInit() {
     this.emailDataService.currentEmail.subscribe(email => {
       if (email) {
-        console.log('Email recebido no ngOnInit:', email);
+        this.emailRecebido = email
         this.validarUsuario(email).subscribe(
           sucesso => {
             if (sucesso) {
@@ -52,6 +60,8 @@ export class PaginaPrincipalComponent  {
         );
       }
     });
+    this.buscarCadastros(this.emailRecebido)
+
   }
   toggleMenu() {
     this.menuActive = !this.menuActive;
@@ -67,20 +77,13 @@ export class PaginaPrincipalComponent  {
 
 
   validarUsuario(email: string): Observable<boolean> {
-    console.log('Iniciando validação do usuário:', email);
-
     return this.pessoaService.buscarCadastroByEmail(email).pipe(
       map(response => {
-        console.log('Resposta recebida:', response);
         if (response) {
-          console.log('aaaaaaaaaaaaaaaa'); // Adicionado para debug
           this.isMembro = response.role === 'M';
           this.isVoluntario = response.role === 'V';
           this.isAdmin = response.role === 'A';
-
-          console.log('Papel do usuário:', { isMembro: this.isMembro, isVoluntario: this.isVoluntario, isAdmin: this.isAdmin });
-
-          this.atualizarMenuItems();
+          this.atualizarMenuItems(response.email);
           return true;
         }
         console.log('Nenhum usuário encontrado');
@@ -93,12 +96,26 @@ export class PaginaPrincipalComponent  {
     );
   }
 
-  private atualizarMenuItems() {
+  private atualizarMenuItems(email: string) {
     this.menuItems = [
-      { label: 'cadastro', route: '/cadastro', icon: 'home', visible: true },
+      { label: 'cadastro', route:`/cadastro/${email}`, icon: 'home', visible: true },
       { label: 'Crianças', route: '/lista-crianca', icon: 'shopping_basket', visible: this.isAdmin || this.isVoluntario },
       { label: 'sair', callback: () => this.logout(), icon: 'exit_to_app', visible: true },
     ];
-    console.log('Menu items atualizados:', this.menuItems);
+  }
+
+
+
+  buscarCadastros(email: string): void {
+    this.cadastroService.buscarCadastrosByEmail(email).subscribe({
+      next: (dados: Cadastro[]) => {
+        this.children = dados;
+        this.isPossuiFilhos = true
+        for (const cadastro of this.children) {
+          this.caculaIdadeService.calcularIdade(cadastro);
+        }
+      }
+    });
   }
 }
+

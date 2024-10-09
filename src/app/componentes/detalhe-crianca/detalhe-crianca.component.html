@@ -8,15 +8,15 @@
   <p><strong>Sexo:</strong> {{ cadastro.sexo }}</p>
   <p><strong>Responsável:</strong> {{ cadastro.nomeResponsavel }}</p>
   <p><strong>Telefone:</strong> {{ cadastro.telefoneResponsavel }}</p>
-  <p><strong>Observação:</strong> {{ cadastro.observacao }}</p>
+  <p><strong>Restrições:</strong> {{ cadastro.observacao }}</p>
   <p><strong>Horário:</strong> {{ cadastro.horario }}</p>
   <p><strong>Data Nascimento:</strong> {{ cadastro.dataNascimento }}</p>
   <p><strong>idade:</strong> {{ cadastro.idade }}</p>
   <p><strong>tipo:</strong> {{ cadastro.tipo }}</p>
   <p><strong>Checkin:</strong> {{ cadastro.selecionado ? 'Não' : 'Sim'}} </p>
 
-  <button routerLink="/lista-crianca">Voltar</button>
-  <button (click)="atualizarItem()">Liberar</button>
+  <button routerLink="/pagina-principal">Voltar</button>
+  <button (click)="atualizarItem()">Checkin</button>
   <button routerLink="/mensagem/{{ cadastro.telefoneResponsavel }}" class="botao">Enviar Mensagem</button>
   <button (click)="gerarQrcode()">Imprimir Etiqueta</button>
 </section>
