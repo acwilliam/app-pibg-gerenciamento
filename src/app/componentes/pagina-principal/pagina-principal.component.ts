@@ -48,12 +48,12 @@ export class PaginaPrincipalComponent  {
     this.emailDataService.currentEmail.subscribe(email => {
       if (email) {
         this.emailRecebido = email
-        this.validarUsuario(email).subscribe(
+        this.buscarCadastrosByEmail(email).subscribe(
           sucesso => {
             if (sucesso) {
-              console.log('Usuário validado com sucesso');
+              console.log('Dados Retornado com suceso');
             } else {
-              console.log('Falha na validação do usuário');
+              console.log('Usuario não é responsável por nenhuma criança');
             }
           },
           erro => console.error('Erro na validação do usuário:', erro)
@@ -76,7 +76,7 @@ export class PaginaPrincipalComponent  {
   }
 
 
-  validarUsuario(email: string): Observable<boolean> {
+  buscarCadastrosByEmail(email: string): Observable<boolean> {
     return this.pessoaService.buscarCadastroByEmail(email).pipe(
       map(response => {
         if (response) {
@@ -103,8 +103,6 @@ export class PaginaPrincipalComponent  {
       { label: 'sair', callback: () => this.logout(), icon: 'exit_to_app', visible: true },
     ];
   }
-
-
 
   buscarCadastros(email: string): void {
     this.cadastroService.buscarCadastrosByEmail(email).subscribe({

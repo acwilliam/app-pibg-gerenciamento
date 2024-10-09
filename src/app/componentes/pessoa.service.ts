@@ -38,7 +38,7 @@ export class PessoaService {
       .valueChanges()
       .pipe(
         first(),
-        map((cadastros: Pessoa[]) => cadastros.length > 0 ? cadastros[0] : undefined)
+        map((pessoas: Pessoa[]) => pessoas.length > 0 ? pessoas[0] : undefined)
       );
   }
 
