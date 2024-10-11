@@ -6,6 +6,7 @@ import { PessoaService } from '../pessoa.service';
 import { catchError, map, Observable, of } from 'rxjs';
 import { CadastroService } from '../cadastro.service';
 import { Cadastro } from '../Cadastro';
+import { Router } from '@angular/router';
 
 
 interface MenuItem {
@@ -41,10 +42,12 @@ export class PaginaPrincipalComponent  {
     private emailDataService: EmailDataService,
     private pessoaService: PessoaService,
     private cadastroService: CadastroService,
-    private caculaIdadeService: CacularIdadeService
+    private caculaIdadeService: CacularIdadeService,
+    private router: Router,
   )  {}
 
   ngOnInit() {
+    console.log('passo aqui antes')
     this.emailDataService.currentEmail.subscribe(email => {
       if (email) {
         this.emailRecebido = email
@@ -77,13 +80,16 @@ export class PaginaPrincipalComponent  {
 
 
   buscarCadastrosByEmail(email: string): Observable<boolean> {
+    console.log('passou aqui')
     return this.pessoaService.buscarCadastroByEmail(email).pipe(
       map(response => {
         if (response) {
+          console.log('response', response.role)
           this.isMembro = response.role === 'M';
           this.isVoluntario = response.role === 'V';
           this.isAdmin = response.role === 'A';
           this.atualizarMenuItems(response.email);
+          console.log('isAdmin', this.isAdmin)
           return true;
         }
         console.log('Nenhum usuário encontrado');

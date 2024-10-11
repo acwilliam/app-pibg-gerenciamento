@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="header">
+      <div class="header-icons">
+        <mat-icon class="custom-icon">settings</mat-icon>
+        <mat-icon class="custom-icon">notifications</mat-icon>
+        <mat-icon (click)="logout()">exit_to_app</mat-icon>
+      </div>
+  </div>
+
+  <div class="family-photo">
+      <img src="assets/family-photo.png" alt="Family Photo">
+  </div>
+
+  <div class="action-buttons">
+    <button mat-icon-button class="custom-button">
+      <mat-icon (click)="adicionarCrianca()">child_care</mat-icon>
+      <span class="button-label">Adicionar criança</span>
+    </button>
+    <button mat-icon-button class="custom-button">
+      <mat-icon>how_to_reg</mat-icon>
+      <span class="button-label">Inscrição</span>
+    </button>
+  </div>
+  <div class="section-title">Crianças</div>
+  <ul class="person-list">
+      <li class="person-item" *ngFor="let child of children">
+          <div class="person-avatar"></div>
+          <div class="person-details">
+              <div class="person-name">{{ child.nomeCrianca }}</div>
+              <div class="person-info">{{ child.idade }} anos</div>
+          </div>
+          <span class="chevron-right" [routerLink]="['/detalhe-crianca', child.id]">&#8250;</span>
+      </li>
+  </ul>
+</div>
+

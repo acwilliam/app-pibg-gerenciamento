@@ -9,6 +9,7 @@ import { ListaCriancaComponent } from './componentes/lista-crianca/lista-crianca
 import { PaginaPrincipalComponent } from './componentes/pagina-principal/pagina-principal.component';
 import { LoginUsuarioComponent } from './componentes/login-usuario/login-usuario.component';
 import { AuthGuardService } from './componentes/auth-guard.service';
+import { TelaUsuarioKidsComponent } from './componentes/tela-usuario-kids/tela-usuario-kids.component';
 
 export const routes: Routes = [
 
@@ -55,6 +56,10 @@ export const routes: Routes = [
    },
    { path: 'cadastro/:email',
     component: CadastroComponent,
+    canActivate: [AuthGuardService]
+   },
+   { path: 'usuario-kids',
+    component: TelaUsuarioKidsComponent,
     canActivate: [AuthGuardService]
    }
 ];

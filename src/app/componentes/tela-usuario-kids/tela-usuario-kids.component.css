@@ -1,0 +1,118 @@
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  background-color: white;
+  height: 100vh;
+  font-family: Arial, sans-serif;
+}
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 10px;
+}
+
+.header-icons {
+  display: flex;
+  gap: 15px;
+}
+
+.header-icons img {
+  width: 24px;
+  height: 24px;
+}
+
+.family-photo {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.family-photo img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-bottom: 20px;
+  color: rgb(16, 137, 211);
+  align-items: center;
+}
+
+.action-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: #333;
+}
+.custom-button {
+  text-align: left; /* Center content within the button */
+  background-color: rgb(16, 137, 211);
+  color: white;
+  padding: 10px;
+  margin: 5px;
+  flex-direction: column;
+}
+
+.button-label {
+  display: flex; /* No need for flex here as text-align is used */
+  margin-top: 8px;
+  color: #000;
+  font-size: small;
+}
+.action-button img {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 5px;
+}
+
+.section-title {
+  font-weight: bold;
+  margin: 20px 10px 10px;
+}
+
+.person-list {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.person-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.person-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ddd;
+  margin-right: 10px;
+}
+
+.person-details {
+  flex-grow: 1;
+}
+
+.person-name {
+  font-weight: bold;
+}
+
+.person-info {
+  color: #666;
+  font-size: 0.9em;
+}
+
+.chevron-right {
+  color: #999;
+}
+.custom-icon {
+  color: #424141;
+}

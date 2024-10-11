@@ -28,6 +28,8 @@ import { LoginUsuarioComponent } from './componentes/login-usuario/login-usuario
 import { NgxPrintModule } from 'ngx-print';
 import { CriarContaComponent } from './componentes/criar-conta/criar-conta.component';
 import { MatListModule } from '@angular/material/list';
+import { TelaUsuarioKidsComponent } from './componentes/tela-usuario-kids/tela-usuario-kids.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +40,8 @@ import { MatListModule } from '@angular/material/list';
     ListaCriancaComponent,
     PaginaPrincipalComponent,
     LoginUsuarioComponent,
-    CriarContaComponent
+    CriarContaComponent,
+    TelaUsuarioKidsComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +65,8 @@ import { MatListModule } from '@angular/material/list';
      FormsModule,
      NgxPrintModule,
      ReactiveFormsModule,
-     MatListModule
+     MatListModule,
+     MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]
