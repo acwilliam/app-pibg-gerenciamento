@@ -71,7 +71,7 @@ export class DetalheCriancaComponent implements OnInit {
   }
   getUserImage() {
     if (this.cadastro.sexo === 'masculino') {
-      return 'menino.png';
+      return 'menino.jpg';
     } else if (this.cadastro.sexo === 'feminino') {
       return 'menina.jpg';
     } else {
