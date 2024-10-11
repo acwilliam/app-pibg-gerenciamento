@@ -51,6 +51,7 @@ export class AuthService {
   }
 
   async logout(): Promise<void> {
+    window.location.reload()
     await this.auth.signOut();
     this.router.navigate(['/login'])
   }
