@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class TelaUsuarioKidsComponent implements OnInit{
   children: any[] = [ ];
+  emailRecebido: string = '';
   constructor (
     private router: Router,
     private validarPerfilService: ValidarPerfilUsuarioService,
@@ -22,14 +23,14 @@ export class TelaUsuarioKidsComponent implements OnInit{
   }
 
   adicionarCrianca() {
-    this.router.navigate(['/cadastro'])
+    this.router.navigate([`/cadastro/${this.emailRecebido}`])
   }
 
 
 
   buscarCriancas() {
-   const email = this.validarPerfilService.recuperarDadosByEmail();
-   this.validarPerfilService.buscarCadastros(email).subscribe((cadastros: Cadastro[]) => {
+   this.emailRecebido = this.validarPerfilService.recuperarDadosByEmail();
+   this.validarPerfilService.buscarCadastros(this.emailRecebido).subscribe((cadastros: Cadastro[]) => {
     this.children = cadastros;
     console.log(cadastros);
   });

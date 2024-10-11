@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Mensagem } from './Mensagem';
 import { ActivatedRoute } from '@angular/router';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-mensagem',
   templateUrl: './mensagem.component.html',
@@ -10,7 +10,10 @@ import { ActivatedRoute } from '@angular/router';
 export class MensagemComponent {
   telefoneResponsavel: string = '';
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+    private route: ActivatedRoute,
+    private location: Location
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -26,5 +29,9 @@ export class MensagemComponent {
   enviarMensagem() {
     const link = `https://wa.me/+55${this.telefoneResponsavel}?text=${encodeURIComponent(this.mensagem.msg)}`;
     window.open(link, '_blank');
+  }
+
+  voltar() {
+    this.location.back();
   }
 }

@@ -1,6 +1,6 @@
 <section *ngIf="cadastro" >
   <div class="logo">
-    <img src="crianca.png" alt="Imagem de perfil">
+    <img [src]="getUserImage()" alt="Imagem de perfil">
   </div>
   <h2>Detalhes da Criança</h2>
   <p><strong>Id:</strong> {{ cadastro.identificador }}</p>
@@ -15,7 +15,7 @@
   <p><strong>tipo:</strong> {{ cadastro.tipo }}</p>
   <p><strong>Checkin:</strong> {{ cadastro.selecionado ? 'Não' : 'Sim'}} </p>
 
-  <button routerLink="/pagina-principal">Voltar</button>
+  <button (click)="voltar()">Voltar</button>
   <button (click)="atualizarItem()">Checkin</button>
   <button routerLink="/mensagem/{{ cadastro.telefoneResponsavel }}" class="botao">Enviar Mensagem</button>
   <button (click)="gerarQrcode()">Imprimir Etiqueta</button>

@@ -3,7 +3,7 @@ import { Cadastro } from './../Cadastro';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CadastroService } from '../cadastro.service';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-detalhe-crianca',
   templateUrl: './detalhe-crianca.component.html',
@@ -28,7 +28,8 @@ export class DetalheCriancaComponent implements OnInit {
     private route: ActivatedRoute,
     private service: CadastroService,
     private router: Router,
-    private caculaIdadeService: CacularIdadeService
+    private caculaIdadeService: CacularIdadeService,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -67,5 +68,19 @@ export class DetalheCriancaComponent implements OnInit {
         id: this.cadastro.identificador
     })
     this.router.navigate(['/qrcode', qrcodeData]);
+  }
+  getUserImage() {
+    if (this.cadastro.sexo === 'masculino') {
+      return 'menino.png';
+    } else if (this.cadastro.sexo === 'feminino') {
+      return 'menina.png';
+    } else {
+      return ''; // or a default image URL
+    }
+  }
+
+
+  voltar() {
+    this.location.back();
   }
 }

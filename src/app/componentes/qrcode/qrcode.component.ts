@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { QrcodeService } from '../qrcode.service';
 import { NgxPrintService, PrintOptions } from 'ngx-print';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-qrcode',
@@ -17,7 +18,8 @@ export class QrcodeComponent {
   constructor(
     private route: ActivatedRoute,
     private qrcodeService: QrcodeService,
-    private printService: NgxPrintService
+    private printService: NgxPrintService,
+    private location: Location
   ) {}
 
   ngOnInit() {
@@ -35,15 +37,19 @@ export class QrcodeComponent {
 
   printContent() {
     const printOptions: PrintOptions = {
-      printDelay: 100,
+      printDelay: 10,
       printSectionId: 'printSection',
-      printTitle: 'teste',
-      useExistingCss: true,
+      printTitle: 'imprimindo dados da criança',
+      useExistingCss: false,
       bodyClass: 'impresso',
       openNewTab: false,
       previewOnly: false,
       closeWindow: false
     };
     this.printService.print(printOptions);
+  }
+
+  voltar() {
+    this.location.back();
   }
 }

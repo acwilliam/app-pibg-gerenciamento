@@ -2,6 +2,6 @@
 <div>
   <input class="input" type="textarea" [(ngModel)]="mensagem.msg" placeholder="Digite sua mensagem">
   <button class="botao" (click)="enviarMensagem()">Enviar Mensagem</button>
-  <button type="button" routerLink="/lista-crianca" class="botao">Cancelar</button>
+  <button type="button" (click)="voltar()" class="botao">Cancelar</button>
 </div>
 </section>

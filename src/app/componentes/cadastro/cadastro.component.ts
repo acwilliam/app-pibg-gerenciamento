@@ -3,7 +3,7 @@ import { Cadastro } from '../Cadastro';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CadastroService } from '../cadastro.service';
 import { AutoIncrementIdGeradorService } from '../auto-increment-id-gerador.service';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
@@ -15,7 +15,8 @@ export class CadastroComponent {
     private router: Router,
     private service: CadastroService,
     private geradorId: AutoIncrementIdGeradorService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ){  }
 
   ngOnInit(): void {
@@ -42,14 +43,13 @@ export class CadastroComponent {
   cadastrar() {
     this.cadastro.identificador = this.geradorId.gerarNumeroAleatorio()
     this.service.cadastrarCrianca(this.cadastro)
-    this.router.navigate(['/pagina-principal'])
+    this.location.back();
 
 
   }
 
   cancelar() {
-    this.router.navigate(['/pagina-principal'])
-
+    this.location.back();
   }
 
   formatDate(): string {
