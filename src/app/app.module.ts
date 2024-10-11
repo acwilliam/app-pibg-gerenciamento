@@ -29,6 +29,7 @@ import { NgxPrintModule } from 'ngx-print';
 import { CriarContaComponent } from './componentes/criar-conta/criar-conta.component';
 import { MatListModule } from '@angular/material/list';
 import { TelaUsuarioKidsComponent } from './componentes/tela-usuario-kids/tela-usuario-kids.component';
+import { HasholeDirective } from './diretivas/hashole.directive';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { TelaUsuarioKidsComponent } from './componentes/tela-usuario-kids/tela-u
     PaginaPrincipalComponent,
     LoginUsuarioComponent,
     CriarContaComponent,
-    TelaUsuarioKidsComponent
+    TelaUsuarioKidsComponent,
+    HasholeDirective
   ],
   imports: [
     BrowserModule,

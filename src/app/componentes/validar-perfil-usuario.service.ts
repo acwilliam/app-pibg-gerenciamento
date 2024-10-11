@@ -67,24 +67,14 @@ export class ValidarPerfilUsuarioService {
     this.buscarCadastros(this.validaUsuario.emailRecebido)
 
   }
-  toggleMenu() {
-    this.menuActive = !this.menuActive;
-  }
+
 
   logout() {
     this.authService.logout();
   }
 
-  navigateToRoute() {
-    this.menuActive = false;
-  }
 
-  menuItems: MenuItem[] = [
-    { label: 'cadastro', route: '/cadastro', icon: 'home', visible: true },
-    { label: 'Crianças', route: '/lista-crianca', icon: 'shopping_basket', visible: this.validaUsuario.isAdmin || this.validaUsuario.isVoluntario },
-    { label: 'sair', callback: () => this.logout(), icon: 'exit_to_app', visible: true },
-  ];
-  menuActive = false;
+
 
 
   buscarCadastrosByEmail(email: string): Observable<ValidarUsuario> {
@@ -102,7 +92,6 @@ export class ValidarPerfilUsuarioService {
             if (response.role === 'V') {
               this.validaUsuario.isVoluntario = true
             }
-          this.atualizarMenuItems(response.email);
           console.log('isAdmin', this.validaUsuario.isAdmin)
           return this.validaUsuario;
         }
@@ -122,17 +111,9 @@ export class ValidarPerfilUsuarioService {
       })
     );
   }
-  private atualizarMenuItems(email: string) {
-    this.menuItems = [
-      { label: 'cadastro', route:`/cadastro/${email}`, icon: 'home', visible: true },
-      { label: 'Crianças', route: '/lista-crianca', icon: 'shopping_basket', visible: this.validaUsuario.isAdmin || this.validaUsuario.isVoluntario },
-      { label: 'sair', callback: () => this.logout(), icon: 'exit_to_app', visible: true },
-    ];
-  }
 
 
   recuperarDadosByEmail(): string {
-    console.log('passo aqui antes')
 
     this.emailDataService.currentEmail.subscribe(email => {
       if (email) {
