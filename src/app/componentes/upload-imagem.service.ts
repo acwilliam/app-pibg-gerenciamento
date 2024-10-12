@@ -1,6 +1,6 @@
 import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { Injectable } from '@angular/core';
-import { catchError, finalize, Observable, switchMap, throwError } from 'rxjs';
+import { catchError, finalize, from, Observable, switchMap, throwError, timer } from 'rxjs';
 
 
 @Injectable({
@@ -18,23 +18,13 @@ export class UploadImagemService {
     const fileRef = this.storage.ref(filePath);
     const task = this.storage.upload(filePath, file);
 
-    return task.snapshotChanges().pipe(
-        finalize(() => {
-            console.log('Upload concluído:', filePath);
-        }),
-        switchMap(() => {
-            // Adicionar um atraso para garantir a sincronização
-            return new Promise(resolve => setTimeout(resolve, 1000));
-        }),
-        switchMap(() => fileRef.getDownloadURL()),
-        catchError((error) => {
-            console.error('Erro ao obter URL:', error);
-            if (error.code === 'storage/object-not-found') {
-                console.error('Objeto não encontrado:', filePath);
-            }
-            return throwError(error);
-        })
+    return from(task).pipe(
+      switchMap(() => timer(2000)), // Espera 2 segundos
+      switchMap(() => from(fileRef.getDownloadURL())),
+      catchError((error) => {
+        console.error('Erro ao obter URL:', error);
+        return throwError(error);
+      })
     );
-}
-
+  }
 }

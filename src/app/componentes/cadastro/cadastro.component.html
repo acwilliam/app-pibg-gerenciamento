@@ -2,7 +2,7 @@
   <header class="header">
     <h2>Cadastre uma criança:</h2>
   </header>
-
+  <ngx-spinner type="ball-scale-multiple"></ngx-spinner>
   <form (ngSubmit)="cadastrar()" #cadastroForm="ngForm">
    <div class="custom-file-upload">
     <input type="file" (change)="onFileSelected($event)" accept="image/*" #fileInput>

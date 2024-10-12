@@ -6,6 +6,9 @@ import { CadastroService } from '../cadastro.service';
 import { AutoIncrementIdGeradorService } from '../auto-increment-id-gerador.service';
 import { Location } from '@angular/common';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { finalize, mergeMap } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
+
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
@@ -21,7 +24,8 @@ export class CadastroComponent {
     private geradorId: AutoIncrementIdGeradorService,
     private route: ActivatedRoute,
     private location: Location,
-    private uploadImagemService: UploadImagemService
+    private uploadImagemService: UploadImagemService,
+    private spinner: NgxSpinnerService
   ){
     this.form = new FormGroup({
       file: new FormControl(null, [Validators.required]),
@@ -59,23 +63,34 @@ export class CadastroComponent {
   }
 
   cadastrar() {
-    this.cadastro.identificador = this.geradorId.gerarNumeroAleatorio()
+    this.spinner.show();
+
+    this.cadastro.identificador = this.geradorId.gerarNumeroAleatorio();
 
     if (this.selectedFile) {
       const path = 'pibg-foto-perfil-bucket';
-      this.uploadImagemService.uploadFoto(this.selectedFile, path).subscribe(
-        (downloadURL) => {
-          this.cadastro.urlFoto = downloadURL
-          this.service.cadastrarCrianca(this.cadastro)
+      this.uploadImagemService.uploadFoto(this.selectedFile, path).pipe(
+        mergeMap(downloadURL => {
+          this.cadastro.urlFoto = downloadURL;
+          return this.service.cadastrarCrianca(this.cadastro);
+        }),
+        finalize(() => {
+          this.spinner.hide()
+        })
+      ).subscribe(
+        () => {
+          console.log('Cadastro concluído com sucesso');
+          this.location.back();
         },
         (error) => {
-          console.error('Erro no upload:', error);
+          console.error('Erro no cadastro:', error);
         }
       );
+    } else {
+      this.service.cadastrarCrianca(this.cadastro)
+          this.location.back()
     }
-    this.location.back();
   }
-
   cancelar() {
     this.location.back();
   }
