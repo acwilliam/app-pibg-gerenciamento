@@ -25,6 +25,7 @@ export class DetalheCriancaComponent implements OnInit {
     urlFoto: ''
    }
 
+
   constructor(
     private route: ActivatedRoute,
     private service: CadastroService,
@@ -34,7 +35,7 @@ export class DetalheCriancaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const id: string | null = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get('id');
     this.obterDetalhesCrianca(id!);
   }
 
@@ -62,11 +63,14 @@ export class DetalheCriancaComponent implements OnInit {
   qrData: string = '';
 
   gerarQrcode() {
+    console.log('cadastro para impressão', this.cadastro)
+    const id = this.route.snapshot.paramMap.get('id');
     const qrcodeData = JSON.stringify({
         nome: this.cadastro.nomeCrianca,
-        url: `https://app-pibg-gerenciamento.vercel.app/detalhe-crianca/${this.cadastro.identificador}`,
+        url: `https://app-pibg-gerenciamento.vercel.app/detalhe-crianca/${id}`,
         idade: this.cadastro.idade,
-        id: this.cadastro.identificador
+        id: id,
+        identificado : this.cadastro.identificador
     })
     this.router.navigate(['/qrcode', qrcodeData]);
   }
