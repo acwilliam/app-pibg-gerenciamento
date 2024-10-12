@@ -30,7 +30,8 @@ export const routes: Routes = [
    },
    { path: 'detalhe-crianca/:id',
     component: DetalheCriancaComponent,
-    canActivate: [AuthGuardService]
+    canActivate: [AuthGuardService],
+    data: { email: 'emailDoResponsavel' }
    },
    { path: 'mensagem/:telefoneResponsavel',
      component: MensagemComponent,

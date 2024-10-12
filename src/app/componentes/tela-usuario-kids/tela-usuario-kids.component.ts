@@ -16,9 +16,10 @@ export class TelaUsuarioKidsComponent implements OnInit{
   constructor (
     private router: Router,
     private validarPerfilService: ValidarPerfilUsuarioService,
-    private authService: AuthService,
+    private authService: AuthService
   ) { }
   ngOnInit(): void {
+    console.log('buscando criancas tela usuario kids')
     this.buscarCriancas();
   }
 
@@ -29,7 +30,8 @@ export class TelaUsuarioKidsComponent implements OnInit{
 
 
   buscarCriancas() {
-   this.emailRecebido = this.validarPerfilService.recuperarDadosByEmail();
+    this.emailRecebido = this.authService.currentUserValue?.email || '';
+
    this.validarPerfilService.buscarCadastros(this.emailRecebido).subscribe((cadastros: Cadastro[]) => {
     this.children = cadastros;
     console.log(cadastros);

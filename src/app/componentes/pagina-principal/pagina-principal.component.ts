@@ -30,6 +30,7 @@ export class PaginaPrincipalComponent  {
   isAdmin: boolean = false;
   isVoluntario: boolean = false
   emailRecebido: string = '';
+  role: string = '';
   menuItems: MenuItem[] = [
     { label: 'cadastro', route: '/cadastro', icon: 'home', visible: true },
     { label: 'Crianças', route: '/lista-crianca', icon: 'shopping_basket', visible: this.isAdmin || this.isVoluntario },
@@ -39,30 +40,14 @@ export class PaginaPrincipalComponent  {
 
   constructor (
     private authService: AuthService,
-    private emailDataService: EmailDataService,
-    private pessoaService: PessoaService,
     private cadastroService: CadastroService,
-    private caculaIdadeService: CacularIdadeService,
-    private router: Router,
+    private caculaIdadeService: CacularIdadeService
   )  {}
 
   ngOnInit() {
     console.log('passo aqui antes')
-    this.emailDataService.currentEmail.subscribe(email => {
-      if (email) {
-        this.emailRecebido = email
-        this.buscarCadastrosByEmail(email).subscribe(
-          sucesso => {
-            if (sucesso) {
-              console.log('Dados Retornado com suceso');
-            } else {
-              console.log('Usuario não é responsável por nenhuma criança');
-            }
-          },
-          erro => console.error('Erro na validação do usuário:', erro)
-        );
-      }
-    });
+        this.emailRecebido = this.authService.currentUserValue?.email || '';
+        this.buscarCadastrosByEmail()
     this.buscarCadastros(this.emailRecebido)
 
   }
@@ -79,26 +64,16 @@ export class PaginaPrincipalComponent  {
   }
 
 
-  buscarCadastrosByEmail(email: string): Observable<boolean> {
-    return this.pessoaService.buscarCadastroByEmail(email).pipe(
-      map(response => {
-        if (response) {
-          console.log('response', response.role)
-          this.isMembro = response.role === 'M';
-          this.isVoluntario = response.role === 'V';
-          this.isAdmin = response.role === 'A';
-          this.atualizarMenuItems(response.email);
-          console.log('isAdmin', this.isAdmin)
-          return true;
-        }
-        console.log('Nenhum usuário encontrado');
-        return false;
-      }),
-      catchError(error => {
-        console.error('Erro ao validar usuário:', error);
-        return of(false);
-      })
-    );
+  buscarCadastrosByEmail() {
+    this.role = this.authService.currentUserValue?.role || '';
+
+    if ( this.role === 'A') {
+      this.isAdmin = true
+    } else {
+      this.isAdmin = false
+    }
+    this.atualizarMenuItems(this.emailRecebido);
+
   }
 
   private atualizarMenuItems(email: string) {

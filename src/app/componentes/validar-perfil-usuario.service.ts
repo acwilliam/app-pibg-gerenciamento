@@ -111,15 +111,4 @@ export class ValidarPerfilUsuarioService {
     );
   }
 
-
-  recuperarDadosByEmail(): string {
-
-    this.emailDataService.currentEmail.subscribe(email => {
-      if (email) {
-        this.emailRecebido = email
-      }
-    });
-    return this.emailRecebido
-  }
-
 }

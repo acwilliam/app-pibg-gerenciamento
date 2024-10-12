@@ -4,12 +4,14 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CadastroService } from '../cadastro.service';
 import { Location } from '@angular/common';
+import { AuthService } from '../auth.service';
 @Component({
   selector: 'app-detalhe-crianca',
   templateUrl: './detalhe-crianca.component.html',
   styleUrls: ['./detalhe-crianca.component.css']
 })
 export class DetalheCriancaComponent implements OnInit {
+    canEdit: boolean = false;
    cadastro: Cadastro = {
     nomeResponsavel: '',
     nomeCrianca: '' ,
@@ -31,7 +33,8 @@ export class DetalheCriancaComponent implements OnInit {
     private service: CadastroService,
     private router: Router,
     private caculaIdadeService: CacularIdadeService,
-    private location: Location
+    private location: Location,
+    private authService: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -50,6 +53,24 @@ export class DetalheCriancaComponent implements OnInit {
       }
 
     });
+  }
+
+  obterDetalhesCrianca1(idCadastro: string): void {
+    this.service.buscarCadastroPorId(idCadastro).subscribe(
+      response => {
+        if (response) {
+          this.cadastro = response;
+          this.canEdit = this.authService.isAdmin() || this.authService.isResponsible(this.cadastro.emailResponsavel!);
+        } else {
+          console.error('Cadastro não encontrado');
+          this.router.navigate(['/']);
+        }
+      },
+      error => {
+        console.error('Erro ao buscar cadastro', error);
+        this.router.navigate(['/']);
+      }
+    );
   }
 
   atualizarItem() {

@@ -30,32 +30,7 @@ export class LoginUsuarioComponent {
   }
   async fazerLogin() {
     try {
-      const user = await this.authService.fazerLogin(this.usuario);
-      if (user) {
-        this.emailDataService.setEmail(this.usuario.email);
-
-        this.validarPerfilUsuarioService.buscarCadastrosByEmail(this.usuario.email).pipe(
-          map(response => {
-            if (response.isAdmin) {
-              console.log('is admin', response.isAdmin);
-              this.router.navigate(['/pagina-principal']);
-            } else {
-              console.log('is membro');
-              this.router.navigate(['/usuario-kids']);
-            }
-            return response; // Assuming you might use the response later
-          })
-        ).subscribe(
-          validatedUser => {
-            // Do something with validatedUser (optional)
-          },
-          error => {
-            console.error('Error fetching user profile:', error);
-            // Handle error in a user-friendly way
-            this.errorMessage = 'Erro ao obter perfil do usuário.';
-          }
-        );
-      }
+      await this.authService.fazerLogin(this.usuario);
     } catch (error) {
       this.errorMessage = "Email ou senha incorretos";
     }
