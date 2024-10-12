@@ -24,7 +24,7 @@
   <div class="section-title">Crianças</div>
   <ul class="person-list">
       <li class="person-item" *ngFor="let child of children">
-        <img [src]="getUserImage(child.sexo)" alt="Child Photo" class="person-avatar">
+        <img [src]="child.urlFoto" alt="Child Photo" class="person-avatar">
           <div class="person-avatar"></div>
           <div class="person-details">
               <div class="person-name">{{ child.nomeCrianca }}</div>

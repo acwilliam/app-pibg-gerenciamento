@@ -78,7 +78,6 @@ export class ValidarPerfilUsuarioService {
 
 
   buscarCadastrosByEmail(email: string): Observable<ValidarUsuario> {
-    console.log('passou aqui')
     return this.pessoaService.buscarCadastroByEmail(email).pipe(
       map(response => {
         if (response) {

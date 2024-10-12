@@ -39,13 +39,5 @@ export class TelaUsuarioKidsComponent implements OnInit{
   logout() {
     this.authService.logout();
   }
-  getUserImage(sexoCrianca: string) {
-    if (sexoCrianca === 'masculino') {
-      return 'menino.jpg';
-    } else if (sexoCrianca === 'feminino') {
-      return 'menina.jpg';
-    } else {
-      return ''; // or a default image URL
-    }
-  }
+
 }

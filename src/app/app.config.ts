@@ -13,8 +13,6 @@ const firebaseConfig = {
   appId: '1:840132328082:web:a31e4cab92ba53705e044b'
 };
 
-console.log('passou aqui')
-// Initialize Firebase
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),

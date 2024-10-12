@@ -80,7 +80,6 @@ export class PaginaPrincipalComponent  {
 
 
   buscarCadastrosByEmail(email: string): Observable<boolean> {
-    console.log('passou aqui')
     return this.pessoaService.buscarCadastroByEmail(email).pipe(
       map(response => {
         if (response) {

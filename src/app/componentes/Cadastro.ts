@@ -11,5 +11,6 @@ export interface Cadastro {
   sexo: string,
   tipo?: string,
   sobreNome: string,
-  emailResponsavel?: string
+  emailResponsavel?: string,
+  urlFoto?: string
 }

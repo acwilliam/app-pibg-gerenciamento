@@ -21,7 +21,8 @@ export class DetalheCriancaComponent implements OnInit {
     dataNascimento: '',
     sexo:'',
     tipo:'',
-    sobreNome: ''
+    sobreNome: '',
+    urlFoto: ''
    }
 
   constructor(
@@ -70,13 +71,7 @@ export class DetalheCriancaComponent implements OnInit {
     this.router.navigate(['/qrcode', qrcodeData]);
   }
   getUserImage() {
-    if (this.cadastro.sexo === 'masculino') {
-      return 'menino.jpg';
-    } else if (this.cadastro.sexo === 'feminino') {
-      return 'menina.jpg';
-    } else {
-      return ''; // or a default image URL
-    }
+    return this.cadastro.urlFoto
   }
 
 

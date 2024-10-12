@@ -30,6 +30,7 @@ body {
   padding: 10px;
   background-color: #f0f0f0;
   border-bottom: 1px solid #ddd;
+  text-align: center;
 }
 
 .header h2 {
@@ -149,4 +150,34 @@ select:focus {
   border-color: #66afe9;
   outline: none;
   box-shadow: 0 0 5px rgba(102, 175, 233, 0.6);
+}
+
+.custom-file-upload {
+  margin-bottom: 15px;
+}
+
+.custom-file-upload input[type="file"] {
+  display: none;
+}
+
+.custom-file-upload button {
+  background-color:#337ab7;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.custom-file-upload button:hover {
+  background-color:rgba(102, 175, 233, 0.6);
+}
+
+.custom-file-upload span {
+  margin-left: 5px;
 }

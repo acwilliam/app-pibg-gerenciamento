@@ -1,11 +1,16 @@
 <section class="container criar-crianca ff-inter">
   <header class="header">
-    <h2>Cadastre uma nova criança:</h2>
+    <h2>Cadastre uma criança:</h2>
   </header>
 
-  <!-- Adiciona o evento (ngSubmit) no formulário -->
   <form (ngSubmit)="cadastrar()" #cadastroForm="ngForm">
-
+   <div class="custom-file-upload">
+    <input type="file" (change)="onFileSelected($event)" accept="image/*" #fileInput>
+    <button type="button" (click)="fileInput.click()">
+      <i class="fas fa-cloud-upload-alt"></i> Escolher foto
+    </button>
+    <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
+  </div>
     <label for="nomeResponsavel">Responsável</label>
     <input
       type="textarea"
@@ -49,7 +54,7 @@
       required
       >
 
-      <label for="nascimento">Data nascimento</label>
+      <label for="nascimento">Data nascimento da criança</label>
       <input
         type="date"
         class="input"
