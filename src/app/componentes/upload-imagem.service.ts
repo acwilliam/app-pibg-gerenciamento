@@ -24,7 +24,7 @@ export class UploadImagemService {
         }),
         switchMap(() => {
             // Adicionar um atraso para garantir a sincronização
-            return new Promise(resolve => setTimeout(resolve, 2000));
+            return new Promise(resolve => setTimeout(resolve, 1000));
         }),
         switchMap(() => fileRef.getDownloadURL()),
         catchError((error) => {
