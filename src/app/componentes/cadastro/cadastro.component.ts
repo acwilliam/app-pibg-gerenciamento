@@ -15,6 +15,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
   styleUrls: ['./cadastro.component.css'],
 })
 export class CadastroComponent {
+  fileSelecionado: boolean= false;
   cadastros: Cadastro[]=[];
   selectedFile: File | null = null;
   form: FormGroup;
@@ -28,15 +29,15 @@ export class CadastroComponent {
     private spinner: NgxSpinnerService
   ){
     this.form = new FormGroup({
-      file: new FormControl(null, [Validators.required]),
       nomeResponsavel: new FormControl('', [Validators.required]),
       nomeCrianca: new FormControl('', [Validators.required]),
       sobreNomeCrianca: new FormControl('', [Validators.required]),
       telefoneResponsavel: new FormControl('', [Validators.required]),
       nascimento: new FormControl('', [Validators.required]),
-      observacao: new FormControl(''),
-      sexo: new FormControl(''),
-      tipo: new FormControl('')
+      observacao: new FormControl('',[Validators.required]),
+      sexo: new FormControl('',[Validators.required]),
+      tipo: new FormControl('',[Validators.required]),
+      selectedFile: new FormControl('',[Validators.required])
     });
    }
 
@@ -113,6 +114,7 @@ export class CadastroComponent {
    {
       // O arquivo é uma imagem válida
       this.selectedFile = file;
+      this.fileSelecionado = true
     } else {
       // Exibir uma mensagem de erro para o usuário
       alert('Por favor, selecione um arquivo de imagem válido.');
