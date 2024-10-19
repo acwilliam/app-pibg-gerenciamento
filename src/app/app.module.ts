@@ -30,6 +30,7 @@ import { CriarContaComponent } from './componentes/criar-conta/criar-conta.compo
 import { MatListModule } from '@angular/material/list';
 import { TelaUsuarioKidsComponent } from './componentes/tela-usuario-kids/tela-usuario-kids.component';
 import { HasholeDirective } from './diretivas/hashole.directive';
+import { MascaraTelefoneDirective } from './diretivas/mascara-telefone.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -42,7 +43,8 @@ import { HasholeDirective } from './diretivas/hashole.directive';
     LoginUsuarioComponent,
     CriarContaComponent,
     TelaUsuarioKidsComponent,
-    HasholeDirective
+    HasholeDirective,
+    MascaraTelefoneDirective
   ],
   imports: [
     BrowserModule,
