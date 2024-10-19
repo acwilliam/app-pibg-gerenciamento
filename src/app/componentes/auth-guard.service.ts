@@ -16,7 +16,6 @@ export class AuthGuardService implements CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
       const currentUser = this.authService.currentUserValue;
       if (currentUser) {
-        console.log('passou no canActive')
         if (this.authService.isLogado() || this.authService.isResponsible(route.params['email'])) {
           return true;
         }

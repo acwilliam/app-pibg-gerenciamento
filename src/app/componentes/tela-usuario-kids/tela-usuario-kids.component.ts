@@ -19,7 +19,6 @@ export class TelaUsuarioKidsComponent implements OnInit{
     private authService: AuthService
   ) { }
   ngOnInit(): void {
-    console.log('buscando criancas tela usuario kids')
     this.buscarCriancas();
   }
 

@@ -84,10 +84,16 @@ export class AuthService {
   }
   isResponsible(email: string): boolean {
     const user = this.currentUserValue;
-    return user !== null && user.email === email;
+    if(user != null) {
+      return user.email === email
+    } else {
+      return false
+    }
+
   }
   isAdmin(): boolean {
     const user = this.currentUserValue;
-    return user !== null && user.role === 'A';
+    const usuario = user !== null && user.role === 'A';
+    return usuario
   }
 }

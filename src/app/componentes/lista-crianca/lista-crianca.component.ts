@@ -12,7 +12,7 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrl: './lista-crianca.component.css'
 })
 export class ListaCriancaComponent implements OnInit, AfterViewInit{
-  displayedColumns: string[] = ['nomeCrianca', 'nomeResponsavel', 'telefoneResponsavel', 'selecionado'];
+  displayedColumns: string[] = ['nomeCrianca', 'nomeResponsavel', 'telefoneResponsavel', 'selecionado','chekout'];
   dataSource: MatTableDataSource<Cadastro>;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;

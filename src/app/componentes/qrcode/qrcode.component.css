@@ -1,22 +1,25 @@
 .card {
-  display: flex; /* Transforma a card em um flex container */
-  flex-direction: row; /* Define a direção dos itens como linha */
-  max-width: 240px; /* Ajuste o valor conforme necessário */
-  margin: 0 ; /* Centraliza a card horizontalmente */
-  font-size: 10px; /* Ajusta o tamanho da fonte */
+  display: flex;
+  flex-direction: row;
+  max-width: 240px;
+  margin: 0 ;
+  font-size: 10px;
   margin-left: 0;
 }
 
 .card {
   display: flex;
-  flex-direction: inherit; /* Define a direção dos itens como coluna */
+  flex-direction: inherit;
+  margin-left: 5px;
 }
-
+  
 .qrcode-container {
-  flex: 1; /* Ocupa todo o espaço disponível na linha */
+  margin-top: 5px;
+  margin-left: 5px;
+  flex: 1;
   text-align: left;
-  width: 110px; /* Ajusta o tamanho do QRCode */
-  height: 110px; /* Ajusta o tamanho do QRCode */
+  width: 110px;
+  height: 110px;
 }
 
 .text-container {

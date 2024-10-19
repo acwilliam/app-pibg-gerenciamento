@@ -42,37 +42,30 @@ export class DetalheCriancaComponent implements OnInit {
     this.obterDetalhesCrianca(id!);
   }
 
+
   obterDetalhesCrianca(idCadastro: string): void {
-    console.log(idCadastro)
-    this.service.buscarCadastroPorId(idCadastro).subscribe(response => {
-      if (response) {
-        this.caculaIdadeService.calcularIdade(response)
-        this.cadastro = response;
-      } else {
-        console.error('Cadastro não encontrado');
-      }
-
-    });
-  }
-
-  obterDetalhesCrianca1(idCadastro: string): void {
     this.service.buscarCadastroPorId(idCadastro).subscribe(
-      response => {
-        if (response) {
-          this.cadastro = response;
-          this.canEdit = this.authService.isAdmin() || this.authService.isResponsible(this.cadastro.emailResponsavel!);
-        } else {
-          console.error('Cadastro não encontrado');
-          this.router.navigate(['/']);
-        }
-      },
-      error => {
-        console.error('Erro ao buscar cadastro', error);
-        this.router.navigate(['/']);
-      }
-    );
-  }
+        response => {
+            if (response) {
+                this.cadastro = response;
+                const emailUsuarioLogado = this.cadastro.emailResponsavel!;
 
+                if (!(this.authService.isAdmin() || this.authService.isResponsible(emailUsuarioLogado))) {
+                  alert('Você não tem permissão para ver os dados dessa criança.');
+                  this.router.navigate(['/usuario-kids']);
+                  return;
+              }
+            } else {
+                console.error('Cadastro não encontrado');
+                this.router.navigate(['/usuario-kids']);
+            }
+        },
+        error => {
+            console.error('Erro ao buscar cadastro', error);
+            this.router.navigate(['/']);
+        }
+    );
+}
   atualizarItem() {
     this.route.params.subscribe(params => {
       this.cadastro.identificador = params['id'];

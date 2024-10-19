@@ -60,6 +60,7 @@ export class QrcodeComponent {
     contentToKeep.style.display = originalDisplay;
     contentToKeep.style.position = originalPosition;
     contentToKeep.style.zIndex = originalZIndex;
+    this.voltar()
   } else {
     console.error('Elementos necessários não encontrados');
   }
