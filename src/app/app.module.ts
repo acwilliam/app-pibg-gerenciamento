@@ -30,7 +30,6 @@ import { CriarContaComponent } from './componentes/criar-conta/criar-conta.compo
 import { MatListModule } from '@angular/material/list';
 import { TelaUsuarioKidsComponent } from './componentes/tela-usuario-kids/tela-usuario-kids.component';
 import { HasholeDirective } from './diretivas/hashole.directive';
-import { NgxSpinnerModule } from 'ngx-spinner';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,8 +66,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
      FormsModule,
      NgxPrintModule,
      ReactiveFormsModule,
-     MatListModule,
-     NgxSpinnerModule
+     MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -7,7 +7,6 @@ import { AutoIncrementIdGeradorService } from '../auto-increment-id-gerador.serv
 import { Location } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { finalize, mergeMap } from 'rxjs';
-import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-cadastro',
