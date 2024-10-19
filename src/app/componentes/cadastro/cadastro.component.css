@@ -181,3 +181,62 @@ select:focus {
 .custom-file-upload span {
   margin-left: 5px;
 }
+
+
+.container {
+  position: relative;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* From Uiverse.io by bociKond */
+.loader {
+  /* color of choise */
+  --clr:#337ab7;
+  /* loading time of choice */
+  --load-time: 2s;
+  outline: 5px solid var(--clr);
+  outline-offset: 5px;
+  overflow: hidden;
+  border-radius: 5rem;
+  padding: 1rem 5rem;
+  font-size: 25px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+
+.loader::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--clr);
+  z-index: 2;
+  animation: loading var(--load-time) ease-in-out infinite;
+}
+
+@keyframes loading {
+  0% {
+    width: 0%;
+  }
+
+  100% {
+    width: 100%;
+  }
+}

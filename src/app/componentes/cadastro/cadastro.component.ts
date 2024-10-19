@@ -16,6 +16,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class CadastroComponent {
   fileSelecionado: boolean= false;
+  isLoading: boolean = false
   cadastros: Cadastro[]=[];
   selectedFile: File | null = null;
   form: FormGroup;
@@ -64,8 +65,8 @@ export class CadastroComponent {
   }
 
   cadastrar() {
-    this.spinner.show();
-
+    //this.spinner.show();
+    this.isLoading  = true
     this.cadastro.identificador = this.geradorId.gerarNumeroAleatorio();
 
     if (this.selectedFile) {
@@ -76,7 +77,8 @@ export class CadastroComponent {
           return this.service.cadastrarCrianca(this.cadastro);
         }),
         finalize(() => {
-          this.spinner.hide()
+         // this.spinner.hide()
+         this.isLoading = false
         })
       ).subscribe(
         () => {
