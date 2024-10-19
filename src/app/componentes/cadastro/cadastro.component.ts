@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CadastroService } from '../cadastro.service';
 import { AutoIncrementIdGeradorService } from '../auto-increment-id-gerador.service';
 import { Location } from '@angular/common';
-import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { finalize, mergeMap } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -21,14 +21,11 @@ export class CadastroComponent {
   selectedFile: File | null = null;
   form: FormGroup;
   constructor(
-    private router: Router,
     private service: CadastroService,
     private geradorId: AutoIncrementIdGeradorService,
     private route: ActivatedRoute,
     private location: Location,
-    private uploadImagemService: UploadImagemService,
-    private spinner: NgxSpinnerService
-  ){
+    private uploadImagemService: UploadImagemService  ){
     this.form = new FormGroup({
       nomeResponsavel: new FormControl('', [Validators.required]),
       nomeCrianca: new FormControl('', [Validators.required]),
@@ -65,7 +62,6 @@ export class CadastroComponent {
   }
 
   cadastrar() {
-    //this.spinner.show();
     this.isLoading  = true
     this.cadastro.identificador = this.geradorId.gerarNumeroAleatorio();
 
@@ -77,7 +73,6 @@ export class CadastroComponent {
           return this.service.cadastrarCrianca(this.cadastro);
         }),
         finalize(() => {
-         // this.spinner.hide()
          this.isLoading = false
         })
       ).subscribe(
