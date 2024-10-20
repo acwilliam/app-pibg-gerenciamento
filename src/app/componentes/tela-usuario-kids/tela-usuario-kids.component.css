@@ -5,6 +5,10 @@
   height: 100vh;
   font-family: Arial, sans-serif;
   box-shadow: rgba(133, 189, 215, 0.8784313725) 0px 30px 30px -20px;
+  display: flex; /* Enable flexbox for vertical alignment */
+  flex-direction: column; /* Stack elements vertically */
+  justify-content: space-between; /* Align items at the top and bottom */
+  height: 100vh; /* Maintain full viewport height */
 }
 
 .header {
@@ -119,12 +123,13 @@
 
 .chevron-right {
   color: #999999;
+  font-size: 45px;
 }
 .custom-icon {
   color: #414142;
 }
 .check-in-container {
-  padding: 0 15px;
+  padding: 0 15px; /* Maintain padding */
 }
 
 .botao-check-in {
@@ -138,7 +143,7 @@
   border-radius: 20px;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-bottom: 25px;
+
 }
 
 .botao-check-in:hover {
