@@ -1,0 +1,10 @@
+.radio-item {
+  display: flex;
+  align-items: center;
+}
+
+mat-radio-button {
+  margin-right: 8px; /* Adjust spacing as needed */
+  z-index: 1; /* Ensure radio button renders on top (if necessary) */
+}
+

@@ -31,6 +31,12 @@ import { MatListModule } from '@angular/material/list';
 import { TelaUsuarioKidsComponent } from './componentes/tela-usuario-kids/tela-usuario-kids.component';
 import { HasholeDirective } from './diretivas/hashole.directive';
 import { MascaraTelefoneDirective } from './diretivas/mascara-telefone.directive';
+import { CheckInModalComponent } from './modais/check-in-modal/check-in-modal.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -44,7 +50,8 @@ import { MascaraTelefoneDirective } from './diretivas/mascara-telefone.directive
     CriarContaComponent,
     TelaUsuarioKidsComponent,
     HasholeDirective,
-    MascaraTelefoneDirective
+    MascaraTelefoneDirective,
+    CheckInModalComponent
   ],
   imports: [
     BrowserModule,
@@ -54,21 +61,23 @@ import { MascaraTelefoneDirective } from './diretivas/mascara-telefone.directive
     AngularFirestoreModule,
     QRCodeModule,
     MatTableModule,
-     MatButtonModule,
-     MatFormFieldModule,
-     MatInputModule,
-     BrowserAnimationsModule,
-     MatInputModule,
-     MatMenuModule,
-     MatToolbarModule,
-     MatIconModule,
-     CommonModule,
-     RouterModule,
-     MatPaginatorModule,
-     FormsModule,
-     NgxPrintModule,
-     ReactiveFormsModule,
-     MatListModule
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatIconModule,
+    CommonModule,
+    RouterModule,
+    MatPaginatorModule,
+    FormsModule,
+    NgxPrintModule,
+    ReactiveFormsModule,
+    MatListModule,
+    MatDialogModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]

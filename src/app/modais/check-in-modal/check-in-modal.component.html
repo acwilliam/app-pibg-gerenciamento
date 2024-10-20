@@ -1,0 +1,16 @@
+<div class="modal">
+  <h2 mat-dialog-title>Check-in</h2>
+  <mat-dialog-content>
+    <mat-list>
+      <mat-list-item *ngFor="let child of data.children" class="check-item">
+        <mat-checkbox [(ngModel)]="child.selecionado" (change)="updateSelectedChildren(child)">
+          {{ child.nomeCrianca }}
+        </mat-checkbox>
+      </mat-list-item>
+    </mat-list>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button mat-button (click)="onCancel()">Cancelar</button>
+    <button mat-button color="primary" (click)="onConfirm()" [disabled]="!hasSelectedChildren()">Confirmar</button>
+  </mat-dialog-actions>
+</div>

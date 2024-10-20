@@ -3,6 +3,8 @@ import { AuthService } from './../auth.service';
 import { ValidarPerfilUsuarioService } from './../validar-perfil-usuario.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { CheckInModalComponent } from '../../modais/check-in-modal/check-in-modal.component';
 
 
 @Component({
@@ -16,7 +18,8 @@ export class TelaUsuarioKidsComponent implements OnInit{
   constructor (
     private router: Router,
     private validarPerfilService: ValidarPerfilUsuarioService,
-    private authService: AuthService
+    private authService: AuthService,
+    private dialog: MatDialog
   ) { }
   ngOnInit(): void {
     this.buscarCriancas();
@@ -41,7 +44,19 @@ export class TelaUsuarioKidsComponent implements OnInit{
     this.authService.logout();
   }
 
-  realizarCheckIn(){
-    
+  realizarCheckIn(enterAnimationDuration: string, exitAnimationDuration: string){
+    const dialogRef = this.dialog.open(CheckInModalComponent, {
+      width: '600px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      data: { children: this.children }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Check-in realizado para a criança com ID:', result);
+        // Aqui você pode implementar a lógica de check-in para a criança selecionada
+      }
+    });
   }
 }
