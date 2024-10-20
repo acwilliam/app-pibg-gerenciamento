@@ -1,3 +1,4 @@
+<section>
 <div class="container">
   <div class="header">
       <div class="header-icons">
@@ -33,5 +34,8 @@
           <span class="chevron-right" [routerLink]="['/detalhe-crianca', child.id]">&#8250;</span>
       </li>
   </ul>
+  <div class="check-in-container">
+    <button (click)="realizarCheckIn()" class="botao-check-in">CHECK-IN</button>
+  </div>
 </div>
-
+</section>

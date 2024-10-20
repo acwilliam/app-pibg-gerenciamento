@@ -41,4 +41,7 @@ export class TelaUsuarioKidsComponent implements OnInit{
     this.authService.logout();
   }
 
+  realizarCheckIn(){
+    
+  }
 }
