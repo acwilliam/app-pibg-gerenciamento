@@ -9,6 +9,10 @@
       </mat-list-item>
     </mat-list>
     <video #videoElement [hidden]="!showCamera" autoplay playsinline></video>
+    <canvas #canvasElement [hidden]="true"></canvas>
+    <div *ngIf="qrResultString">
+      QR Code detectado: {{ qrResultString }}
+    </div>
   </mat-dialog-content>
   <mat-dialog-actions>
     <button mat-button (click)="onCancel()">Cancelar</button>

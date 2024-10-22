@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { QrcodeService } from '../qrcode.service';
 import { Location } from '@angular/common';
@@ -37,7 +37,7 @@ export class QrcodeComponent {
     console.log('Imprimindo...');
 
   const contentToKeep = document.getElementById('contentToKeep');
-  const printSection = document.getElementById('printSection');
+ const printSection = document.getElementById('printSection');
 
   if (contentToKeep && printSection) {
     // Salva o estado original
@@ -55,16 +55,15 @@ export class QrcodeComponent {
     contentToKeep.style.zIndex = '9999';
 
     window.print();
-
-    // Restaura o estado original
     contentToKeep.style.display = originalDisplay;
     contentToKeep.style.position = originalPosition;
     contentToKeep.style.zIndex = originalZIndex;
     this.voltar()
   } else {
-    console.error('Elementos necessários não encontrados');
+       console.error('Elementos necessários não encontrados');
+    }
   }
-  }
+
   voltar() {
     this.location.back();
   }

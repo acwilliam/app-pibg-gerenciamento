@@ -1,12 +1,17 @@
+import { of } from 'rxjs';
+import { PrintService } from './../../componentes/print.service';
 import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-
+import { QrcodeService } from '../../componentes/qrcode.service';
+import { PdfService } from '../../componentes/pdf.service';
 
 interface Child {
   id: number;
   nomeCrianca: string;
   urlFoto: string;
-  selecionado: string
+  selecionado: string;
+  url?: string;
+  dataNascimento?: string;
 }
 
 @Component({
@@ -18,30 +23,40 @@ export class CheckInModalComponent {
   selectedChildId: number | null = null;
   showCamera: boolean = false;
   stream: MediaStream | null = null;
+  qrResultString: string = '';
   @ViewChild('videoElement') videoElement!: ElementRef;
+  @ViewChild('canvasElement') canvasElement!: ElementRef<HTMLCanvasElement>;
   constructor(
     public dialogRef: MatDialogRef<CheckInModalComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { children: Child[] }
+    @Inject(MAT_DIALOG_DATA) public data: { children: Child[] },
+    private qrcodeService: QrcodeService,
+    private pdfService: PdfService,
+    private printService: PrintService
   ) {}
 
   onCancel(): void {
-    this.stopCamera()
     this.dialogRef.close();
   }
 
-  onConfirm(): void {
+  async onConfirm(): Promise<void> {
 
-    const selectedChildrenIds = this.data.children
-    .filter(child => child.selecionado)
-    .map(child => child.id);
+    console.log('crianças selecionadas para checkin', this.data.children);
 
-    console.log('crianças selecionadas para checkin',selectedChildrenIds);
-    if (!this.showCamera) {
-      this.openCamera();
-    } else {
-      this.capturePhoto();
-      this.stopCamera();
-      this.dialogRef.close(selectedChildrenIds);
+    try {
+      const pdfs: Blob[] = []; // Cria uma lista para armazenar os PDFs
+
+      for (const crianca of this.data.children) {
+        const url = `https://app-pibg-gerenciamento.vercel.app/detalhe-crianca/${crianca.id}`;
+        const qrCode = await this.qrcodeService.generateQrCodeAsimage(url);
+        const pdf = this.pdfService.generatePdf(qrCode, crianca.nomeCrianca, 10);
+        console.log('PDF generated successfully');
+        pdfs.push(pdf); // Adiciona o PDF gerado à lista
+      }
+
+      this.addPdfToQueue(pdfs); // Chama a função com a lista de PDFs
+
+    } catch (error) {
+      console.error('Error generating PDF:', error);
     }
   }
 
@@ -54,39 +69,9 @@ export class CheckInModalComponent {
     child.selected = !child.selected;
   }
 
-  async openCamera(): Promise<void> {
-    try {
-      const constraints = {
-        video: {
-          facingMode: { exact: "environment" }
-        }
-      };
-      this.stream = await navigator.mediaDevices.getUserMedia(constraints);
-      this.videoElement.nativeElement.srcObject = this.stream;
-      this.showCamera = true;
-    } catch (err) {
-      console.error('Erro ao abrir a câmera:', err);
-      // Se falhar ao abrir a câmera traseira, tente abrir qualquer câmera disponível
-      try {
-        this.stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        this.videoElement.nativeElement.srcObject = this.stream;
-        this.showCamera = true;
-      } catch (fallbackErr) {
-        console.error('Erro ao abrir qualquer câmera:', fallbackErr);
-      }
-    }
-  }
+  addPdfToQueue(pdfs: Blob[]): void {
 
-  stopCamera(): void {
-    if (this.stream) {
-      this.stream.getTracks().forEach(track => track.stop());
-      this.stream = null;
-    }
-    this.showCamera = false;
-  }
-
-  capturePhoto(): void {
-    // Implementar a lógica para capturar a foto
-    console.log('Foto capturada');
+    console.log('Enviando pdf para impressora');
+    this.printService.addPdfToQueue(pdfs)
   }
 }

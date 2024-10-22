@@ -13,10 +13,10 @@
   <p><strong>Data Nascimento:</strong> {{ cadastro.dataNascimento }}</p>
   <p><strong>idade:</strong> {{ cadastro.idade }}</p>
   <p><strong>tipo:</strong> {{ cadastro.tipo }}</p>
-  <p><strong>CheckOut:</strong> {{ cadastro.selecionado ? 'Sim' : 'Não'}} </p>
+  <p><strong>CheckIn:</strong> {{ cadastro.selecionado ? 'Sim' : 'Não'}} </p>
 
   <button (click)="voltar()">Voltar</button>
-  <button (click)="atualizarItem()">Checkout</button>
+  <button (click)="atualizarItem()">CheckIn</button>
   <button routerLink="/mensagem/{{ cadastro.telefoneResponsavel }}" class="botao">Enviar Mensagem</button>
   <button (click)="gerarQrcode()">Imprimir Etiqueta</button>
 </section>

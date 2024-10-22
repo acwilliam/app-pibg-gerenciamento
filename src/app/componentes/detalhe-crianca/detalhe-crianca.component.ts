@@ -5,6 +5,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CadastroService } from '../cadastro.service';
 import { Location } from '@angular/common';
 import { AuthService } from '../auth.service';
+import { PrintService } from '../print.service';
+import { QrcodeService } from '../qrcode.service';
+import { PdfService } from '../pdf.service';
 @Component({
   selector: 'app-detalhe-crianca',
   templateUrl: './detalhe-crianca.component.html',
@@ -34,7 +37,10 @@ export class DetalheCriancaComponent implements OnInit {
     private router: Router,
     private caculaIdadeService: CacularIdadeService,
     private location: Location,
-    private authService: AuthService
+    private authService: AuthService,
+    private printService: PrintService,
+    private qrcodeService: QrcodeService,
+    private pdfService: PdfService
   ) { }
 
   ngOnInit(): void {
@@ -48,6 +54,7 @@ export class DetalheCriancaComponent implements OnInit {
         response => {
             if (response) {
                 this.cadastro = response;
+                this.caculaIdadeService.calcularIdade(this.cadastro)
                 const emailUsuarioLogado = this.cadastro.emailResponsavel!;
 
                 if (!(this.authService.isAdmin() || this.authService.isResponsible(emailUsuarioLogado))) {
@@ -76,7 +83,7 @@ export class DetalheCriancaComponent implements OnInit {
   }
   qrData: string = '';
 
-  gerarQrcode() {
+  /*gerarQrcode() {
     console.log('cadastro para impressão', this.cadastro)
     const id = this.route.snapshot.paramMap.get('id');
     const qrcodeData = JSON.stringify({
@@ -87,7 +94,15 @@ export class DetalheCriancaComponent implements OnInit {
         identificado : this.cadastro.identificador
     })
     this.router.navigate(['/qrcode', qrcodeData]);
-  }
+  }*/
+
+    gerarQrcode() {
+      console.log('cadastro para impressão', this.cadastro)
+      const id = this.route.snapshot.paramMap.get('id');
+      this.onConfirm(id!)
+
+    }
+
   getUserImage() {
     return this.cadastro.urlFoto
   }
@@ -95,5 +110,24 @@ export class DetalheCriancaComponent implements OnInit {
 
   voltar() {
     this.location.back();
+  }
+
+  async onConfirm(id: string): Promise<void> {
+    try {
+
+        const url = `https://app-pibg-gerenciamento.vercel.app/detalhe-crianca/${id}`;
+        const qrCode = await this.qrcodeService.generateQrCodeAsimage(url);
+        const pdf = this.pdfService.generatePdf(qrCode, this.cadastro.nomeCrianca, this.cadastro.idade!);
+        console.log('PDF generated successfully');
+        this.addPdf(pdf); // Chama a função com a lista de PDFs
+    } catch (error) {
+      console.error('Error generating PDF:', error);
+    }
+  }
+
+  addPdf(pdf: Blob): void {
+
+    console.log('Enviando pdf para impressora');
+    this.printService.addPdf(pdf)
   }
 }

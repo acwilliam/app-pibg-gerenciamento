@@ -45,6 +45,7 @@ export class TelaUsuarioKidsComponent implements OnInit{
   }
 
   realizarCheckIn(enterAnimationDuration: string, exitAnimationDuration: string){
+    console.log('criancas', this.children)
     const dialogRef = this.dialog.open(CheckInModalComponent, {
       width: '600px',
       enterAnimationDuration,
