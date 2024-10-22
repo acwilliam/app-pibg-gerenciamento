@@ -1,20 +1,12 @@
 import { Injectable } from '@angular/core';
-import jsPDF from 'jspdf';
-import  Printer from 'pdf-to-printer';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class PrintService {
 
-  private printer: any;
-
   constructor() {
-    if (typeof process !== 'undefined' && process.versions && process.versions.node) {
-      import('pdf-to-printer').then(module => {
-        this.printer = module.default;
-      });
-    }
   }
 
   addPdfToQueue(pdfs: Blob[]): void {
