@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { UpdateService } from './componentes/update.service';
 //import { UpdateService } from './update.service';
 
 @Component({
@@ -8,5 +9,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app-pibg-gerenciamento';
-  //constructor(private updateService: UpdateService) {}
+  constructor(private updateService: UpdateService) {}
 }
