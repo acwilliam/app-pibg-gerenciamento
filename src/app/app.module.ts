@@ -1,5 +1,5 @@
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
@@ -34,6 +34,7 @@ import { MascaraTelefoneDirective } from './diretivas/mascara-telefone.directive
 import { CheckInModalComponent } from './modais/check-in-modal/check-in-modal.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 
@@ -77,7 +78,13 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     ReactiveFormsModule,
     MatListModule,
     MatDialogModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

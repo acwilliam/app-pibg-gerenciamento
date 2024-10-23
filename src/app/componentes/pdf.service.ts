@@ -1,6 +1,7 @@
 import { QrcodeService } from './qrcode.service';
 import { Injectable } from '@angular/core';
 import { jsPDF } from 'jspdf';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,8 +12,8 @@ export class PdfService {
 
 
   generatePdf(qrCode: string, nome: string, idade: Number): Blob {
-    const pageWidth = 50; // 5cm em mm
-    const pageHeight = 30; // 3cm em mm
+    const pageWidth = 55; // 5cm em mm
+    const pageHeight = 31; // 3cm em mm
     const pdf = new jsPDF({
       orientation: 'landscape',
       unit: 'mm',
