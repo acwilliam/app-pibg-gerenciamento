@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "^18.2.8",
     "@angular/platform-server": "^18.2.8",
     "@angular/router": "^18.2.8",
+    "@angular/service-worker": "^18.2.8",
     "angularx-qrcode": "^18.0.1",
     "dotenv": "^16.4.5",
     "firebase": "^10.13.2",

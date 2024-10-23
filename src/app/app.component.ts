@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {  }
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app-pibg-gerenciamento';
+  constructor(private updateService: UpdateService) {}
 }
