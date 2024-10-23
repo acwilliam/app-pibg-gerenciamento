@@ -11,8 +11,15 @@ export class PdfService {
 
 
   generatePdf(qrCode: string, nome: string, idade: Number): Blob {
-    const pdf = new jsPDF('landscape');
+    const pageWidth = 50; // 5cm em mm
+    const pageHeight = 30; // 3cm em mm
+    const pdf = new jsPDF({
+      orientation: 'landscape',
+      unit: 'mm',
+      format: [pageWidth, pageHeight]
+  });
 
+    //const pdf = new jsPDF('landscape');
     const qrCodeX = 2; // Posição x do QR Code
     const qrCodeY = 1; // Posição y do QR Code
     const qrCodeWidth = 27; // Largura do QR Code
