@@ -1,6 +1,7 @@
 import { QrcodeService } from './qrcode.service';
 import { Injectable } from '@angular/core';
 import { jsPDF } from 'jspdf';
+
 @Injectable({
   providedIn: 'root'
 })
