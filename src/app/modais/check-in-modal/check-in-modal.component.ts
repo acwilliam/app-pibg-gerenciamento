@@ -48,7 +48,7 @@ export class CheckInModalComponent {
       for (const crianca of this.data.children) {
         const url = `https://app-pibg-gerenciamento.vercel.app/detalhe-crianca/${crianca.id}`;
         const qrCode = await this.qrcodeService.generateQrCodeAsimage(url);
-        const pdf = this.pdfService.generatePdf(qrCode, crianca.nomeCrianca, 10);
+        const pdf = await this.pdfService.generatePdf(qrCode, crianca.nomeCrianca, 10);
         console.log('PDF generated successfully');
         pdfs.push(pdf); // Adiciona o PDF gerado à lista
       }
