@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { UpdateService } from './componentes/update.service';
-//import { UpdateService } from './update.service';
 
 @Component({
   selector: 'app-root',
