@@ -117,7 +117,7 @@ export class DetalheCriancaComponent implements OnInit {
 
         const url = `https://app-pibg-gerenciamento.vercel.app/detalhe-crianca/${id}`;
         const qrCode = await this.qrcodeService.generateQrCodeAsimage(url);
-        const pdf = this.pdfService.generatePdf(qrCode, this.cadastro.nomeCrianca, this.cadastro.idade!);
+        const pdf = await this.pdfService.generatePdf(qrCode, this.cadastro.nomeCrianca, this.cadastro.idade!);
         console.log('PDF generated successfully');
         this.addPdf(pdf); // Chama a função com a lista de PDFs
     } catch (error) {
