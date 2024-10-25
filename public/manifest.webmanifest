@@ -1,6 +1,6 @@
 {
-  "name": "app-pibg-gerenciamento",
-  "short_name": "app-pibg-gerenciamento",
+  "name": "Pibg Kids",
+  "short_name": "kids",
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
