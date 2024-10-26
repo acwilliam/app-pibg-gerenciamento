@@ -36,14 +36,18 @@ button:hover {
 }
 
 .logo {
-  text-align: center;
+  width: 200px;  /* Largura da div */
+  height: 200px; /* Altura da div */
+  margin: 0 auto; /* Centraliza a div */
+  border-radius: 50%; /* Garante que a div fique redonda */
+  overflow: hidden; /* Garante que a imagem não transborde a div */
 }
 
 .logo img {
-  display: block;
-  margin: 0 auto;
-  border-radius: 50%;
-  max-width: 200px;
-  max-height: 200px;
-  object-fit: cover;
+  width: 100%; /* Garante que a imagem se ajuste à largura da div */
+  height: 100%; /* Garante que a imagem se ajuste à altura da div */
+  object-fit: cover; /* Mantém a proporção da imagem */
+  border-radius: 50%; /* Garante que a imagem fique redonda */
+  object-position: center top; /* Centraliza a imagem no topo */
+
 }
