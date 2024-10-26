@@ -1,0 +1,59 @@
+/* Container das abas */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Estilo das abas */
+.tabs div {
+  flex-grow: 1;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  color: #007bff;
+  border-bottom: 2px solid transparent;
+}
+
+/* Aba ativa */
+.tabs div.active {
+  background-color: #e0f7ff;
+  border-bottom: 2px solid #007bff;
+}
+
+/* Conteúdo */
+.content {
+  padding: 20px;
+  text-align: center;
+  color: #333333;
+}
+
+/* Estilo das seções e listas */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+}
+
+button {
+  padding: 5px 10px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.titulo {
+  font-size: 14px;
+}

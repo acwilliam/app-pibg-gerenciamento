@@ -1,0 +1,23 @@
+<mat-icon class="chevron_left" (click)="voltar()" >chevron_left</mat-icon>
+<div class="tabs">
+  <div (click)="selecionarAba('inscrever')" [class.active]="abaAtiva === 'inscrever'">Inscrever-se</div>
+  <div (click)="selecionarAba('inscricoes')" [class.active]="abaAtiva === 'inscricoes'">Minhas Inscrições</div>
+</div>
+
+<div class="content" *ngIf="abaAtiva === 'inscrever'">
+  <ul>
+    <li *ngFor="let evento of eventosDisponiveis">
+      {{ evento.nome }}
+      <button (click)="inscreverEvento(evento)">Inscrever</button>
+    </li>
+  </ul>
+</div>
+
+<div class="content" *ngIf="abaAtiva === 'inscricoes'">
+  <ul>
+    <li *ngFor="let evento of eventosInscritos">
+      {{ evento.nome }}
+    </li>
+  </ul>
+</div>
+

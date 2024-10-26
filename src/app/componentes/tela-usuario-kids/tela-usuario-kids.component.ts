@@ -60,4 +60,8 @@ export class TelaUsuarioKidsComponent implements OnInit{
       }
     });
   }
+
+  inscricoes(){
+    this.router.navigate([`/inscricoes`])
+  }
 }

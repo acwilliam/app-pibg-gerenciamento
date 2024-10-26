@@ -35,6 +35,7 @@ import { CheckInModalComponent } from './modais/check-in-modal/check-in-modal.co
 import { MatDialogModule } from '@angular/material/dialog';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { InscricoesComponent } from './componentes/inscricoes/inscricoes.component';
 
 
 
@@ -52,7 +53,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     TelaUsuarioKidsComponent,
     HasholeDirective,
     MascaraTelefoneDirective,
-    CheckInModalComponent
+    CheckInModalComponent,
+    InscricoesComponent
   ],
   imports: [
     BrowserModule,
