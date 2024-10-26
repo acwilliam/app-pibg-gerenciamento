@@ -54,12 +54,21 @@ export class CriarContaComponent implements OnInit {
   }
 
   onSubmit() {
-      if (this.cadastroForm.valid) {
-        console.log(this.cadastroForm.value);
-        this.pessoaService.cadastrarPessoa(this.parsePessoa(this.cadastroForm.value))
-        this.criarContaService.signup(this.cadastroForm.value.email, this.cadastroForm.value.senha)
-        this.router.navigate(['/login']);
-        }
+    if (this.cadastroForm.valid) {
+      console.log(this.cadastroForm.value);
+      const pessoa = this.parsePessoa(this.cadastroForm.value);
+
+      this.pessoaService.cadastrarPessoa(pessoa)
+        .then(() => {
+          return this.criarContaService.signup(this.cadastroForm.value.email, this.cadastroForm.value.senha)
+        })
+        .then(() => {
+          this.router.navigate(['/login']);
+        })
+        .catch((error) => {
+          console.error('Erro ao criar conta:', error);
+        });
+    }
   }
 
   hasError(controlName: string, errorName: string): boolean {
