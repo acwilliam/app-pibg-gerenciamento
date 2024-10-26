@@ -57,3 +57,7 @@ button:hover {
 .titulo {
   font-size: 14px;
 }
+p {
+  color: #999;
+  font-style: italic;
+}

@@ -5,19 +5,28 @@
 </div>
 
 <div class="content" *ngIf="abaAtiva === 'inscrever'">
-  <ul>
-    <li *ngFor="let evento of eventosDisponiveis">
-      {{ evento.nome }}
-      <button (click)="inscreverEvento(evento)">Inscrever</button>
-    </li>
-  </ul>
+  <ng-container *ngIf="eventosDisponiveis.length > 0; else noEventosDisponiveis">
+    <ul>
+      <li *ngFor="let evento of eventosDisponiveis">
+        {{ evento.nome }}
+        <button (click)="inscreverEvento(evento)">Inscrever</button>
+      </li>
+    </ul>
+  </ng-container>
+  <ng-template #noEventosDisponiveis>
+    <p>Não há eventos disponíveis</p>
+  </ng-template>
 </div>
 
 <div class="content" *ngIf="abaAtiva === 'inscricoes'">
-  <ul>
-    <li *ngFor="let evento of eventosInscritos">
-      {{ evento.nome }}
-    </li>
-  </ul>
+  <ng-container *ngIf="eventosInscritos.length > 0; else noInscricoes">
+    <ul>
+      <li *ngFor="let evento of eventosInscritos">
+        {{ evento.nome }}
+      </li>
+    </ul>
+  </ng-container>
+  <ng-template #noInscricoes>
+    <p>Não há eventos inscritos</p>
+  </ng-template>
 </div>
-

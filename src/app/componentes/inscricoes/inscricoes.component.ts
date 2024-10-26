@@ -1,3 +1,4 @@
+import { Evento } from './../model/Evento';
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
 @Component({
@@ -7,14 +8,18 @@ import { Location } from '@angular/common';
 })
 export class InscricoesComponent {
   abaAtiva: string = 'inscrever';
+  eventosIncristo: Evento = {
+    id: '',
+    nome: ''
+  }
   eventosDisponiveis = [
-    { id: 1, nome: 'Evento A' },
-    { id: 2, nome: 'Evento B' }
+    this.eventosIncristo
+    //{ id: null, nome: '' },
+    //{ id: 2, nome: 'Evento B' }
     // Adicione mais eventos conforme necessário
   ];
-
   eventosInscritos = [
-    { id: 3, nome: 'Evento C' }
+    this.eventosIncristo
     // Adicione mais eventos conforme necessário
   ];
 
