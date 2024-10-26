@@ -3,13 +3,11 @@
     <img [src]="getUserImage()" alt="Imagem de perfil">
   </div>
   <h2>Detalhes da Criança</h2>
-  <p><strong>Id:</strong> {{ cadastro.identificador }}</p>
   <p><strong>Nome:</strong> {{ cadastro.nomeCrianca }}</p>
   <p><strong>Sexo:</strong> {{ cadastro.sexo }}</p>
   <p><strong>Responsável:</strong> {{ cadastro.nomeResponsavel }}</p>
   <p><strong>Telefone:</strong> {{ cadastro.telefoneResponsavel }}</p>
   <p><strong>Restrições:</strong> {{ cadastro.observacao }}</p>
-  <p><strong>Horário:</strong> {{ cadastro.horario }}</p>
   <p><strong>Data Nascimento:</strong> {{ cadastro.dataNascimento }}</p>
   <p><strong>idade:</strong> {{ cadastro.idade }}</p>
   <p><strong>tipo:</strong> {{ cadastro.tipo }}</p>
@@ -17,6 +15,6 @@
 
   <button (click)="voltar()">Voltar</button>
   <button (click)="atualizarItem()">CheckIn</button>
-  <button routerLink="/mensagem/{{ cadastro.telefoneResponsavel }}" class="botao">Enviar Mensagem</button>
-  <button (click)="gerarQrcode()">Imprimir Etiqueta</button>
+  <button routerLink="/mensagem/{{ cadastro.telefoneResponsavel }}" class="botao">Mensagem</button>
+  <button (click)="gerarQrcode()">Etiqueta</button>
 </section>

@@ -10,6 +10,7 @@ import { PaginaPrincipalComponent } from './componentes/pagina-principal/pagina-
 import { LoginUsuarioComponent } from './componentes/login-usuario/login-usuario.component';
 import { AuthGuardService } from './componentes/auth-guard.service';
 import { TelaUsuarioKidsComponent } from './componentes/tela-usuario-kids/tela-usuario-kids.component';
+import { InscricoesComponent } from './componentes/inscricoes/inscricoes.component';
 
 export const routes: Routes = [
 
@@ -61,6 +62,10 @@ export const routes: Routes = [
    },
    { path: 'usuario-kids',
     component: TelaUsuarioKidsComponent,
+    canActivate: [AuthGuardService]
+   },
+   { path: 'inscricoes',
+    component: InscricoesComponent,
     canActivate: [AuthGuardService]
    }
 ];
