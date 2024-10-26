@@ -1,3 +1,4 @@
+<mat-icon class="chevron_left" (click)="voltar()" >chevron_left</mat-icon>
 <section *ngIf="cadastro" >
   <div class="logo">
     <img [src]="getUserImage()" alt="Imagem de perfil">
@@ -12,8 +13,6 @@
   <p><strong>idade:</strong> {{ cadastro.idade }}</p>
   <p><strong>tipo:</strong> {{ cadastro.tipo }}</p>
   <p><strong>CheckIn:</strong> {{ cadastro.selecionado ? 'Sim' : 'Não'}} </p>
-
-  <button (click)="voltar()">Voltar</button>
   <button (click)="atualizarItem()">CheckIn</button>
   <button routerLink="/mensagem/{{ cadastro.telefoneResponsavel }}" class="botao">Mensagem</button>
   <button (click)="gerarQrcode()">Etiqueta</button>
