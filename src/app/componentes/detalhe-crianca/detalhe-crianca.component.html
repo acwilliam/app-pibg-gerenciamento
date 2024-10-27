@@ -2,6 +2,9 @@
 <section *ngIf="cadastro" >
   <div class="logo">
     <img [src]="getUserImage()" alt="Imagem de perfil">
+    <button mat-icon-button class="edit-icon" (click)="editarCadastro()">
+      <mat-icon>edit</mat-icon>
+    </button>
   </div>
   <h2>Detalhes da Criança</h2>
   <p><strong>Nome:</strong> {{ cadastro.nomeCrianca }}</p>

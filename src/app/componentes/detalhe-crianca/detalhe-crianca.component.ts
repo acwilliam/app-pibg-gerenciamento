@@ -130,4 +130,9 @@ export class DetalheCriancaComponent implements OnInit {
     console.log('Enviando pdf para impressora');
     this.printService.addPdf(pdf)
   }
+
+
+  editarCadastro() {
+    console.log('passou aqui')
+  }
 }
