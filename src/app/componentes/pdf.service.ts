@@ -47,7 +47,7 @@ export class PdfService {
             format: [pageWidth, pageHeight]
         });
 
-        const qrCodeX = 2; // Posição x do QR Code
+        const qrCodeX = 3; // Posição x do QR Code
         const qrCodeY = 1; // Posição y do QR Code
         const qrCodeWidth = 27; // Largura do QR Code
         const qrCodeHeight = 27; // Altura do QR Code
