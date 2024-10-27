@@ -47,7 +47,7 @@ export class PdfService {
             format: [pageWidth, pageHeight]
         });
 
-        const qrCodeX = 3; // Posição x do QR Code
+        const qrCodeX = 2; // Posição x do QR Code
         const qrCodeY = 1; // Posição y do QR Code
         const qrCodeWidth = 27; // Largura do QR Code
         const qrCodeHeight = 27; // Altura do QR Code
@@ -61,7 +61,7 @@ export class PdfService {
         pdf.text(nome + ', ' + idade + ' Anos', textX, textY);
 
         const logoImage = new Image();
-        logoImage.src = 'logo-aviao.png'; // Ajustar o caminho da imagem
+        logoImage.src = 'LOGO.png'; // Ajustar o caminho da imagem
         logoImage.onload = () => {
             pdf.addImage(logoImage, 'PNG', qrCodeX + 27, qrCodeY+7 , 22, 19);
             resolve(pdf.output('blob')); // Resolve a promise com o blob do PDF
