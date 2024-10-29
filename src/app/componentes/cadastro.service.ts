@@ -3,6 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/comp
 import { Cadastro } from './Cadastro';
 import { first, from, map, Observable, switchMap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { Frequencia } from './model/Frequencia';
 
 @Injectable({
   providedIn: 'root'
@@ -63,5 +64,16 @@ export class CadastroService {
   buscarCadastrosByEmail(email: string): Observable<Cadastro[]> {
     return this.firestore.collection<Cadastro>('cadastro', ref => ref.where('emailResponsavel', '==', email))
       .valueChanges({ idField: 'id' });
-    }
+  }
+
+  cadastrarFrequencia(frequencia: Frequencia) {
+    const cadastroCollection = this.firestore.collection<Frequencia>('checkin');
+    return cadastroCollection.add(frequencia);
+  }
+
+  buscarListaDeCheckins(idCadastro: string): Observable<Frequencia[]> {
+    return this.firestore.collection<Frequencia>('checkin', ref => ref.where('identificacao', '==', idCadastro))
+    .valueChanges({ idField: 'id' });
+  }
+  
 }
