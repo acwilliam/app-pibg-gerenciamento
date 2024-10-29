@@ -12,8 +12,8 @@ export class UploadImagemService {
     private storage: AngularFireStorage
   ) { }
 
-  uploadFoto(file: File, path: string): Observable<string> {
-    const fileName = new Date().getTime() + '_' + file.name;
+  uploadFoto(file: File, path: string, nomeCrianca: string): Observable<string> {
+    const fileName = new Date().getTime() + '_' + nomeCrianca;
     const filePath = `${path}/${fileName}`;
     const fileRef = this.storage.ref(filePath);
     const task = this.storage.upload(filePath, file);

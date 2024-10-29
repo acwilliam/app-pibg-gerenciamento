@@ -6,7 +6,8 @@ import { CadastroService } from '../cadastro.service';
 import { AutoIncrementIdGeradorService } from '../auto-increment-id-gerador.service';
 import { Location } from '@angular/common';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { finalize, mergeMap } from 'rxjs';
+import { finalize, from, mergeMap } from 'rxjs';
+import { ComprimirImagemService } from '../services/comprimir-imagem.service';
 
 @Component({
   selector: 'app-cadastro',
@@ -24,7 +25,9 @@ export class CadastroComponent {
     private geradorId: AutoIncrementIdGeradorService,
     private route: ActivatedRoute,
     private location: Location,
-    private uploadImagemService: UploadImagemService  ){
+    private uploadImagemService: UploadImagemService,
+    private comprimirImagemService: ComprimirImagemService
+  ){
     this.form = new FormGroup({
       nomeResponsavel: new FormControl('', [Validators.required]),
       nomeCrianca: new FormControl('', [Validators.required]),
@@ -66,7 +69,8 @@ export class CadastroComponent {
 
     if (this.selectedFile) {
       const path = 'pibg-foto-perfil-bucket';
-      this.uploadImagemService.uploadFoto(this.selectedFile, path).pipe(
+      const nomeCompletoCrianca = this.cadastro.nomeCrianca + '_' +this.cadastro.sobreNome;
+      this.uploadImagemService.uploadFoto(this.selectedFile, path, nomeCompletoCrianca).pipe(
         mergeMap(downloadURL => {
           this.cadastro.urlFoto = downloadURL;
           return this.service.cadastrarCrianca(this.cadastro);
@@ -88,6 +92,7 @@ export class CadastroComponent {
           this.location.back()
     }
   }
+
   cancelar() {
     this.location.back();
   }
@@ -102,32 +107,43 @@ export class CadastroComponent {
     const minutes = String(date.getMinutes()).padStart(2, '0');  // Minutos com 2 dígitos
     return `${day}/${month}/${year} ${hours}:${minutes}`;
   }
+
   onFileSelected(event: any) {
     const file = event.target.files[0];
-    const allowedTypes = ['image/jpeg', 'image/png'];
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/jpg'];
 
-    if (file && allowedTypes.includes(file.type)){
-      this.selectedFile = file;
-      this.fileSelecionado = true
+    if (file && allowedTypes.includes(file.type)) {
+
+      if (!this.comprimirImagemService.validateFileSize(file, 5)) {
+        alert('Arquivo muito grande. Tamanho máximo permitido: 5MB');
+        return;
+      }
+
+      this.comprimirImagemService.compressFileObservable(file)
+        .subscribe({
+          next: (compressedImage) => {
+            this.selectedFile = this.dataURLtoFile(compressedImage, file.name);
+            this.fileSelecionado = true;
+          },
+          error: (error) => {
+            console.error('Erro ao comprimir imagem:', error);
+            alert('Erro ao processar imagem');
+          }
+        });
     } else {
-      // Exibir uma mensagem de erro para o usuário
       alert('Por favor, selecione um arquivo de imagem válido.');
     }
   }
 
-  onUpload() {
-    if (this.selectedFile) {
-      const path = 'pibg-foto-perfil-bucket';
-      this.uploadImagemService.uploadFoto(this.selectedFile, path).subscribe(
-        (downloadURL) => {
-          console.log('URL da foto:', downloadURL);
-          // Aqui você pode salvar a URL no seu objeto de cadastro ou no banco de dados
-          this.cadastro.urlFoto = downloadURL
-        },
-        (error) => {
-          console.error('Erro no upload:', error);
-        }
-      );
+  dataURLtoFile(dataurl: string, filename: string): File {
+    const arr = dataurl.split(',');
+    const mime = arr[0].match(/:(.*?);/)?.[1];
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
     }
+    return new File([u8arr], filename, { type: mime });
   }
 }
