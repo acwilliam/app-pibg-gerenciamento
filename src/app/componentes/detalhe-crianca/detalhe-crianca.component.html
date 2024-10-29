@@ -16,16 +16,17 @@
   <p><strong>idade:</strong> {{ cadastro.idade }}</p>
   <p><strong>tipo:</strong> {{ cadastro.tipo }}</p>
   <p><strong>CheckIn:</strong> {{ cadastro.selecionado ? 'Sim' : 'Não'}} </p>
-  <button (click)="realizarCheckin()">CheckIn</button>
-  <button routerLink="/mensagem/{{ cadastro.telefoneResponsavel }}" class="botao">Mensagem</button>
-  <button (click)="gerarQrcode()">Etiqueta</button>
+  <div *ngIf="validarUserAdmin()">
+    <button (click)="realizarCheckin()">CheckIn</button>
+    <button routerLink="/mensagem/{{ cadastro.telefoneResponsavel }}" class="botao">Mensagem</button>
+    <button (click)="gerarQrcode()">Etiqueta</button>
+  </div>
 </section>
 <!-- Nova Seção para exibir a lista de frequências -->
-<div *ngIf="listaChekins.length > 0">
-  <h2>Frequência</h2>
-  <ul>
-    <li *ngFor="let checkin of listaChekins">
-      <!--Data: {{ checkin.data| date: 'dd/MM/yyyy' }}, Hora: {{ checkin.hora }}-->
+<div class="frequencia-container" *ngIf="listaChekins.length > 0">
+  <h2 class="titulo-frequencia">Frequência</h2>
+  <ul class="lista-frequencia">
+    <li class="item-frequencia" *ngFor="let checkin of listaChekins">
        Data: {{ checkin.data }}
     </li>
   </ul>

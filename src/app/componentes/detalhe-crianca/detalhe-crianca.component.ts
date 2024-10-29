@@ -16,7 +16,7 @@ import { Frequencia } from '../model/Frequencia';
   styleUrls: ['./detalhe-crianca.component.css']
 })
 export class DetalheCriancaComponent implements OnInit {
-   canEdit: boolean = false;
+   userAdmin: boolean = false;
    cadastro: Cadastro = {
     nomeResponsavel: '',
     nomeCrianca: '' ,
@@ -145,5 +145,9 @@ export class DetalheCriancaComponent implements OnInit {
     const hours = String(date.getHours()).padStart(2, '0');  // Horas com 2 dígitos
     const minutes = String(date.getMinutes()).padStart(2, '0');  // Minutos com 2 dígitos
     return `${day}/${month}/${year} ${hours}:${minutes}`;
+  }
+
+  validarUserAdmin() {
+    return this.authService.isAdmin();
   }
 }

@@ -66,3 +66,37 @@ button:hover {
 }
 
 
+.frequencia-container {
+  width: 80%;
+  margin: 0 auto;
+  background-color: #f9f9f9;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.titulo-frequencia {
+  margin-top: 0;
+}
+
+.lista-frequencia {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.item-frequencia {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.item-frequencia:last-child {
+  border-bottom: none;
+}
+
+.data-checkin {
+  font-weight: bold;
+  color: #666;
+}
+
