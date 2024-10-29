@@ -104,11 +104,9 @@ export class CadastroComponent {
   }
   onFileSelected(event: any) {
     const file = event.target.files[0];
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    const allowedTypes = ['image/jpeg', 'image/png'];
 
-    if (file && allowedTypes.includes(file.type))  
-   {
-      // O arquivo é uma imagem válida
+    if (file && allowedTypes.includes(file.type)){
       this.selectedFile = file;
       this.fileSelecionado = true
     } else {

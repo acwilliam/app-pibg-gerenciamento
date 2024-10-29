@@ -16,7 +16,20 @@
   <p><strong>idade:</strong> {{ cadastro.idade }}</p>
   <p><strong>tipo:</strong> {{ cadastro.tipo }}</p>
   <p><strong>CheckIn:</strong> {{ cadastro.selecionado ? 'Sim' : 'Não'}} </p>
-  <button (click)="atualizarItem()">CheckIn</button>
+  <button (click)="realizarCheckin()">CheckIn</button>
   <button routerLink="/mensagem/{{ cadastro.telefoneResponsavel }}" class="botao">Mensagem</button>
   <button (click)="gerarQrcode()">Etiqueta</button>
 </section>
+<!-- Nova Seção para exibir a lista de frequências -->
+<div *ngIf="listaChekins.length > 0">
+  <h2>Frequência</h2>
+  <ul>
+    <li *ngFor="let checkin of listaChekins">
+      <!--Data: {{ checkin.data| date: 'dd/MM/yyyy' }}, Hora: {{ checkin.hora }}-->
+       Data: {{ checkin.data }}
+    </li>
+  </ul>
+</div>
+<ng-template #noCheckins>
+  <p>Não há check-ins registrados</p>
+</ng-template>

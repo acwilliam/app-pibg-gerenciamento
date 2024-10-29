@@ -1,3 +1,4 @@
+import { Data } from '@angular/router';
 import { CacularIdadeService } from './../cacular-idade.service';
 import { Cadastro } from './../Cadastro';
 import { Component, OnInit } from '@angular/core';
@@ -8,13 +9,14 @@ import { AuthService } from '../auth.service';
 import { PrintService } from '../print.service';
 import { QrcodeService } from '../qrcode.service';
 import { PdfService } from '../pdf.service';
+import { Frequencia } from '../model/Frequencia';
 @Component({
   selector: 'app-detalhe-crianca',
   templateUrl: './detalhe-crianca.component.html',
   styleUrls: ['./detalhe-crianca.component.css']
 })
 export class DetalheCriancaComponent implements OnInit {
-    canEdit: boolean = false;
+   canEdit: boolean = false;
    cadastro: Cadastro = {
     nomeResponsavel: '',
     nomeCrianca: '' ,
@@ -30,6 +32,12 @@ export class DetalheCriancaComponent implements OnInit {
     urlFoto: ''
    }
 
+   frequencia: Frequencia = {
+    data: '',
+    identificacao: ''
+   }
+
+   listaChekins: Frequencia[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -54,6 +62,7 @@ export class DetalheCriancaComponent implements OnInit {
         response => {
             if (response) {
                 this.cadastro = response;
+                this.buscarListaDeCheckins(idCadastro);
                 this.caculaIdadeService.calcularIdade(this.cadastro)
                 const emailUsuarioLogado = this.cadastro.emailResponsavel!;
 
@@ -72,36 +81,28 @@ export class DetalheCriancaComponent implements OnInit {
             this.router.navigate(['/']);
         }
     );
-}
-  atualizarItem() {
-    this.route.params.subscribe(params => {
-      this.cadastro.identificador = params['id'];
-      console.log('parametro',params['id'])
-    });
-    console.log('atualiando cadastro ', this.cadastro.identificador)
-      this.service.atualizarCadastro(this.cadastro.identificador)
   }
-  qrData: string = '';
 
-  /*gerarQrcode() {
+  buscarListaDeCheckins(idCadastro: string) {
+  this.service.buscarListaDeCheckins(idCadastro).subscribe(checkins => {
+    this.listaChekins = checkins;
+      console.log('Lista de check-ins:', this.listaChekins);
+    });
+  }
+
+  realizarCheckin() {
+    this.route.params.subscribe(params => {this.frequencia.identificacao = params['id']; });
+    this.frequencia.data = this.formatDate();
+    console.log('realizando chekin ', this.frequencia)
+    this.service.cadastrarFrequencia(this.frequencia);
+  }
+
+  qrData: string = '';
+  gerarQrcode() {
     console.log('cadastro para impressão', this.cadastro)
     const id = this.route.snapshot.paramMap.get('id');
-    const qrcodeData = JSON.stringify({
-        nome: this.cadastro.nomeCrianca,
-        url: `https://app-pibg-gerenciamento.vercel.app/detalhe-crianca/${id}`,
-        idade: this.cadastro.idade,
-        id: id,
-        identificado : this.cadastro.identificador
-    })
-    this.router.navigate(['/qrcode', qrcodeData]);
-  }*/
-
-    gerarQrcode() {
-      console.log('cadastro para impressão', this.cadastro)
-      const id = this.route.snapshot.paramMap.get('id');
-      this.onConfirm(id!)
-
-    }
+    this.onConfirm(id!)
+  }
 
   getUserImage() {
     return this.cadastro.urlFoto
@@ -134,5 +135,15 @@ export class DetalheCriancaComponent implements OnInit {
 
   editarCadastro() {
     console.log('passou aqui')
+  }
+
+  formatDate(): string {
+    const date = new Date()
+    const day = String(date.getDate()).padStart(2, '0');  // Dia com 2 dígitos
+    const month = String(date.getMonth() + 1).padStart(2, '0');  // Mês com 2 dígitos (Janeiro é 0)
+    const year = date.getFullYear();
+    const hours = String(date.getHours()).padStart(2, '0');  // Horas com 2 dígitos
+    const minutes = String(date.getMinutes()).padStart(2, '0');  // Minutos com 2 dígitos
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
   }
 }
