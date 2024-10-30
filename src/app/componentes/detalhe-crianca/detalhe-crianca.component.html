@@ -17,7 +17,7 @@
   <p><strong>tipo:</strong> {{ cadastro.tipo }}</p>
   <p><strong>CheckIn:</strong> {{ cadastro.selecionado ? 'Sim' : 'Não'}} </p>
   <div *ngIf="validarUserAdmin()">
-    <button (click)="realizarCheckin()">CheckIn</button>
+    <button [disabled]="!habilitarCheckin" (click)="realizarCheckin()">CheckIn</button>
     <button routerLink="/mensagem/{{ cadastro.telefoneResponsavel }}" class="botao">Mensagem</button>
     <button (click)="gerarQrcode()">Etiqueta</button>
   </div>

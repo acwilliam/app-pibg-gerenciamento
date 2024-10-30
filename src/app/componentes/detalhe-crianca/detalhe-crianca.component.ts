@@ -1,4 +1,3 @@
-import { Data } from '@angular/router';
 import { CacularIdadeService } from './../cacular-idade.service';
 import { Cadastro } from './../Cadastro';
 import { Component, OnInit } from '@angular/core';
@@ -17,6 +16,9 @@ import { Frequencia } from '../model/Frequencia';
 })
 export class DetalheCriancaComponent implements OnInit {
    userAdmin: boolean = false;
+   habilitarCheckin: boolean = false
+   hoje: Date = new Date();
+
    cadastro: Cadastro = {
     nomeResponsavel: '',
     nomeCrianca: '' ,
@@ -53,6 +55,7 @@ export class DetalheCriancaComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
+    this.buscarListaDeCheckins(id!);
     this.obterDetalhesCrianca(id!);
   }
 
@@ -62,7 +65,6 @@ export class DetalheCriancaComponent implements OnInit {
         response => {
             if (response) {
                 this.cadastro = response;
-                this.buscarListaDeCheckins(idCadastro);
                 this.caculaIdadeService.calcularIdade(this.cadastro)
                 const emailUsuarioLogado = this.cadastro.emailResponsavel!;
 
@@ -86,20 +88,18 @@ export class DetalheCriancaComponent implements OnInit {
   buscarListaDeCheckins(idCadastro: string) {
   this.service.buscarListaDeCheckins(idCadastro).subscribe(checkins => {
     this.listaChekins = checkins;
-      console.log('Lista de check-ins:', this.listaChekins);
+      this.verificarCheckinHoje(this.listaChekins);
     });
   }
 
   realizarCheckin() {
     this.route.params.subscribe(params => {this.frequencia.identificacao = params['id']; });
     this.frequencia.data = this.formatDate();
-    console.log('realizando chekin ', this.frequencia)
     this.service.cadastrarFrequencia(this.frequencia);
   }
 
   qrData: string = '';
   gerarQrcode() {
-    console.log('cadastro para impressão', this.cadastro)
     const id = this.route.snapshot.paramMap.get('id');
     this.onConfirm(id!)
   }
@@ -119,7 +119,6 @@ export class DetalheCriancaComponent implements OnInit {
         const url = `https://app-pibg-gerenciamento.vercel.app/detalhe-crianca/${id}`;
         const qrCode = await this.qrcodeService.generateQrCodeAsimage(url);
         const pdf = await this.pdfService.generatePdf(qrCode, this.cadastro.nomeCrianca, this.cadastro.idade!);
-        console.log('PDF generated successfully');
         this.addPdf(pdf); // Chama a função com a lista de PDFs
     } catch (error) {
       console.error('Error generating PDF:', error);
@@ -127,8 +126,6 @@ export class DetalheCriancaComponent implements OnInit {
   }
 
   addPdf(pdf: Blob): void {
-
-    console.log('Enviando pdf para impressora');
     this.printService.addPdf(pdf)
   }
 
@@ -150,4 +147,20 @@ export class DetalheCriancaComponent implements OnInit {
   validarUserAdmin() {
     return this.authService.isAdmin();
   }
+
+  verificarCheckinHoje(listaChekins: Frequencia[]): void {
+    const dataHoje = this.hoje.toISOString().split('T')[0];
+    const checkinHoje = listaChekins.some((checkin) => {
+      return this.formateOnlyDate(checkin.data) === dataHoje;
+    });
+    this.habilitarCheckin = !checkinHoje || listaChekins.length === 0;
+  }
+
+  formateOnlyDate(data: String) {
+    const date = data.substring(0, 10);
+    const [dia, mes, ano] = date.split('/');
+
+    return `${ano}-${mes}-${dia}`;
+  }
+
 }

@@ -79,6 +79,7 @@ export class PaginaPrincipalComponent  {
   private atualizarMenuItems(email: string) {
     this.menuItems = [
       { label: 'cadastro', route:`/cadastro/${email}`, icon: 'home', visible: true },
+      { label: 'perfil-usuario', route: '/usuario-kids', icon: 'home', visible: true },
       { label: 'Crianças', route: '/lista-crianca', icon: 'shopping_basket', visible: this.isAdmin || this.isVoluntario },
       { label: 'sair', callback: () => this.logout(), icon: 'exit_to_app', visible: true },
     ];

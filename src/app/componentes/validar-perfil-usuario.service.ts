@@ -48,7 +48,7 @@ export class ValidarPerfilUsuarioService {
   ) { }
 
   ngOnInit() {
-    console.log('passo aqui antes')
+
     this.emailDataService.currentEmail.subscribe(email => {
       if (email) {
         this.validaUsuario.emailRecebido = email
@@ -72,10 +72,6 @@ export class ValidarPerfilUsuarioService {
   logout() {
     this.authService.logout();
   }
-
-
-
-
 
   buscarCadastrosByEmail(email: string): Observable<ValidarUsuario> {
     return this.pessoaService.buscarCadastroByEmail(email).pipe(
