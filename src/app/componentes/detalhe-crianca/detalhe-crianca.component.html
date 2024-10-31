@@ -1,36 +1,110 @@
-<mat-icon class="chevron_left" (click)="voltar()" >chevron_left</mat-icon>
-<section *ngIf="cadastro" >
+<mat-icon class="chevron_left" (click)="voltar()">chevron_left</mat-icon>
+<section *ngIf="cadastro">
   <div class="logo">
-    <img [src]="getUserImage()" alt="Imagem de perfil">
-    <button mat-icon-button class="edit-icon" (click)="editarCadastro()">
-      <mat-icon>edit</mat-icon>
+    <button mat-icon-button class="edit-icon" (click)="toggleEdicao()">
+      <mat-icon>{{ modoEdicao ? 'save' : 'edit' }}</mat-icon>
     </button>
+    <img [src]="getUserImage()" alt="Imagem de perfil">
   </div>
   <h2>Detalhes da Criança</h2>
-  <p><strong>Nome:</strong> {{ cadastro.nomeCrianca }}</p>
-  <p><strong>Sexo:</strong> {{ cadastro.sexo }}</p>
-  <p><strong>Responsável:</strong> {{ cadastro.nomeResponsavel }}</p>
-  <p><strong>Telefone:</strong> {{ cadastro.telefoneResponsavel }}</p>
-  <p><strong>Restrições:</strong> {{ cadastro.observacao }}</p>
-  <p><strong>Data Nascimento:</strong> {{ cadastro.dataNascimento }}</p>
-  <p><strong>idade:</strong> {{ cadastro.idade }}</p>
-  <p><strong>tipo:</strong> {{ cadastro.tipo }}</p>
-  <p><strong>CheckIn:</strong> {{ cadastro.selecionado ? 'Sim' : 'Não'}} </p>
-  <div *ngIf="validarUserAdmin()">
-    <button (click)="realizarCheckin()">CheckIn</button>
+  <p>
+    <strong>Nome:</strong>
+    <ng-container *ngIf="!modoEdicao">
+      {{ cadastro.nomeCrianca }}
+    </ng-container>
+    <mat-form-field *ngIf="modoEdicao" appearance="outline" class="edit-field">
+      <input matInput [(ngModel)]="cadastroTemp.nomeCrianca" name="nomeCrianca">
+    </mat-form-field>
+  </p>
+  <p>
+    <strong>Sexo:</strong>
+    <ng-container *ngIf="!modoEdicao">
+      {{ cadastro.sexo }}
+    </ng-container>
+    <mat-form-field *ngIf="modoEdicao" appearance="outline" class="edit-field">
+      <mat-select [(ngModel)]="cadastroTemp.sexo" name="sexo">
+        <mat-option value="masculino">Masculino</mat-option>
+        <mat-option value="feminino">Feminino</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
+  <p>
+    <strong>Responsável:</strong>
+    <ng-container *ngIf="!modoEdicao">
+      {{ cadastro.nomeResponsavel }}
+    </ng-container>
+    <mat-form-field *ngIf="modoEdicao" appearance="outline" class="edit-field">
+      <input matInput [(ngModel)]="cadastroTemp.nomeResponsavel" name="nomeResponsavel">
+    </mat-form-field>
+  </p>
+  <p>
+    <strong>Telefone:</strong>
+    <ng-container *ngIf="!modoEdicao">
+      {{ cadastro.telefoneResponsavel }}
+    </ng-container>
+    <mat-form-field *ngIf="modoEdicao" appearance="outline" class="edit-field">
+      <input matInput [(ngModel)]="cadastroTemp.telefoneResponsavel" name="telefoneResponsavel"
+             mask="(00) 00000-0000">
+    </mat-form-field>
+  </p>
+  <p>
+    <strong>Restrições:</strong>
+    <ng-container *ngIf="!modoEdicao">
+      {{ cadastro.observacao }}
+    </ng-container>
+    <mat-form-field *ngIf="modoEdicao" appearance="outline" class="edit-field">
+      <textarea matInput [(ngModel)]="cadastroTemp.observacao" name="observacao"></textarea>
+    </mat-form-field>
+  </p>
+  <p>
+    <strong>Data Nascimento:</strong>
+    <ng-container *ngIf="!modoEdicao">
+      {{ cadastro.dataNascimento }}
+    </ng-container>
+    <mat-form-field *ngIf="modoEdicao" appearance="outline" class="edit-field">
+      <input matInput [matDatepicker]="picker" [(ngModel)]="cadastroTemp.dataNascimento" name="dataNascimento">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </p>
+  <p *ngIf="!modoEdicao">
+    <strong>Idade:</strong> {{ cadastro.idade }}
+  </p>
+  <p>
+    <strong>Tipo:</strong>
+    <ng-container *ngIf="!modoEdicao">
+      {{ cadastro.tipo }}
+    </ng-container>
+    <mat-form-field *ngIf="modoEdicao" appearance="outline" class="edit-field">
+      <mat-select [(ngModel)]="cadastroTemp.tipo" name="tipo">
+        <mat-option value="Visitante">Visitante</mat-option>
+        <mat-option value="Membro">Membro</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </p>
+  <p *ngIf="!modoEdicao">
+    <strong>CheckIn:</strong> {{ cadastro.selecionado ? 'Sim' : 'Não'}}
+  </p>
+  <div class="button" *ngIf="modoEdicao">
+    <button mat-button color="warn" (click)="cancelarEdicao()">Cancelar</button>
+    <button mat-button color="primary" (click)="salvarEdicao()">Salvar</button>
+  </div>
+
+  <div *ngIf="validarUserAdmin() && !modoEdicao">
+    <button [disabled]="!habilitarCheckin" (click)="realizarCheckin()">CheckIn</button>
     <button routerLink="/mensagem/{{ cadastro.telefoneResponsavel }}" class="botao">Mensagem</button>
     <button (click)="gerarQrcode()">Etiqueta</button>
   </div>
 </section>
-<!-- Nova Seção para exibir a lista de frequências -->
 <div class="frequencia-container" *ngIf="listaChekins.length > 0">
   <h2 class="titulo-frequencia">Frequência</h2>
   <ul class="lista-frequencia">
     <li class="item-frequencia" *ngFor="let checkin of listaChekins">
-       Data: {{ checkin.data }}
+      Data: {{ checkin.data }}
     </li>
   </ul>
 </div>
+
 <ng-template #noCheckins>
   <p>Não há check-ins registrados</p>
 </ng-template>

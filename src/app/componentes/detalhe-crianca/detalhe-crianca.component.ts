@@ -1,4 +1,3 @@
-import { Data } from '@angular/router';
 import { CacularIdadeService } from './../cacular-idade.service';
 import { Cadastro } from './../Cadastro';
 import { Component, OnInit } from '@angular/core';
@@ -10,13 +9,20 @@ import { PrintService } from '../print.service';
 import { QrcodeService } from '../qrcode.service';
 import { PdfService } from '../pdf.service';
 import { Frequencia } from '../model/Frequencia';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-detalhe-crianca',
   templateUrl: './detalhe-crianca.component.html',
   styleUrls: ['./detalhe-crianca.component.css']
 })
 export class DetalheCriancaComponent implements OnInit {
+
    userAdmin: boolean = false;
+   habilitarCheckin: boolean = false
+   hoje: Date = new Date();
+   cadastroTemp: Cadastro = this.cadastroTemporario();
+   modoEdicao = false;
+   idDacrianca:string = '';
    cadastro: Cadastro = {
     nomeResponsavel: '',
     nomeCrianca: '' ,
@@ -48,11 +54,14 @@ export class DetalheCriancaComponent implements OnInit {
     private authService: AuthService,
     private printService: PrintService,
     private qrcodeService: QrcodeService,
-    private pdfService: PdfService
+    private pdfService: PdfService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
+    this.idDacrianca = this.route.snapshot.paramMap.get('id') || '';
+    this.buscarListaDeCheckins(id!);
     this.obterDetalhesCrianca(id!);
   }
 
@@ -62,7 +71,6 @@ export class DetalheCriancaComponent implements OnInit {
         response => {
             if (response) {
                 this.cadastro = response;
-                this.buscarListaDeCheckins(idCadastro);
                 this.caculaIdadeService.calcularIdade(this.cadastro)
                 const emailUsuarioLogado = this.cadastro.emailResponsavel!;
 
@@ -86,20 +94,18 @@ export class DetalheCriancaComponent implements OnInit {
   buscarListaDeCheckins(idCadastro: string) {
   this.service.buscarListaDeCheckins(idCadastro).subscribe(checkins => {
     this.listaChekins = checkins;
-      console.log('Lista de check-ins:', this.listaChekins);
+      this.verificarCheckinHoje(this.listaChekins);
     });
   }
 
   realizarCheckin() {
     this.route.params.subscribe(params => {this.frequencia.identificacao = params['id']; });
     this.frequencia.data = this.formatDate();
-    console.log('realizando chekin ', this.frequencia)
     this.service.cadastrarFrequencia(this.frequencia);
   }
 
   qrData: string = '';
   gerarQrcode() {
-    console.log('cadastro para impressão', this.cadastro)
     const id = this.route.snapshot.paramMap.get('id');
     this.onConfirm(id!)
   }
@@ -119,7 +125,6 @@ export class DetalheCriancaComponent implements OnInit {
         const url = `https://app-pibg-gerenciamento.vercel.app/detalhe-crianca/${id}`;
         const qrCode = await this.qrcodeService.generateQrCodeAsimage(url);
         const pdf = await this.pdfService.generatePdf(qrCode, this.cadastro.nomeCrianca, this.cadastro.idade!);
-        console.log('PDF generated successfully');
         this.addPdf(pdf); // Chama a função com a lista de PDFs
     } catch (error) {
       console.error('Error generating PDF:', error);
@@ -127,15 +132,9 @@ export class DetalheCriancaComponent implements OnInit {
   }
 
   addPdf(pdf: Blob): void {
-
-    console.log('Enviando pdf para impressora');
     this.printService.addPdf(pdf)
   }
 
-
-  editarCadastro() {
-    console.log('passou aqui')
-  }
 
   formatDate(): string {
     const date = new Date()
@@ -149,5 +148,88 @@ export class DetalheCriancaComponent implements OnInit {
 
   validarUserAdmin() {
     return this.authService.isAdmin();
+  }
+
+  verificarCheckinHoje(listaChekins: Frequencia[]): void {
+    const dataHoje = this.hoje.toISOString().split('T')[0];
+    const checkinHoje = listaChekins.some((checkin) => {
+      return this.formateOnlyDate(checkin.data) === dataHoje;
+    });
+    this.habilitarCheckin = !checkinHoje || listaChekins.length === 0;
+  }
+
+  formateOnlyDate(data: String) {
+    const date = data.substring(0, 10);
+    const [dia, mes, ano] = date.split('/');
+
+    return `${ano}-${mes}-${dia}`;
+  }
+
+  toggleEdicao() {
+    if (this.modoEdicao) {
+      this.salvarEdicao();
+    } else {
+      this.iniciarEdicao();
+    }
+  }
+
+
+  cadastroTemporario(): Cadastro {
+    return {
+      nomeResponsavel: '',
+      nomeCrianca: '' ,
+      telefoneResponsavel: '',
+      observacao: '',
+      horario: '',
+      identificador: 0,
+      selecionado: false,
+      dataNascimento: '',
+      sexo:'',
+      tipo:'',
+      sobreNome: '',
+      urlFoto: ''
+    }
+  }
+  iniciarEdicao() {
+    // Cria uma cópia do objeto para edição
+    this.cadastroTemp = { ...this.cadastro };
+    this.modoEdicao = true;
+  }
+
+  cancelarEdicao() {
+    this.modoEdicao = false;
+   // this.cadastroTemp = null;
+    this.snackBar.open('Edição cancelada', 'Fechar', { duration: 3000 });
+  }
+
+  async salvarEdicao() {
+    try {
+      if (!this.validarDados()) {
+        this.snackBar.open('Por favor, preencha todos os campos obrigatórios', 'Fechar', { duration: 3000 });
+        return;
+      }
+      const convertDate = new Date(this.cadastroTemp.dataNascimento)
+      const dataFormatada = convertDate.toLocaleDateString('pt-BR')
+      this.cadastroTemp.dataNascimento = this.formateOnlyDate(dataFormatada)
+      await this.service.atualizarCadastroCompleto(this.cadastroTemp, this.idDacrianca);
+      this.cadastro = { ...this.cadastroTemp };
+      this.modoEdicao = false;
+      this.snackBar.open('Cadastro atualizado com sucesso!', 'Fechar', { duration: 3000 });
+    } catch (error) {
+      console.error('Erro ao atualizar cadastro:', error);
+      this.snackBar.open('Erro ao atualizar cadastro', 'Fechar', { duration: 3000 });
+    }
+  }
+
+  validarDados(): boolean {
+    // Adicione suas validações aqui
+    return !!(
+      this.cadastroTemp.nomeCrianca &&
+      this.cadastroTemp.nomeResponsavel &&
+      this.cadastroTemp.telefoneResponsavel &&
+      this.cadastroTemp.dataNascimento &&
+      this.cadastroTemp.sexo &&
+      this.cadastroTemp.tipo
+    );
   }
 }
