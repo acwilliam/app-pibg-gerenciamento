@@ -19,6 +19,7 @@ export class DetalheCriancaComponent implements OnInit {
 
    userAdmin: boolean = false;
    habilitarCheckin: boolean = false
+   habilitarCheckout: boolean = false
    hoje: Date = new Date();
    cadastroTemp: Cadastro = this.cadastroTemporario();
    modoEdicao = false;
@@ -39,8 +40,9 @@ export class DetalheCriancaComponent implements OnInit {
    }
 
    frequencia: Frequencia = {
-    data: '',
-    identificacao: ''
+    dataCheking: '',
+    identificacao: '',
+    dataChekout: ''
    }
 
    listaChekins: Frequencia[] = [];
@@ -100,8 +102,17 @@ export class DetalheCriancaComponent implements OnInit {
 
   realizarCheckin() {
     this.route.params.subscribe(params => {this.frequencia.identificacao = params['id']; });
-    this.frequencia.data = this.formatDate();
-    this.service.cadastrarFrequencia(this.frequencia);
+    this.frequencia.dataCheking = this.formatDate();
+    this.service.realizarCheckin(this.frequencia);
+  }
+
+  realizarCheckout() {
+    console.log('passou no checkout')
+    this.route.params.subscribe(params => {this.frequencia.identificacao = params['id']; });
+    this.frequencia.dataChekout = this.formatDate();
+    this.service.realizarCheckOut(this.frequencia).subscribe(checkin => {
+          console.log('Checkout registrado', checkin)
+      });
   }
 
   qrData: string = '';
@@ -153,11 +164,21 @@ export class DetalheCriancaComponent implements OnInit {
   verificarCheckinHoje(listaChekins: Frequencia[]): void {
     const dataHoje = this.hoje.toISOString().split('T')[0];
     const checkinHoje = listaChekins.some((checkin) => {
-      return this.formateOnlyDate(checkin.data) === dataHoje;
+      if (this.isDataCheckoutPreenchida(checkin.dataChekout)) {
+        console.log('chekout 1')
+        this.habilitarCheckout = checkin.dataChekout === dataHoje
+      } else {
+        console.log('chekout 2')
+        this.habilitarCheckout = true
+      }
+      return this.formateOnlyDate(checkin.dataCheking) === dataHoje;
     });
     this.habilitarCheckin = !checkinHoje || listaChekins.length === 0;
   }
 
+  isDataCheckoutPreenchida(dataCheckout: string | null | undefined): boolean {
+    return dataCheckout !== null && dataCheckout !== undefined && dataCheckout.trim().length > 0;
+  }
   formateOnlyDate(data: String) {
     const date = data.substring(0, 10);
     const [dia, mes, ano] = date.split('/');

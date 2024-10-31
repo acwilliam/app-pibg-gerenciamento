@@ -92,6 +92,7 @@
 
   <div *ngIf="validarUserAdmin() && !modoEdicao">
     <button [disabled]="!habilitarCheckin" (click)="realizarCheckin()">CheckIn</button>
+    <button [disabled]="!habilitarCheckout" (click)="realizarCheckout()">chekOut</button>
     <button routerLink="/mensagem/{{ cadastro.telefoneResponsavel }}" class="botao">Mensagem</button>
     <button (click)="gerarQrcode()">Etiqueta</button>
   </div>
@@ -100,7 +101,7 @@
   <h2 class="titulo-frequencia">Frequência</h2>
   <ul class="lista-frequencia">
     <li class="item-frequencia" *ngFor="let checkin of listaChekins">
-      Data: {{ checkin.data }}
+      Data: {{ checkin.dataCheking }}
     </li>
   </ul>
 </div>

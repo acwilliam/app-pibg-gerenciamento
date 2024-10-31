@@ -15,20 +15,4 @@
       </li>
     </ul>
   </nav>
-  <div *ngIf="isPossuiFilhos">
-  <div class="children-list">
-    <ul>
-      <li *ngFor="let child of children">
-        <div class="child-info">
-          <div class="avatar"></div>
-          <div class="child-details">
-            <span class="child-name">{{child.nomeCrianca}}</span>
-            <span class="child-age">{{child.idade}} anos</span>
-          </div>
-        </div>
-        <span class="material-icons" [routerLink]="['/detalhe-crianca', child.id]">chevron_right</span>
-      </li>
-    </ul>
-  </div>
-</div>
 </body>

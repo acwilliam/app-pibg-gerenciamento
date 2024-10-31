@@ -1,12 +1,5 @@
-import { CacularIdadeService } from './../cacular-idade.service';
 import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { EmailDataService } from '../email-data.service';
-import { PessoaService } from '../pessoa.service';
-import { catchError, map, Observable, of } from 'rxjs';
-import { CadastroService } from '../cadastro.service';
-import { Cadastro } from '../Cadastro';
-import { Router } from '@angular/router';
 
 
 interface MenuItem {
@@ -39,17 +32,13 @@ export class PaginaPrincipalComponent  {
   menuActive = false;
 
   constructor (
-    private authService: AuthService,
-    private cadastroService: CadastroService,
-    private caculaIdadeService: CacularIdadeService
+    private authService: AuthService
   )  {}
 
   ngOnInit() {
     console.log('passo aqui antes')
         this.emailRecebido = this.authService.currentUserValue?.email || '';
         this.buscarCadastrosByEmail()
-    this.buscarCadastros(this.emailRecebido)
-
   }
   toggleMenu() {
     this.menuActive = !this.menuActive;
@@ -85,16 +74,5 @@ export class PaginaPrincipalComponent  {
     ];
   }
 
-  buscarCadastros(email: string): void {
-    this.cadastroService.buscarCadastrosByEmail(email).subscribe({
-      next: (dados: Cadastro[]) => {
-        this.children = dados;
-        this.isPossuiFilhos = true
-        for (const cadastro of this.children) {
-          this.caculaIdadeService.calcularIdade(cadastro);
-        }
-      }
-    });
-  }
 }
 
