@@ -1,9 +1,9 @@
 <mat-icon class="chevron_left" (click)="voltar()">chevron_left</mat-icon>
 <section *ngIf="cadastro">
-  <button mat-icon-button class="edit-icon" (click)="toggleEdicao()">
-    <mat-icon>{{ modoEdicao ? 'save' : 'edit' }}</mat-icon>
-  </button>
   <div class="logo">
+    <button mat-icon-button class="edit-icon" (click)="toggleEdicao()">
+      <mat-icon>{{ modoEdicao ? 'save' : 'edit' }}</mat-icon>
+    </button>
     <img [src]="getUserImage()" alt="Imagem de perfil">
   </div>
   <h2>Detalhes da Criança</h2>
@@ -85,7 +85,7 @@
   <p *ngIf="!modoEdicao">
     <strong>CheckIn:</strong> {{ cadastro.selecionado ? 'Sim' : 'Não'}}
   </p>
-  <div class="acoes" *ngIf="modoEdicao">
+  <div class="button" *ngIf="modoEdicao">
     <button mat-button color="warn" (click)="cancelarEdicao()">Cancelar</button>
     <button mat-button color="primary" (click)="salvarEdicao()">Salvar</button>
   </div>

@@ -13,8 +13,11 @@ h2 {
 }
 
 p {
-  font-size: 18px;
-  margin: 10px 0;
+ /* font-size: 18px;*/
+  margin: 8px 0;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
 }
 
 button {
@@ -104,6 +107,13 @@ button:hover {
   padding: 0.5em 0;
 }
 
+.edit-field {
+  width: 100%;
+  max-width: 300px;
+  margin-left: 8px;
+  border: #ccc;
+}
+
 
 
 /*
@@ -113,12 +123,7 @@ button:hover {
   margin-left: 8px;
 }
 
-.acoes {
-  display: flex;
-  gap: 8px;
-  margin-top: 16px;
-  margin-bottom: 16px;
-}
+
 
 .edit-icon {
   position: absolute;
