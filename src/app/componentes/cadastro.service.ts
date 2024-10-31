@@ -75,5 +75,17 @@ export class CadastroService {
     return this.firestore.collection<Frequencia>('checkin', ref => ref.where('identificacao', '==', idCadastro))
     .valueChanges({ idField: 'id' });
   }
-  
+
+  atualizarCadastroCompleto(cadastro: Cadastro, idDacrianca: string): Promise<void> {
+    return this.firestore
+    .doc(`cadastro/${idDacrianca}`)
+    .update(cadastro)
+    .then(() => {
+      console.log('Cadastro atualizado com sucesso');
+    })
+    .catch((error) => {
+      console.error('Erro ao atualizar cadastro:', error);
+      throw error;
+    });
+  }
 }

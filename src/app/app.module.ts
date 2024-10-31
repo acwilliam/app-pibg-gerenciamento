@@ -36,7 +36,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { InscricoesComponent } from './componentes/inscricoes/inscricoes.component';
-
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 @NgModule({
@@ -81,6 +84,10 @@ import { InscricoesComponent } from './componentes/inscricoes/inscricoes.compone
     MatListModule,
     MatDialogModule,
     MatCheckboxModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSnackBarModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       // Register the ServiceWorker as soon as the application is stable

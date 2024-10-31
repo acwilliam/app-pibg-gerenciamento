@@ -44,18 +44,18 @@ button:hover {
 }
 
 .logo img {
-  width: 100%; /* Garante que a imagem se ajuste à largura da div */
-  height: 100%; /* Garante que a imagem se ajuste à altura da div */
-  object-fit: cover; /* Mantém a proporção da imagem */
-  border-radius: 50%; /* Garante que a imagem fique redonda */
-  object-position: center top; /* Centraliza a imagem no topo */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  object-position: center top;
 
 }
 
 .edit-icon {
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 20px;
+  right: 20px;
   background-color: #004494;
   border-radius: 50%;
   cursor: pointer;
@@ -100,3 +100,48 @@ button:hover {
   color: #666;
 }
 
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0.5em 0;
+}
+
+
+
+/*
+.edit-field {
+  width: 100%;
+  max-width: 300px;
+  margin-left: 8px;
+}
+
+.acoes {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.edit-icon {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+}
+
+/* Ajustes para modo de edição
+.mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 0.5em 0;
+}
+
+/* Estilo para campos em modo de visualização
+p {
+  margin: 8px 0;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+p:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+*/
