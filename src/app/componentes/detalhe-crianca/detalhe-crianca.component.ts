@@ -221,7 +221,6 @@ export class DetalheCriancaComponent implements OnInit {
   }
 
   validarDados(): boolean {
-    // Adicione suas validações aqui
     return !!(
       this.cadastroTemp.nomeCrianca &&
       this.cadastroTemp.nomeResponsavel &&
