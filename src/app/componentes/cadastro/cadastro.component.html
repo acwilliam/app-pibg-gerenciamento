@@ -2,7 +2,6 @@
   <header class="header">
     <h2>Cadastre uma criança:</h2>
   </header>
-  <!--<ngx-spinner type="ball-scale-multiple"></ngx-spinner>-->
   <div class="overlay" *ngIf="isLoading">
     <div class="loader">Cadastrando...</div>
   </div>
@@ -79,20 +78,19 @@
       >
       <div>
         <label for="sexo-select">Escolha o sexo:</label>
-        <select id="sexo-select" name="sexo" [(ngModel)]="cadastro.sexo"> <!-- Adicione o atributo name -->
+        <select id="sexo-select" name="sexo" [(ngModel)]="cadastro.sexo">
           <option value="masculino">Masculino</option>
           <option value="feminino">Feminino</option>
         </select>
       </div>
       <div>
         <label for="tipo-select">Membro ou visitante?</label>
-        <select id="tipo-select" name="tipo" [(ngModel)]="cadastro.tipo"> <!-- Adicione o atributo name -->
+        <select id="tipo-select" name="tipo" [(ngModel)]="cadastro.tipo">
           <option value="Visitante">Visitante</option>
           <option value="Membro">Membro</option>
         </select>
       </div>
     <div class="acoes">
-      <!-- Transforma o botão de submit -->
       <button type="button" (click)="cancelar()" class="botao">Cancelar</button>
       <button type="submit" class="botao" [disabled]="!cadastroForm.valid || !selectedFile">Cadastrar</button>
     </div>

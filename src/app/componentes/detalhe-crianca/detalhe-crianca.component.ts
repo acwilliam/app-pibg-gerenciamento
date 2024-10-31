@@ -198,7 +198,6 @@ export class DetalheCriancaComponent implements OnInit {
 
   cancelarEdicao() {
     this.modoEdicao = false;
-   // this.cadastroTemp = null;
     this.snackBar.open('Edição cancelada', 'Fechar', { duration: 3000 });
   }
 

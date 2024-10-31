@@ -13,7 +13,7 @@
       {{ cadastro.nomeCrianca }}
     </ng-container>
     <mat-form-field *ngIf="modoEdicao" appearance="outline" class="edit-field">
-      <input matInput [(ngModel)]="cadastroTemp.nomeCrianca" name="nomeCrianca">
+      <input matInput [(ngModel)]="cadastroTemp.nomeCrianca" name="nomeCrianca" required>
     </mat-form-field>
   </p>
   <p>
@@ -34,7 +34,7 @@
       {{ cadastro.nomeResponsavel }}
     </ng-container>
     <mat-form-field *ngIf="modoEdicao" appearance="outline" class="edit-field">
-      <input matInput [(ngModel)]="cadastroTemp.nomeResponsavel" name="nomeResponsavel">
+      <input matInput [(ngModel)]="cadastroTemp.nomeResponsavel" name="nomeResponsavel" required>
     </mat-form-field>
   </p>
   <p>
@@ -44,7 +44,7 @@
     </ng-container>
     <mat-form-field *ngIf="modoEdicao" appearance="outline" class="edit-field">
       <input matInput [(ngModel)]="cadastroTemp.telefoneResponsavel" name="telefoneResponsavel"
-             mask="(00) 00000-0000">
+             placeholder="(11) 00000-0000" required  appMascaraTelefone>
     </mat-form-field>
   </p>
   <p>
@@ -62,7 +62,7 @@
       {{ cadastro.dataNascimento }}
     </ng-container>
     <mat-form-field *ngIf="modoEdicao" appearance="outline" class="edit-field">
-      <input matInput [matDatepicker]="picker" [(ngModel)]="cadastroTemp.dataNascimento" name="dataNascimento">
+      <input matInput [matDatepicker]="picker" [(ngModel)]="cadastroTemp.dataNascimento" name="dataNascimento" required>
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
@@ -85,9 +85,9 @@
   <p *ngIf="!modoEdicao">
     <strong>CheckIn:</strong> {{ cadastro.selecionado ? 'Sim' : 'Não'}}
   </p>
-  <div class="button" *ngIf="modoEdicao">
-    <button mat-button color="warn" (click)="cancelarEdicao()">Cancelar</button>
-    <button mat-button color="primary" (click)="salvarEdicao()">Salvar</button>
+  <div  *ngIf="modoEdicao">
+    <button class="button" (click)="cancelarEdicao()">Cancelar</button>
+    <button class="button" (click)="salvarEdicao()">Salvar</button>
   </div>
 
   <div *ngIf="validarUserAdmin() && !modoEdicao">
