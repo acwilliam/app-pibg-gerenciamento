@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Cadastro } from './Cadastro';
-import { from, Observable, switchMap } from 'rxjs';
+import { from, map, Observable, switchMap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Frequencia } from './model/Frequencia';
 
@@ -60,6 +60,16 @@ export class CadastroService {
     return this.firestore.collection<Frequencia>('checkin', ref => ref.where('identificacao', '==', idCadastro))
     .valueChanges({ idField: 'id' });
   }
+
+  buscarUltimoCheckin(idCadastro: string): Observable<Frequencia> {
+    return this.firestore.collection<Frequencia>('checkin', ref =>
+      ref
+        .where('identificacao', '==', idCadastro)
+        .orderBy('dataCheckin', 'desc')
+        .limit(1)
+    ).valueChanges({ idField: 'id' }).pipe(map(res => res[0]));
+  }
+
 
   atualizarCadastroCompleto(cadastro: Cadastro, idDacrianca: string): Promise<void> {
     return this.firestore

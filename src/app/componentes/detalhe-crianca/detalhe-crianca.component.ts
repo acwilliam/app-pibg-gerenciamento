@@ -26,7 +26,7 @@ export class DetalheCriancaComponent implements OnInit {
   cadastro: Cadastro = this.criarCadastro();
 
   frequencia: Frequencia = {
-    dataCheking: '',
+    dataCheckin: '',
     identificacao: '',
     dataChekout: ''
   }
@@ -89,7 +89,7 @@ export class DetalheCriancaComponent implements OnInit {
 
   realizarCheckin() {
     this.route.params.subscribe(params => { this.frequencia.identificacao = params['id']; });
-    this.frequencia.dataCheking = this.formatDate();
+    this.frequencia.dataCheckin = this.formatDate();
     this.service.realizarCheckin(this.frequencia);
   }
 

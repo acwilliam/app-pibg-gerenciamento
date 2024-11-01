@@ -1,5 +1,5 @@
 export interface Frequencia {
   identificacao: String,
-  dataCheking: string,
+  dataCheckin: string,
   dataChekout: string;
 }
