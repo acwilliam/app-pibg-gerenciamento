@@ -89,17 +89,23 @@ export class DetalheCriancaComponent implements OnInit {
 
   realizarCheckin() {
     this.route.params.subscribe(params => { this.frequencia.identificacao = params['id']; });
+    console.log('realizando checkins')
     this.frequencia.dataCheckin = this.formatDate();
     this.service.realizarCheckin(this.frequencia);
+    this.cadastro.Frequencia = this.frequencia
+    console.log('cadastro com a frequencia', this.cadastro)
+    this.service.atualizarCadastroCompleto(this.cadastro, this.idDacrianca)
   }
 
   realizarCheckout() {
-    console.log('passou no checkout')
+    console.log('passou no checkout', this.frequencia)
     this.route.params.subscribe(params => { this.frequencia.identificacao = params['id']; });
     this.frequencia.dataChekout = this.formatDate();
-    this.service.realizarCheckOut(this.frequencia).subscribe(checkin => {
-      console.log('Checkout registrado', checkin)
-    });
+    this.service.realizarCheckOut(this.frequencia).subscribe();
+    if (this.cadastro.Frequencia) {
+      this.cadastro.Frequencia.dataChekout = this.formatDate();
+    }
+     this.service.atualizarCadastroCompleto(this.cadastro, this.idDacrianca)
   }
 
   qrData: string = '';
