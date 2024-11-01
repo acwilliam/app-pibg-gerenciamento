@@ -1,12 +1,10 @@
 import { EmailDataService } from './email-data.service';
-import { EventEmitter, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Usuario } from './login-usuario/Usuario';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
-import firebase from 'firebase/compat/app';
 import { BehaviorSubject, Observable, of, throwError } from 'rxjs';
-import { catchError, map, switchMap, tap } from 'rxjs/operators';
-import { ValidarPerfilUsuarioService } from './validar-perfil-usuario.service';
+import { catchError, tap } from 'rxjs/operators';
 import { PessoaService } from './pessoa.service';
 
 

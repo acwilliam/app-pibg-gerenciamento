@@ -54,7 +54,7 @@ export class CadastroComponent {
     observacao:  '',
     horario: this.formatDate(),
     identificador: 0,
-    selecionado: true,
+    selecionado: false,
     dataNascimento: '',
     sexo:'',
     tipo:'',

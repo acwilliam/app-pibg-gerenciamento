@@ -1,3 +1,4 @@
+import { Frequencia } from './model/Frequencia';
 export interface Cadastro {
   nomeResponsavel: string,
   nomeCrianca: string ,
@@ -6,11 +7,13 @@ export interface Cadastro {
   horario: string,
   identificador: Number,
   selecionado: boolean,
+  selecionadoOut?: boolean,
   dataNascimento: string,
   idade?:Number,
   sexo: string,
   tipo?: string,
   sobreNome: string,
   emailResponsavel?: string,
-  urlFoto?: string
+  urlFoto?: string,
+  Frequencia?: Frequencia
 }

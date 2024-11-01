@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Cadastro } from './Cadastro';
-import { first, from, map, Observable, switchMap } from 'rxjs';
+import { from, map, Observable, switchMap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Frequencia } from './model/Frequencia';
 
@@ -11,8 +11,7 @@ import { Frequencia } from './model/Frequencia';
 export class CadastroService {
 
   constructor(
-    private firestore: AngularFirestore,
-    private route: ActivatedRoute
+    private firestore: AngularFirestore
   ) { }
 
   cadastrarCrianca(cadastro: Cadastro) {
@@ -27,54 +26,50 @@ export class CadastroService {
       .valueChanges({ idField: 'id' });
   }
 
-  atualizarCadastro(id: Number) {
-    const cadastroCollection = this.firestore.doc<Cadastro>(`cadastro/${id}`);
-    return cadastroCollection.update({selecionado: false})
-  }
-
   buscarCadastroPorId(idCadastro: string): Observable<Cadastro | undefined> {
     console.log('id',idCadastro)
     return this.firestore.collection<Cadastro>('cadastro').doc(idCadastro).valueChanges();
   }
 
-  buscarCadastroByName(nomeCrianca: string): Observable<Cadastro | undefined> {
-    console.log('buscando nome', nomeCrianca);
-    return this.firestore.collection<Cadastro>('cadastro', ref => ref.where('nomeCrianca', '==', nomeCrianca))
-      .valueChanges()
-      .pipe(
-        first(), // Primeiro valor emitido (array de resultados)
-        map((cadastros: Cadastro[]) => cadastros.length > 0 ? cadastros[0] : undefined) // Pega o primeiro cadastro ou undefined
-      );
-  }
-
-  atualizarCadastroPorNome(nomeCrianca: string): Observable<void> {
-    return this.firestore.collection('cadastro', ref => ref.where('nomeCrianca', '==', nomeCrianca))
-    .get()
-      .pipe(
-        switchMap(snapshot => {
-          if (snapshot.empty) {
-            throw new Error('Nenhum cadastro encontrado com este nome');
-          }
-          const doc = snapshot.docs[0];
-          return from(doc.ref.update({ selecionado: true }));
-        })
-      );
-  }
 
   buscarCadastrosByEmail(email: string): Observable<Cadastro[]> {
     return this.firestore.collection<Cadastro>('cadastro', ref => ref.where('emailResponsavel', '==', email))
       .valueChanges({ idField: 'id' });
   }
 
-  cadastrarFrequencia(frequencia: Frequencia) {
+  realizarCheckin(frequencia: Frequencia) {
     const cadastroCollection = this.firestore.collection<Frequencia>('checkin');
     return cadastroCollection.add(frequencia);
+  }
+
+  realizarCheckOut(frequencia: Frequencia): Observable<void> {
+    return this.firestore.collection('checkin', ref => ref.where('identificacao', '==', frequencia.identificacao))
+    .get()
+      .pipe(
+        switchMap(snapshot => {
+          if (snapshot.empty) {
+            throw new Error('Nenhum registro de checkin encontrado');
+          }
+          const doc = snapshot.docs[0];
+          return from(doc.ref.update({ dataChekout: frequencia.dataChekout }));
+        })
+      );
   }
 
   buscarListaDeCheckins(idCadastro: string): Observable<Frequencia[]> {
     return this.firestore.collection<Frequencia>('checkin', ref => ref.where('identificacao', '==', idCadastro))
     .valueChanges({ idField: 'id' });
   }
+
+  buscarUltimoCheckin(idCadastro: string): Observable<Frequencia> {
+    return this.firestore.collection<Frequencia>('checkin', ref =>
+      ref
+        .where('identificacao', '==', idCadastro)
+        .orderBy('dataCheckin', 'desc')
+        .limit(1)
+    ).valueChanges({ idField: 'id' }).pipe(map(res => res[0]));
+  }
+
 
   atualizarCadastroCompleto(cadastro: Cadastro, idDacrianca: string): Promise<void> {
     return this.firestore

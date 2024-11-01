@@ -10,6 +10,8 @@ import { QrcodeService } from '../qrcode.service';
 import { PdfService } from '../pdf.service';
 import { Frequencia } from '../model/Frequencia';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ValidacaoChecksService } from '../services/validacao-checks.service';
+import { StatusCheckinCheckout } from '../model/StatusCheckinCheckout';
 @Component({
   selector: 'app-detalhe-crianca',
   templateUrl: './detalhe-crianca.component.html',
@@ -17,33 +19,19 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class DetalheCriancaComponent implements OnInit {
 
-   userAdmin: boolean = false;
-   habilitarCheckin: boolean = false
-   hoje: Date = new Date();
-   cadastroTemp: Cadastro = this.cadastroTemporario();
-   modoEdicao = false;
-   idDacrianca:string = '';
-   cadastro: Cadastro = {
-    nomeResponsavel: '',
-    nomeCrianca: '' ,
-    telefoneResponsavel: '',
-    observacao: '',
-    horario: '',
-    identificador: 0,
-    selecionado: false,
-    dataNascimento: '',
-    sexo:'',
-    tipo:'',
-    sobreNome: '',
-    urlFoto: ''
-   }
+  cadastroTemp: Cadastro = this.cadastroTemporario();
+  status: StatusCheckinCheckout = this.construirObjeto();
+  modoEdicao = false;
+  idDacrianca: string = '';
+  cadastro: Cadastro = this.criarCadastro();
 
-   frequencia: Frequencia = {
-    data: '',
-    identificacao: ''
-   }
+  frequencia: Frequencia = {
+    dataCheckin: '',
+    identificacao: '',
+    dataChekout: ''
+  }
 
-   listaChekins: Frequencia[] = [];
+  listaChekins: Frequencia[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -55,7 +43,8 @@ export class DetalheCriancaComponent implements OnInit {
     private printService: PrintService,
     private qrcodeService: QrcodeService,
     private pdfService: PdfService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private validacaoCheksSerice: ValidacaoChecksService
   ) { }
 
   ngOnInit(): void {
@@ -68,40 +57,55 @@ export class DetalheCriancaComponent implements OnInit {
 
   obterDetalhesCrianca(idCadastro: string): void {
     this.service.buscarCadastroPorId(idCadastro).subscribe(
-        response => {
-            if (response) {
-                this.cadastro = response;
-                this.caculaIdadeService.calcularIdade(this.cadastro)
-                const emailUsuarioLogado = this.cadastro.emailResponsavel!;
+      response => {
+        if (response) {
+          this.cadastro = response;
+          this.caculaIdadeService.calcularIdade(this.cadastro)
+          const emailUsuarioLogado = this.cadastro.emailResponsavel!;
 
-                if (!(this.authService.isAdmin() || this.authService.isResponsible(emailUsuarioLogado))) {
-                  alert('Você não tem permissão para ver os dados dessa criança.');
-                  this.router.navigate(['/usuario-kids']);
-                  return;
-              }
-            } else {
-                console.error('Cadastro não encontrado');
-                this.router.navigate(['/usuario-kids']);
-            }
-        },
-        error => {
-            console.error('Erro ao buscar cadastro', error);
-            this.router.navigate(['/']);
+          if (!(this.authService.isAdmin() || this.authService.isResponsible(emailUsuarioLogado))) {
+            alert('Você não tem permissão para ver os dados dessa criança.');
+            this.router.navigate(['/usuario-kids']);
+            return;
+          }
+        } else {
+          console.error('Cadastro não encontrado');
+          this.router.navigate(['/usuario-kids']);
         }
+      },
+      error => {
+        console.error('Erro ao buscar cadastro', error);
+        this.router.navigate(['/']);
+      }
     );
   }
 
   buscarListaDeCheckins(idCadastro: string) {
-  this.service.buscarListaDeCheckins(idCadastro).subscribe(checkins => {
-    this.listaChekins = checkins;
-      this.verificarCheckinHoje(this.listaChekins);
+    this.service.buscarListaDeCheckins(idCadastro).subscribe(checkins => {
+      this.listaChekins = checkins;
+      this.status = this.validacaoCheksSerice.verificarCheckinHoje(this.listaChekins);
     });
   }
 
   realizarCheckin() {
-    this.route.params.subscribe(params => {this.frequencia.identificacao = params['id']; });
-    this.frequencia.data = this.formatDate();
-    this.service.cadastrarFrequencia(this.frequencia);
+    this.route.params.subscribe(params => { this.frequencia.identificacao = params['id']; });
+    console.log('realizando checkins')
+    this.frequencia.dataCheckin = this.formatDate();
+    this.service.realizarCheckin(this.frequencia);
+    this.cadastro.Frequencia = this.frequencia
+    console.log('cadastro com a frequencia', this.cadastro)
+    this.service.atualizarCadastroCompleto(this.cadastro, this.idDacrianca)
+  }
+
+  realizarCheckout() {
+    console.log('passou no checkout', this.frequencia)
+    this.route.params.subscribe(params => { this.frequencia.identificacao = params['id']; });
+    this.frequencia.dataChekout = this.formatDate();
+    this.service.realizarCheckOut(this.frequencia).subscribe();
+    if (this.cadastro.Frequencia) {
+      this.cadastro.Frequencia.dataChekout = this.formatDate();
+    }
+     this.service.atualizarCadastroCompleto(this.cadastro, this.idDacrianca)
   }
 
   qrData: string = '';
@@ -122,10 +126,10 @@ export class DetalheCriancaComponent implements OnInit {
   async onConfirm(id: string): Promise<void> {
     try {
 
-        const url = `https://app-pibg-gerenciamento.vercel.app/detalhe-crianca/${id}`;
-        const qrCode = await this.qrcodeService.generateQrCodeAsimage(url);
-        const pdf = await this.pdfService.generatePdf(qrCode, this.cadastro.nomeCrianca, this.cadastro.idade!);
-        this.addPdf(pdf); // Chama a função com a lista de PDFs
+      const url = `https://app-pibg-gerenciamento.vercel.app/detalhe-crianca/${id}`;
+      const qrCode = await this.qrcodeService.generateQrCodeAsimage(url);
+      const pdf = await this.pdfService.generatePdf(qrCode, this.cadastro.nomeCrianca, this.cadastro.idade!);
+      this.addPdf(pdf); // Chama a função com a lista de PDFs
     } catch (error) {
       console.error('Error generating PDF:', error);
     }
@@ -150,21 +154,6 @@ export class DetalheCriancaComponent implements OnInit {
     return this.authService.isAdmin();
   }
 
-  verificarCheckinHoje(listaChekins: Frequencia[]): void {
-    const dataHoje = this.hoje.toISOString().split('T')[0];
-    const checkinHoje = listaChekins.some((checkin) => {
-      return this.formateOnlyDate(checkin.data) === dataHoje;
-    });
-    this.habilitarCheckin = !checkinHoje || listaChekins.length === 0;
-  }
-
-  formateOnlyDate(data: String) {
-    const date = data.substring(0, 10);
-    const [dia, mes, ano] = date.split('/');
-
-    return `${ano}-${mes}-${dia}`;
-  }
-
   toggleEdicao() {
     if (this.modoEdicao) {
       this.salvarEdicao();
@@ -177,15 +166,32 @@ export class DetalheCriancaComponent implements OnInit {
   cadastroTemporario(): Cadastro {
     return {
       nomeResponsavel: '',
-      nomeCrianca: '' ,
+      nomeCrianca: '',
       telefoneResponsavel: '',
       observacao: '',
       horario: '',
       identificador: 0,
       selecionado: false,
       dataNascimento: '',
-      sexo:'',
-      tipo:'',
+      sexo: '',
+      tipo: '',
+      sobreNome: '',
+      urlFoto: ''
+    }
+  }
+
+  criarCadastro(): Cadastro {
+    return {
+      nomeResponsavel: '',
+      nomeCrianca: '',
+      telefoneResponsavel: '',
+      observacao: '',
+      horario: '',
+      identificador: 0,
+      selecionado: false,
+      dataNascimento: '',
+      sexo: '',
+      tipo: '',
       sobreNome: '',
       urlFoto: ''
     }
@@ -198,7 +204,6 @@ export class DetalheCriancaComponent implements OnInit {
 
   cancelarEdicao() {
     this.modoEdicao = false;
-   // this.cadastroTemp = null;
     this.snackBar.open('Edição cancelada', 'Fechar', { duration: 3000 });
   }
 
@@ -210,7 +215,7 @@ export class DetalheCriancaComponent implements OnInit {
       }
       const convertDate = new Date(this.cadastroTemp.dataNascimento)
       const dataFormatada = convertDate.toLocaleDateString('pt-BR')
-      this.cadastroTemp.dataNascimento = this.formateOnlyDate(dataFormatada)
+      this.cadastroTemp.dataNascimento = this.validacaoCheksSerice.formateOnlyDate(dataFormatada)
       await this.service.atualizarCadastroCompleto(this.cadastroTemp, this.idDacrianca);
       this.cadastro = { ...this.cadastroTemp };
       this.modoEdicao = false;
@@ -222,7 +227,6 @@ export class DetalheCriancaComponent implements OnInit {
   }
 
   validarDados(): boolean {
-    // Adicione suas validações aqui
     return !!(
       this.cadastroTemp.nomeCrianca &&
       this.cadastroTemp.nomeResponsavel &&
@@ -232,4 +236,12 @@ export class DetalheCriancaComponent implements OnInit {
       this.cadastroTemp.tipo
     );
   }
+
+  construirObjeto(): StatusCheckinCheckout {
+    return {
+      isChekin: false,
+      isCheckout: false
+    }
+  }
+
 }
