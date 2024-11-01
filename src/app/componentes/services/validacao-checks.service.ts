@@ -45,6 +45,29 @@ export class ValidacaoChecksService {
     return this.status;
   }
 
+  validarCheckinCheckout(Check: Frequencia): StatusCheckinCheckout {
+    const dataHoje = new Date().toLocaleDateString('pt-BR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+    const dataCheckin = this.formateDate(this.stringToDate(Check.dataCheckin));
+    const dataCheckout = this.formateDate(this.stringToDate(Check.dataChekout));
+    if (dataCheckin === dataHoje) {
+      this.status.isChekin = true;
+    } else {
+      this.status.isChekin = false;
+    }
+
+    if (dataCheckout === dataHoje) {
+      this.status.isCheckout = true;
+    } else {
+      this.status.isCheckout = false;
+    }
+
+    return this.status;
+  }
+
   isDataCheckoutPreenchida(dataCheckout: string | null | undefined): boolean {
     return dataCheckout !== null && dataCheckout !== undefined && dataCheckout.trim().length > 0;
   }
@@ -55,4 +78,17 @@ export class ValidacaoChecksService {
 
     return `${ano}-${mes}-${dia}`;
   }
+  formateDate(date: Date): string {
+    return new Date(date).toLocaleDateString('pt-BR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
+  }
+
+  stringToDate(dateString: string): Date {
+    const [day, month, year, hour, minute] = dateString.split(/[/\s:]+/).map(Number);
+    return new Date(year, month - 1, day, hour, minute);
+  }
+
 }

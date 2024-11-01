@@ -3,6 +3,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import { Cadastro } from '../Cadastro';
 import { CadastroService } from '../cadastro.service';
 import { MatPaginator } from '@angular/material/paginator';
+import { ValidacaoChecksService } from '../services/validacao-checks.service';
+import { StatusCheckinCheckout } from '../model/StatusCheckinCheckout';
 
 
 @Component({
@@ -14,9 +16,16 @@ export class ListaCriancaComponent implements OnInit, AfterViewInit{
   displayedColumns: string[] = ['nomeCrianca', 'nomeResponsavel', 'telefoneResponsavel', 'selecionado','chekout'];
   dataSource: MatTableDataSource<Cadastro>;
 
+   statusCheckinCheckout: StatusCheckinCheckout = {
+    isCheckout: false,
+    isChekin: false,
+   }
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private cadastroService: CadastroService) {
+  constructor(
+    private cadastroService: CadastroService,
+    private validacaoCheksSerice: ValidacaoChecksService
+  ) {
     this.dataSource = new MatTableDataSource<Cadastro>([]);
   }
 
@@ -40,11 +49,23 @@ export class ListaCriancaComponent implements OnInit, AfterViewInit{
   buscarCadastros(): void {
     this.cadastroService.buscarCadastro().subscribe({
       next: (dados: Cadastro[]) => {
-        console.log('passando no cadastro da lista de crianca', dados)
+        this.processarDados(dados)
         this.dataSource.data = dados;
       },
       error: (erro) => {
         console.error('Erro ao buscar cadastros:', erro);
+      }
+    });
+  }
+  processarDados(dados: Cadastro[]) {
+    dados.forEach(dado => {
+      if (dado) {
+        if (dado.Frequencia != undefined && this.validacaoCheksSerice.isDataCheckoutPreenchida(dado.Frequencia?.dataCheckin)) {
+          this.statusCheckinCheckout = this.validacaoCheksSerice.validarCheckinCheckout(dado.Frequencia)
+          console.log('validando status de checkin e checkout', this.statusCheckinCheckout)
+          dado.selecionado = this.statusCheckinCheckout.isChekin
+          dado.selecionadoOut = this.statusCheckinCheckout.isCheckout
+        }
       }
     });
   }

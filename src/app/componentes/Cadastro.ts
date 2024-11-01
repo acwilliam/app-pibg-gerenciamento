@@ -7,6 +7,7 @@ export interface Cadastro {
   horario: string,
   identificador: Number,
   selecionado: boolean,
+  selecionadoOut?: boolean,
   dataNascimento: string,
   idade?:Number,
   sexo: string,
