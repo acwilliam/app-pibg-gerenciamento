@@ -48,4 +48,6 @@ export class ListaCriancaComponent implements OnInit, AfterViewInit{
       }
     });
   }
+
+
 }

@@ -26,7 +26,7 @@ export class ValidacaoChecksService {
     // Regra 2: Verifica a lista de check-ins
     for (const checkin of listaChekins) {
       const dataHoje = this.dataHojeToISOString;
-      const dataCheckin = this.formateOnlyDate(checkin.dataCheking);
+      const dataCheckin = this.formateOnlyDate(checkin.dataCheckin);
       const dataCheckout = this.formateOnlyDate(checkin.dataChekout);
       const convertdataHoje = new Date(dataHoje).toLocaleDateString('pt-BR');
       // Se encontrar um check-in com a data de hoje, marca como falso
