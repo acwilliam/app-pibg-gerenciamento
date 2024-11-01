@@ -15,18 +15,32 @@ export class ValidacaoChecksService {
 
 
   verificarCheckinHoje(listaChekins: Frequencia[]): StatusCheckinCheckout {
+    // Regra 1: Se a lista estiver vazia, ambos são verdadeiros
+    if (!listaChekins || listaChekins.length === 0) {
+      return {
+        isCheckout: true,
+        isChekin: true
+      };
+    }
 
-    const checkinHoje = listaChekins.some((checkin) => {
-      if (this.isDataCheckoutPreenchida(checkin.dataChekout)) {
-        console.log('chekout 1')
-        this.status.isCheckout = checkin.dataChekout === this.dataHojeToISOString
-      } else {
-        console.log('chekout 2')
-        this.status.isCheckout = true
+    // Regra 2: Verifica a lista de check-ins
+    for (const checkin of listaChekins) {
+      const dataHoje = this.dataHojeToISOString;
+      const dataCheckin = this.formateOnlyDate(checkin.dataCheking);
+      const dataCheckout = this.formateOnlyDate(checkin.dataChekout);
+      const convertdataHoje = new Date(dataHoje).toLocaleDateString('pt-BR');
+      // Se encontrar um check-in com a data de hoje, marca como falso
+      if (dataCheckin === convertdataHoje) {
+        this.status.isChekin = false;
       }
-      return this.formateOnlyDate(checkin.dataCheking) === this.dataHojeToISOString;
-    });
-    this.status.isChekin = !checkinHoje || listaChekins.length === 0;
+
+      // Se encontrar um checkout com a data de hoje, marca como falso
+      if (dataCheckout === this.formateOnlyDate(convertdataHoje)) {
+        this.status.isCheckout = false;
+      } else {
+        this.status.isCheckout = true;
+      }
+    }
 
     return this.status;
   }

@@ -1,5 +1,4 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import { Cadastro } from '../Cadastro';
 import { CadastroService } from '../cadastro.service';
@@ -41,6 +40,7 @@ export class ListaCriancaComponent implements OnInit, AfterViewInit{
   buscarCadastros(): void {
     this.cadastroService.buscarCadastro().subscribe({
       next: (dados: Cadastro[]) => {
+        console.log('passando no cadastro da lista de crianca', dados)
         this.dataSource.data = dados;
       },
       error: (erro) => {
