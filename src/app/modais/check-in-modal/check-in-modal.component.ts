@@ -1,9 +1,10 @@
 import { of } from 'rxjs';
 import { PrintService } from './../../componentes/print.service';
-import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, NgZone, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { QrcodeService } from '../../componentes/qrcode.service';
 import { PdfService } from '../../componentes/pdf.service';
+import jsQR from 'jsqr';
 
 interface Child {
   id: number;
@@ -31,16 +32,28 @@ export class CheckInModalComponent {
     @Inject(MAT_DIALOG_DATA) public data: { children: Child[] },
     private qrcodeService: QrcodeService,
     private pdfService: PdfService,
-    private printService: PrintService
+    private printService: PrintService,
+    private ngZone: NgZone
   ) {}
 
   onCancel(): void {
+    this.stopCamera();
     this.dialogRef.close();
   }
 
   async onConfirm(): Promise<void> {
 
-    console.log('crianças selecionadas para checkin', this.data.children);
+    const selectedChildrenIds = this.data.children
+    .filter(child => child.selecionado)
+    .map(child => child.id);
+    console.log('crianças selecionadas para checkin', selectedChildrenIds);
+
+    if (!this.showCamera) {
+      await this.openCamera();
+    } else {
+      this.stopCamera();
+      this.dialogRef.close({ selectedChildrenIds, qrCode: this.qrResultString });
+    }
 
     try {
       const pdfs: Blob[] = []; // Cria uma lista para armazenar os PDFs
@@ -73,5 +86,64 @@ export class CheckInModalComponent {
 
     console.log('Enviando pdf para impressora');
     this.printService.addPdfToQueue(pdfs)
+  }
+
+  async openCamera(): Promise<void> {
+    try {
+      const constraints = {
+        video: {
+          facingMode: { exact: "environment" }
+        }
+      };
+      this.stream = await navigator.mediaDevices.getUserMedia(constraints);
+      this.videoElement.nativeElement.srcObject = this.stream;
+      this.showCamera = true;
+      this.videoElement.nativeElement.play();
+      requestAnimationFrame(() => this.tick());
+    } catch (err) {
+      console.error('Erro ao abrir a câmera:', err);
+      try {
+        this.stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        this.videoElement.nativeElement.srcObject = this.stream;
+        this.showCamera = true;
+        this.videoElement.nativeElement.play();
+        requestAnimationFrame(() => this.tick());
+      } catch (fallbackErr) {
+        console.error('Erro ao abrir qualquer câmera:', fallbackErr);
+      }
+    }
+  }
+
+  stopCamera(): void {
+    if (this.stream) {
+      this.stream.getTracks().forEach(track => track.stop());
+      this.stream = null;
+    }
+    this.showCamera = false;
+  }
+
+  tick() {
+    if (this.videoElement.nativeElement.readyState === this.videoElement.nativeElement.HAVE_ENOUGH_DATA) {
+      this.canvasElement.nativeElement.height = this.videoElement.nativeElement.videoHeight;
+      this.canvasElement.nativeElement.width = this.videoElement.nativeElement.videoWidth;
+      const context = this.canvasElement.nativeElement.getContext('2d');
+      if (context) {
+        context.drawImage(this.videoElement.nativeElement, 0, 0, this.canvasElement.nativeElement.width, this.canvasElement.nativeElement.height);
+        const imageData = context.getImageData(0, 0, this.canvasElement.nativeElement.width, this.canvasElement.nativeElement.height);
+        const code = jsQR(imageData.data, imageData.width, imageData.height, {
+          inversionAttempts: "dontInvert",
+        });
+        if (code) {
+          this.ngZone.run(() => {
+            this.qrResultString = code.data;
+            console.log('QR Code detectado:', this.qrResultString);
+            // Você pode adicionar lógica adicional aqui, como fechar o modal ou processar o código QR
+          });
+        }
+      }
+    }
+    if (this.showCamera) {
+      requestAnimationFrame(() => this.tick());
+    }
   }
 }

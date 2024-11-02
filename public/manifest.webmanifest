@@ -1,7 +1,7 @@
 {
   "name": "Pibg Kids",
   "short_name": "Pibg Kids",
-  "theme_color": "#1976d2",
+  "theme_color": "##FFFF00",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
