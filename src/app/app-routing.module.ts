@@ -11,6 +11,9 @@ import { LoginUsuarioComponent } from './componentes/login-usuario/login-usuario
 import { AuthGuardService } from './componentes/auth-guard.service';
 import { TelaUsuarioKidsComponent } from './componentes/tela-usuario-kids/tela-usuario-kids.component';
 import { InscricoesComponent } from './componentes/inscricoes/inscricoes.component';
+import { HomeComponent } from './componentes/home/home.component';
+import { DisponibilidadeComponent } from './componentes/disponibilidade/disponibilidade.component';
+import { RolesComponent } from './componentes/roles/roles.component';
 
 export const routes: Routes = [
 
@@ -67,6 +70,15 @@ export const routes: Routes = [
    { path: 'inscricoes',
     component: InscricoesComponent,
     canActivate: [AuthGuardService]
+   },
+   { path: 'home',
+    component: HomeComponent
+   },
+   { path: 'availability',
+     component: DisponibilidadeComponent
+    },
+   { path: 'roles',
+    component: RolesComponent
    }
 ];
 

@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Adicionar período de bloqueio</h2>
+
+    <mat-dialog-content>
+      <form [formGroup]="form" class="flex flex-col gap-4">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>Período de bloqueio</mat-label>
+          <mat-date-range-input [rangePicker]="picker">
+            <input matStartDate
+                   formControlName="startDate"
+                   placeholder="Data inicial">
+            <input matEndDate
+                   formControlName="endDate"
+                   placeholder="Data final">
+          </mat-date-range-input>
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-date-range-picker #picker></mat-date-range-picker>
+
+          <mat-error *ngIf="form.get('startDate')?.hasError('required')">
+            Data inicial é obrigatória
+          </mat-error>
+          <mat-error *ngIf="form.get('endDate')?.hasError('required')">
+            Data final é obrigatória
+          </mat-error>
+        </mat-form-field>
+      </form>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end">
+      <button mat-button (click)="onCancel()">Cancelar</button>
+      <button mat-raised-button
+              color="primary"
+              [disabled]="!form.valid"
+              (click)="onSubmit()">
+        Adicionar
+      </button>
+    </mat-dialog-actions>

@@ -40,6 +40,17 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { HomeComponent } from './componentes/home/home.component';
+import { DisponibilidadeComponent } from './componentes/disponibilidade/disponibilidade.component';
+import { RolesComponent } from './componentes/roles/roles.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDividerModule } from '@angular/material/divider';
+import { DateBlockDialogComponent } from './componentes/date-block-dialog/date-block-dialog.component';
+
 
 
 @NgModule({
@@ -57,10 +68,22 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     HasholeDirective,
     MascaraTelefoneDirective,
     CheckInModalComponent,
-    InscricoesComponent
+    InscricoesComponent,
+    HomeComponent,
+    DisponibilidadeComponent,
+    RolesComponent,
+    DateBlockDialogComponent
   ],
   imports: [
+    MatExpansionModule,
     BrowserModule,
+    MatDividerModule,
+    MatSidenavModule,
+    MatSlideToggleModule,
+    MatChipsModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatIconModule,
     AppRoutingModule,
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),

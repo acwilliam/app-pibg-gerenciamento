@@ -1,0 +1,45 @@
+<div class="flex flex-col h-screen">
+  <!-- Header -->
+  <mat-toolbar color="primary" class="flex justify-between items-center">
+    <mat-sidenav-container>
+      <mat-sidenav #sidenav mode="side" opened>
+        </mat-sidenav>
+      <mat-sidenav-content>
+        <button mat-icon-button (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+    <span>Olá, {{ userName }}!</span>
+    <div class="flex items-center gap-2">
+      <button mat-icon-button>
+        <mat-icon matBadge="2" matBadgeColor="warn">notifications</mat-icon>
+      </button>
+      <button mat-icon-button [matMenuTriggerFor]="profileMenu">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+
+  <!-- Profile Menu -->
+  <mat-menu #profileMenu="matMenu">
+    <button mat-menu-item (click)="navigateToProfile()">
+      <mat-icon>person</mat-icon>
+      <span>Meu Perfil</span>
+    </button>
+    <button mat-menu-item (click)="navigateToSettings()">
+      <mat-icon>settings</mat-icon>
+      <span>Configurações</span>
+    </button>
+    <mat-divider></mat-divider>
+    <button mat-menu-item (click)="logout()" class="text-red-500">
+      <mat-icon class="text-red-500">exit_to_app</mat-icon>
+      <span>Sair</span>
+    </button>
+  </mat-menu>
+
+  <!-- Rest of the component remains the same -->
+  <mat-sidenav-container class="flex-grow">
+    <!-- Previous sidenav content... -->
+  </mat-sidenav-container>
+</div>
