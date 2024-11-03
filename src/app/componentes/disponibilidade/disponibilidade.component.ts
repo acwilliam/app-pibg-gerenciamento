@@ -1,6 +1,9 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+
 import { MatDialog } from '@angular/material/dialog';
+
 import { DateBlockDialogComponent } from '../date-block-dialog/date-block-dialog.component';
 
 interface DateBlock {
@@ -20,7 +23,6 @@ export class DisponibilidadeComponent implements OnInit {
   showDateRangePicker = false;
   availabilityForm!: FormGroup;
 
-
   dateBlocks: DateBlock[] = [
     {
       startDate: '24/07/2024',
@@ -35,7 +37,7 @@ export class DisponibilidadeComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private fb: FormBuilder
-  ) {}
+  ) { }
   ngOnInit(): void {
     this.availabilityForm = this.fb.group({
       domingo: [false], // Set default values as needed
@@ -53,7 +55,6 @@ export class DisponibilidadeComponent implements OnInit {
       width: '400px',
       disableClose: true
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.dateBlocks.push({
