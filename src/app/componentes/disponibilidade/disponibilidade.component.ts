@@ -5,6 +5,8 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 
 import { DateBlockDialogComponent } from '../date-block-dialog/date-block-dialog.component';
+import { CadastroService } from '../cadastro.service';
+import { AuthService } from '../auth.service';
 
 interface DateBlock {
   startDate: string;
@@ -18,14 +20,15 @@ interface DayAvailability {
   night: boolean;
 }
 
-interface WeeklyAvailability {
+export interface WeeklyAvailability {
   [key: string]: {
     enabled: boolean;
     periods: DayAvailability;
   };
 }
 
-interface AvailabilityData {
+export interface AvailabilityData {
+  emailvoluntario: string;
   weeklyAvailability: WeeklyAvailability;
   dateBlocks: DateBlock[];
 }
@@ -43,20 +46,13 @@ export class DisponibilidadeComponent implements OnInit {
   availabilityForm!: FormGroup;
   periodsForm!: FormGroup;
 
-  dateBlocks: DateBlock[] = [
-    {
-      startDate: '24/07/2024',
-      endDate: '31/07/2024'
-    },
-    {
-      startDate: '01/08/2024',
-      endDate: '05/08/2024'
-    }
-  ];
+  dateBlocks: DateBlock[] = [];
 
   constructor(
     private dialog: MatDialog,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cadastroService: CadastroService,
+    private authService: AuthService
   ) { }
   ngOnInit(): void {
     this.availabilityForm = this.fb.group({
@@ -73,7 +69,6 @@ export class DisponibilidadeComponent implements OnInit {
   }
 
   private initializeForms() {
-    // Create form group for day toggles
     const dayToggles: { [key: string]: boolean } = {};
     const dayPeriods: { [key: string]: FormGroup } = {};
 
@@ -144,12 +139,11 @@ export class DisponibilidadeComponent implements OnInit {
   }
   getAvailabilityData(): AvailabilityData {
     const weeklyAvailability: WeeklyAvailability = {};
-
+    const emailvoluntario = this.authService.currentUserValue?.email || ''
     this.weekDays.forEach(day => {
       const dayLower = day.toLowerCase();
       const dayEnabled = this.availabilityForm.get(dayLower)?.value;
       const dayPeriods = this.periodsForm.get(`${dayLower}Periods`)?.value;
-
       weeklyAvailability[dayLower] = {
         enabled: dayEnabled,
         periods: {
@@ -162,17 +156,14 @@ export class DisponibilidadeComponent implements OnInit {
     });
     console.log('semana disponivel', weeklyAvailability)
     return {
+      emailvoluntario,
       weeklyAvailability,
       dateBlocks: [...this.dateBlocks]
     };
   }
 
   saveToFirestore() {
-    const availabilityData = this.getAvailabilityData();
-    console.log('Data to be saved:', availabilityData);
-    // Here you would implement the actual Firestore save logic
-    // Example:
-    // this.firestoreService.saveAvailability(availabilityData);
+    this.cadastroService.cadastrarConfiguracaoDisponibilidade(this.getAvailabilityData())
   }
 
 }

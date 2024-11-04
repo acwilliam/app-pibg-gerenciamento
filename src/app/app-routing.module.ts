@@ -75,7 +75,8 @@ export const routes: Routes = [
     component: HomeComponent
    },
    { path: 'disponibilidade',
-     component: DisponibilidadeComponent
+     component: DisponibilidadeComponent,
+     canActivate: [AuthGuardService]
     },
    { path: 'roles',
     component: RolesComponent

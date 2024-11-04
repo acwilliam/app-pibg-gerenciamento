@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Cadastro } from './Cadastro';
 import { from, map, Observable, switchMap } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
 import { Frequencia } from './model/Frequencia';
+import { AvailabilityData, WeeklyAvailability } from './disponibilidade/disponibilidade.component';
 
 @Injectable({
   providedIn: 'root'
@@ -83,4 +83,11 @@ export class CadastroService {
       throw error;
     });
   }
+
+  cadastrarConfiguracaoDisponibilidade(availabilityData: AvailabilityData) {
+
+    const cadastroCollection = this.firestore.collection<AvailabilityData>('availabilityData');
+    return cadastroCollection.add(availabilityData);
+  }
+
 }
