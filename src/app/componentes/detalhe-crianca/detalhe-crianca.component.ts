@@ -88,24 +88,43 @@ export class DetalheCriancaComponent implements OnInit {
   }
 
   realizarCheckin() {
-    this.route.params.subscribe(params => { this.frequencia.identificacao = params['id']; });
-    console.log('realizando checkins')
-    this.frequencia.dataCheckin = this.formatDate();
-    this.service.realizarCheckin(this.frequencia);
-    this.cadastro.Frequencia = this.frequencia
-    console.log('cadastro com a frequencia', this.cadastro)
-    this.service.atualizarCadastroCompleto(this.cadastro, this.idDacrianca)
+
+    if (this.status.isChekin) {
+      this.route.params.subscribe(params => { this.frequencia.identificacao = params['id']; });
+      this.frequencia.dataCheckin = this.formatDate();
+      this.frequencia.dataChekout = ''
+      this.service.realizarCheckin(this.frequencia).subscribe(
+        id => {
+          if (id) {
+            this.frequencia.idRegistroCheckout = id
+            this.cadastro.Frequencia = this.frequencia
+            this.service.atualizarCadastroCompleto(this.cadastro, this.idDacrianca)
+            this.status.isChekin = false
+          }
+        }
+      );
+      window.alert('Checkin Realizado com Sucesso')
+    } else {
+      window.alert('Não é possivel realizar mais de um checkin na mesma data')
+      window.location.reload()
+    }
   }
 
   realizarCheckout() {
-    console.log('passou no checkout', this.frequencia)
-    this.route.params.subscribe(params => { this.frequencia.identificacao = params['id']; });
-    this.frequencia.dataChekout = this.formatDate();
-    this.service.realizarCheckOut(this.frequencia).subscribe();
-    if (this.cadastro.Frequencia) {
-      this.cadastro.Frequencia.dataChekout = this.formatDate();
+    if (this.status.isCheckout) {
+      this.route.params.subscribe(params => { this.frequencia.identificacao = params['id']; });
+      this.frequencia.dataChekout = this.formatDate();
+      if (this.cadastro.Frequencia?.dataCheckin != undefined) {
+        this.service.realizarCheckOut(this.frequencia);
+        this.cadastro.Frequencia.dataChekout = this.frequencia.dataChekout
+        this.service.atualizarCadastroCompleto(this.cadastro, this.idDacrianca)
+        this.status.isCheckout = false
+        window.alert('checkout Realizado com sucesso')
+      } else {
+        window.alert('Não é possivel realizar checkout sem realizar checkin')
+        window.location.reload()
+      }
     }
-     this.service.atualizarCadastroCompleto(this.cadastro, this.idDacrianca)
   }
 
   qrData: string = '';

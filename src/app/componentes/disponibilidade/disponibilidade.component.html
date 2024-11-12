@@ -1,0 +1,62 @@
+<div class="container">
+  <h2 class="text-xl mb-4">Disponibilidade e data de bloqueio</h2>
+
+  <!-- Disponibilidade semanal -->
+
+  <mat-form-group [formGroup]="availabilityForm">
+    <mat-accordion class="mb-6">
+      <mat-expansion-panel [expanded]="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Disponibilidade Semanal
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div *ngFor="let day of weekDays" class="mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-medium">{{ day }}</span>
+            <mat-slide-toggle [formControlName]="day.toLowerCase()" color="primary">
+            </mat-slide-toggle>
+          </div>
+
+          <div class="grid grid-cols-4 gap-2">
+            <mat-chip-option color="primary" selected="false">
+              Dia inteiro
+            </mat-chip-option>
+            <mat-chip-option>Manhã</mat-chip-option>
+            <mat-chip-option>Tarde</mat-chip-option>
+            <mat-chip-option>Noite</mat-chip-option>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+
+  </mat-form-group>
+
+  <!-- Blocos de data -->
+
+  <div class="mb-4">
+
+    <h3 class="text-lg mb-2">Bloqueio de dados</h3>
+    <div *ngFor="let block of dateBlocks" class="mb-2 p-2 border rounded flex justify-between items-center">
+      <div>
+        <div class="font-medium">Período de ausência {{ dateBlocks.indexOf(block) + 1 }}</div>
+        <div class="text-sm text-gray-600">
+          {{ block.startDate }} - {{ block.endDate }}
+        </div>
+      </div>
+      <button mat-icon-button color="warn" (click)="removeDateBlock(block)"> <mat-icon>close</mat-icon> </button>
+    </div>
+
+    <button mat-stroked-button color="primary" class="w-full mt-4" (click)="addDateBlock()">
+      <mat-icon>add</mat-icon> Adicionar bloqueio de data </button>
+  </div>
+
+  <div class="flex gap-2 justificar-fim">
+
+    <button mat-button color="aviso">Excluir </button>
+
+    <button mat-raised-button cor="primário" (click)="saveToFirestore()"> Salvar </button>
+
+  </div>
+</div>

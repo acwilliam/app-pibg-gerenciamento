@@ -11,15 +11,15 @@ export class UpdateService {
     private snackbar: MatSnackBar
   ) {
     if (swUpdate.isEnabled) {
-      swUpdate.versionUpdates.subscribe(() => {
+     /* swUpdate.versionUpdates.subscribe(() => {
         const snack = this.snackbar.open('Nova versão disponível', 'Atualizar', {
           duration: 6000
         });
-        
+
         snack.onAction().subscribe(() => {
           window.location.reload();
         });
-      });
+      });*/
     }
   }
 }

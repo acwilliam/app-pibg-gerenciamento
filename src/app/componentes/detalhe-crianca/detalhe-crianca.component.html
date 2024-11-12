@@ -68,7 +68,7 @@
     </mat-form-field>
   </p>
   <p *ngIf="!modoEdicao">
-    <strong>Idade:</strong> {{ cadastro.idade }}
+    <strong>Idade:</strong> {{ cadastro.idade }} Anos
   </p>
   <p>
     <strong>Tipo:</strong>
@@ -88,8 +88,8 @@
   </div>
 
   <div *ngIf="validarUserAdmin() && !modoEdicao">
-    <button [disabled]="!status.isChekin" (click)="realizarCheckin()">CheckIn</button>
-    <button [disabled]="!status.isCheckout" (click)="realizarCheckout()">CheckOut</button>
+    <button (click)="realizarCheckin()">CheckIn</button>
+    <button (click)="realizarCheckout()">CheckOut</button>
     <button routerLink="/mensagem/{{ cadastro.telefoneResponsavel }}" class="botao">Mensagem</button>
     <button (click)="gerarQrcode()">Etiqueta</button>
   </div>
@@ -98,7 +98,7 @@
   <h2 class="titulo-frequencia">Frequência</h2>
   <ul class="lista-frequencia">
     <li class="item-frequencia" *ngFor="let checkin of listaChekins">
-      Data: {{ checkin.dataCheckin }}
+      checkin: {{ checkin.dataCheckin }} - checkout: {{ checkin.dataChekout }}
     </li>
   </ul>
 </div>

@@ -1,0 +1,17 @@
+.container  {
+  max-width: 620px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+::ng-deep .orange-chip.mat-mdc-chip-selected {
+  background-color: #774905 !important;
+  color: white !important;
+}
+
+::ng-deep .orange-chip:hover {
+  background-color: #fb8c00 !important;
+}
