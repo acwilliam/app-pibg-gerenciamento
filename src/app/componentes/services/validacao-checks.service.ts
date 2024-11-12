@@ -6,7 +6,6 @@ import { StatusCheckinCheckout } from '../model/StatusCheckinCheckout'
 })
 export class ValidacaoChecksService {
   hoje: Date = new Date();
-  dataHojeToISOString = this.hoje.toISOString().split('T')[0];
   status: StatusCheckinCheckout ={
     isChekin: true,
     isCheckout: true
@@ -25,17 +24,19 @@ export class ValidacaoChecksService {
 
     // Regra 2: Verifica a lista de check-ins
     for (const checkin of listaChekins) {
-      const dataHoje = this.dataHojeToISOString;
-      const dataCheckin = this.formateOnlyDate(checkin.dataCheckin);
-      const dataCheckout = this.formateOnlyDate(checkin.dataChekout);
-      const convertdataHoje = new Date(dataHoje).toLocaleDateString('pt-BR');
+      const dataHoje = new Date().toLocaleDateString('pt-BR', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+      });
+      const dataCheckin = this.formateDate(this.stringToDate(checkin.dataCheckin));
+      const dataCheckout = this.formateDate(this.stringToDate(checkin.dataChekout));
       // Se encontrar um check-in com a data de hoje, marca como falso
-      if (dataCheckin === this.formateOnlyDate(convertdataHoje)) {
+      if (dataCheckin === dataHoje) {
         this.status.isChekin = false;
       }
-
       // Se encontrar um checkout com a data de hoje, marca como falso
-      if (dataCheckout === this.formateOnlyDate(convertdataHoje)) {
+      if (dataCheckout === dataHoje) {
         this.status.isCheckout = false;
       }
     }
