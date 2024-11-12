@@ -100,10 +100,10 @@ export class DetalheCriancaComponent implements OnInit {
             this.cadastro.Frequencia = this.frequencia
             this.service.atualizarCadastroCompleto(this.cadastro, this.idDacrianca)
             this.status.isChekin = false
+            window.alert('Checkin Realizado com Sucesso')
           }
         }
       );
-      window.alert('Checkin Realizado com Sucesso')
     } else {
       window.alert('Não é possivel realizar mais de um checkin na mesma data')
       window.location.reload()
@@ -120,6 +120,7 @@ export class DetalheCriancaComponent implements OnInit {
         this.service.atualizarCadastroCompleto(this.cadastro, this.idDacrianca)
         this.status.isCheckout = false
         window.alert('checkout Realizado com sucesso')
+        window.location.reload()
       } else {
         window.alert('Não é possivel realizar checkout sem realizar checkin')
         window.location.reload()
