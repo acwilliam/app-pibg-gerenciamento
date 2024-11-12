@@ -8,8 +8,8 @@ export class ValidacaoChecksService {
   hoje: Date = new Date();
   dataHojeToISOString = this.hoje.toISOString().split('T')[0];
   status: StatusCheckinCheckout ={
-    isChekin: false,
-    isCheckout: false
+    isChekin: true,
+    isCheckout: true
   }
   constructor() { }
 
@@ -30,18 +30,16 @@ export class ValidacaoChecksService {
       const dataCheckout = this.formateOnlyDate(checkin.dataChekout);
       const convertdataHoje = new Date(dataHoje).toLocaleDateString('pt-BR');
       // Se encontrar um check-in com a data de hoje, marca como falso
-      if (dataCheckin === convertdataHoje) {
+      if (dataCheckin === this.formateOnlyDate(convertdataHoje)) {
         this.status.isChekin = false;
       }
 
       // Se encontrar um checkout com a data de hoje, marca como falso
       if (dataCheckout === this.formateOnlyDate(convertdataHoje)) {
         this.status.isCheckout = false;
-      } else {
-        this.status.isCheckout = true;
       }
     }
-
+     console.log('stauts', this.status)
     return this.status;
   }
 

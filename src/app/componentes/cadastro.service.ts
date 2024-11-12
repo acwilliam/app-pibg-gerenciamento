@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Cadastro } from './Cadastro';
-import { from, map, Observable, switchMap } from 'rxjs';
+import { catchError, from, map, Observable, switchMap } from 'rxjs';
 import { Frequencia } from './model/Frequencia';
 import { AvailabilityData, WeeklyAvailability } from './disponibilidade/disponibilidade.component';
 
@@ -27,7 +27,7 @@ export class CadastroService {
   }
 
   buscarCadastroPorId(idCadastro: string): Observable<Cadastro | undefined> {
-    console.log('id',idCadastro)
+    console.log('id', idCadastro)
     return this.firestore.collection<Cadastro>('cadastro').doc(idCadastro).valueChanges();
   }
 
@@ -37,28 +37,27 @@ export class CadastroService {
       .valueChanges({ idField: 'id' });
   }
 
-  realizarCheckin(frequencia: Frequencia) {
+  realizarCheckin(frequencia: Frequencia): Observable<string> {
     const cadastroCollection = this.firestore.collection<Frequencia>('checkin');
-    return cadastroCollection.add(frequencia);
+    return from(cadastroCollection.add(frequencia)).pipe(map(docRef => docRef.id));
   }
 
-  realizarCheckOut(frequencia: Frequencia): Observable<void> {
-    return this.firestore.collection('checkin', ref => ref.where('identificacao', '==', frequencia.identificacao))
-    .get()
-      .pipe(
-        switchMap(snapshot => {
-          if (snapshot.empty) {
-            throw new Error('Nenhum registro de checkin encontrado');
-          }
-          const doc = snapshot.docs[0];
-          return from(doc.ref.update({ dataChekout: frequencia.dataChekout }));
-        })
-      );
+  realizarCheckOut(frequencia: Frequencia) {
+    this.firestore
+      .doc(`checkin/${frequencia.idRegistroCheckout}`)
+      .update(frequencia)
+      .then(() => {
+        console.log('Checkout atualizado com sucesso');
+      })
+      .catch((error) => {
+        console.error('Erro ao atualizar Checkout:', error);
+        throw error;
+      });
   }
 
   buscarListaDeCheckins(idCadastro: string): Observable<Frequencia[]> {
     return this.firestore.collection<Frequencia>('checkin', ref => ref.where('identificacao', '==', idCadastro))
-    .valueChanges({ idField: 'id' });
+      .valueChanges({ idField: 'id' });
   }
 
   buscarUltimoCheckin(idCadastro: string): Observable<Frequencia> {
@@ -73,15 +72,15 @@ export class CadastroService {
 
   atualizarCadastroCompleto(cadastro: Cadastro, idDacrianca: string): Promise<void> {
     return this.firestore
-    .doc(`cadastro/${idDacrianca}`)
-    .update(cadastro)
-    .then(() => {
-      console.log('Cadastro atualizado com sucesso');
-    })
-    .catch((error) => {
-      console.error('Erro ao atualizar cadastro:', error);
-      throw error;
-    });
+      .doc(`cadastro/${idDacrianca}`)
+      .update(cadastro)
+      .then(() => {
+        console.log('Cadastro atualizado com sucesso');
+      })
+      .catch((error) => {
+        console.error('Erro ao atualizar cadastro:', error);
+        throw error;
+      });
   }
 
   cadastrarConfiguracaoDisponibilidade(availabilityData: AvailabilityData) {

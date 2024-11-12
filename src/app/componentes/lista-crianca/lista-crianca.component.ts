@@ -65,6 +65,7 @@ export class ListaCriancaComponent implements OnInit, AfterViewInit{
           console.log('validando status de checkin e checkout', this.statusCheckinCheckout)
           dado.selecionado = this.statusCheckinCheckout.isChekin
           dado.selecionadoOut = this.statusCheckinCheckout.isCheckout
+          //TODO ATUALIZADO O DADO DE SELECIONADO E SELECIONADOOUT NO FIREBASE
         }
       }
     });
