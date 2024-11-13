@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-
 import { MatDialog } from '@angular/material/dialog';
-
 import { DateBlockDialogComponent } from '../date-block-dialog/date-block-dialog.component';
 import { CadastroService } from '../cadastro.service';
 import { AuthService } from '../auth.service';
@@ -13,24 +9,31 @@ interface DateBlock {
   endDate: string;
 }
 
-interface DayAvailability {
-  fullDay: boolean;
-  morning: boolean;
-  afternoon: boolean;
-  night: boolean;
+interface Vigencia {
+  mes: string,
+  ano: number;
 }
 
-export interface WeeklyAvailability {
-  [key: string]: {
-    enabled: boolean;
-    periods: DayAvailability;
-  };
-}
 
-export interface AvailabilityData {
+export interface DisponibilidadeData {
   emailvoluntario: string;
-  weeklyAvailability: WeeklyAvailability;
-  dateBlocks: DateBlock[];
+  vigencia: Vigencia
+  semanaDisponivel: Semana[];
+  dateBlocks?: DateBlock[];
+}
+
+
+export interface PeriodoDia {
+  id: number;
+  name: string;
+  ativo: boolean;
+}
+
+export interface Semana {
+  id: number;
+  name: string;
+  ativo: boolean;
+  periods: PeriodoDia[];
 }
 
 @Component({
@@ -39,69 +42,36 @@ export interface AvailabilityData {
   styleUrls: ['./disponibilidade.component.css']
 })
 export class DisponibilidadeComponent implements OnInit {
-  weekDays = ['Domingo', 'Segunda', 'Terca', 'Quarta', 'Quinta', 'Sexta', 'Sabado'];
-
-  dateRange = new FormControl();
-  showDateRangePicker = false;
-  availabilityForm!: FormGroup;
-  periodsForm!: FormGroup;
-
+  disponibilidadeExiste?: boolean;
   dateBlocks: DateBlock[] = [];
+  disponibilidadeData!: DisponibilidadeData;
+  emailVoluntario: string = '';
+  vigencia: Vigencia = {
+    mes: '',
+    ano: 0
+  }
 
   constructor(
     private dialog: MatDialog,
-    private fb: FormBuilder,
     private cadastroService: CadastroService,
     private authService: AuthService
   ) { }
+
   ngOnInit(): void {
-    this.availabilityForm = this.fb.group({
-      domingo: [true],
-      segunda: [true],
-      terca: [true],
-      quarta: [true],
-      quinta: [true],
-      sexta: [true],
-      sabado: [true]
-    });
-
-    this.initializeForms()
+    this.inicializarDisponibilidadeData();
+    this.emailVoluntario = this.authService.currentUserValue?.email || ''
+    this.obterVigencia();
   }
-
-  private initializeForms() {
-    const dayToggles: { [key: string]: boolean } = {};
-    const dayPeriods: { [key: string]: FormGroup } = {};
-
-    this.weekDays.forEach(day => {
-      const dayLower = day.toLowerCase();
-      dayToggles[dayLower] = false;
-
-      // Criando form group para cada periodo do dia
-      dayPeriods[`${dayLower}Periods`] = this.fb.group({
-        fullDay: [false],
-        morning: [false],
-        afternoon: [false],
-        night: [false]
-      });
-    });
-
-    this.availabilityForm = this.fb.group(dayToggles);
-    this.periodsForm = this.fb.group(dayPeriods);
-
-    // Subscribe to changes in day toggles to enable/disable periods
-    Object.keys(dayToggles).forEach(day => {
-      this.availabilityForm.get(day)?.valueChanges.subscribe(enabled => {
-        const periodControls = this.periodsForm.get(`${day}Periods`) as FormGroup;
-        if (enabled) {
-          periodControls.enable();
-        } else {
-          periodControls.disable();
-          Object.keys(periodControls.controls).forEach(control => {
-            periodControls.get(control)?.setValue(false);
-          });
-        }
-      });
-    });
+  inicializarDisponibilidadeData() {
+    this.disponibilidadeData = {
+      emailvoluntario: '',
+      vigencia: {
+        mes: '',
+        ano: 0
+      },
+      semanaDisponivel: this.weekDays,
+      dateBlocks: []
+    }
   }
 
   addDateBlock() {
@@ -137,33 +107,153 @@ export class DisponibilidadeComponent implements OnInit {
     const [day, month, year] = dateStr.split('/').map(Number);
     return new Date(year, month - 1, day);
   }
-  getAvailabilityData(): AvailabilityData {
-    const weeklyAvailability: WeeklyAvailability = {};
-    const emailvoluntario = this.authService.currentUserValue?.email || ''
-    this.weekDays.forEach(day => {
-      const dayLower = day.toLowerCase();
-      const dayEnabled = this.availabilityForm.get(dayLower)?.value;
-      const dayPeriods = this.periodsForm.get(`${dayLower}Periods`)?.value;
-      weeklyAvailability[dayLower] = {
-        enabled: dayEnabled,
-        periods: {
-          fullDay: dayPeriods?.fullDay || false,
-          morning: dayPeriods?.morning || false,
-          afternoon: dayPeriods?.afternoon || false,
-          night: dayPeriods?.night || false
+
+  excluirDisponibilidade() {
+    this.cadastroService.buscarDisponibilidade(this.emailVoluntario, this.vigencia.ano, this.vigencia.mes)
+      .subscribe(existe => {
+        if (existe) {
+          this.cadastroService.excluirDisponibilidade(this.emailVoluntario, this.vigencia.ano, this.vigencia.mes)
+          .subscribe(resultado => {
+            if (resultado) {
+              window.alert(`Disponibilidade para o mês ${this.vigencia.mes} e ano ${this.vigencia.ano} excluída com sucesso`)
+            }
+          })
+        } else {
+          window.alert(`Só é possivel excluir a disponibilidade do mês vigente`)
         }
-      };
-    });
-    console.log('semana disponivel', weeklyAvailability)
-    return {
-      emailvoluntario,
-      weeklyAvailability,
-      dateBlocks: [...this.dateBlocks]
-    };
+      });
+
   }
 
   saveToFirestore() {
-    this.cadastroService.cadastrarConfiguracaoDisponibilidade(this.getAvailabilityData())
+    this.disponibilidadeData = {
+      emailvoluntario: this.emailVoluntario,
+      vigencia: this.vigencia,
+      semanaDisponivel: this.weekDays,
+      dateBlocks: this.dateBlocks
+    }
+
+    this.cadastroService.buscarDisponibilidade(this.emailVoluntario, this.vigencia.ano, this.vigencia.mes)
+      .subscribe(existe => {
+        if (!existe) {
+          this.cadastroService.cadastrarConfiguracaoDisponibilidade(this.disponibilidadeData)
+          window.alert(`Disponibilidade para o mês ${this.vigencia.mes} e ano ${this.vigencia.ano} cadastrada com sucesso`)
+        } else {
+          window.alert(`Não é possivel cadastrar disponibilidade para o mês ${this.vigencia.mes} e ano ${this.vigencia.ano} porquê já foi cadastrado.`)
+        }
+      });
   }
 
+  weekDays: Semana[] = [
+    {
+      id: 0,
+      name: 'Domingo',
+      ativo: false,
+      periods: [
+        { id: 0, name: 'Dia inteiro', ativo: false },
+        { id: 1, name: 'Manhã', ativo: false },
+        { id: 2, name: 'Tarde', ativo: false },
+        { id: 3, name: 'Noite', ativo: false }
+      ]
+    },
+    {
+      id: 1,
+      name: 'Segunda',
+      ativo: false,
+      periods: [
+        { id: 0, name: 'Dia inteiro', ativo: false },
+        { id: 1, name: 'Manhã', ativo: false },
+        { id: 2, name: 'Tarde', ativo: false },
+        { id: 3, name: 'Noite', ativo: false }
+      ]
+    },
+    {
+      id: 2,
+      name: 'Terca',
+      ativo: false,
+      periods: [
+        { id: 0, name: 'Dia inteiro', ativo: false },
+        { id: 1, name: 'Manhã', ativo: false },
+        { id: 2, name: 'Tarde', ativo: false },
+        { id: 3, name: 'Noite', ativo: false }
+      ]
+    },
+    {
+      id: 3,
+      name: 'Quarta',
+      ativo: false,
+      periods: [
+        { id: 0, name: 'Dia inteiro', ativo: false },
+        { id: 1, name: 'Manhã', ativo: false },
+        { id: 2, name: 'Tarde', ativo: false },
+        { id: 3, name: 'Noite', ativo: false }
+      ]
+    },
+    {
+      id: 4,
+      name: 'Quinta',
+      ativo: false,
+      periods: [
+        { id: 0, name: 'Dia inteiro', ativo: false },
+        { id: 1, name: 'Manhã', ativo: false },
+        { id: 2, name: 'Tarde', ativo: false },
+        { id: 3, name: 'Noite', ativo: false }
+      ]
+    },
+    {
+      id: 5,
+      name: 'Sexta',
+      ativo: false,
+      periods: [
+        { id: 0, name: 'Dia inteiro', ativo: false },
+        { id: 1, name: 'Manhã', ativo: false },
+        { id: 2, name: 'Tarde', ativo: false },
+        { id: 3, name: 'Noite', ativo: false }
+      ]
+    },
+    {
+      id: 6,
+      name: 'Sabado',
+      ativo: false,
+      periods: [
+        { id: 0, name: 'Dia inteiro', ativo: false },
+        { id: 1, name: 'Manhã', ativo: false },
+        { id: 2, name: 'Tarde', ativo: false },
+        { id: 3, name: 'Noite', ativo: false }
+      ]
+    },
+  ];
+  toggleDay(day: Semana): void {
+    day.ativo = !day.ativo;
+
+    if (day.ativo && !day.periods.some(period => period.ativo)) {
+      day.periods[0].ativo = true;
+    } else if (!day.ativo) {
+      day.periods.forEach(period => period.ativo = false);
+    }
+  }
+
+  togglePeriod(day: Semana, periodoSelecionado: PeriodoDia): void {
+    if (periodoSelecionado.name === 'Dia inteiro') {
+      day.periods.forEach(period => {
+        period.ativo = period === periodoSelecionado ? !period.ativo : false;
+      });
+    } else {
+      day.periods[0].ativo = false;
+      periodoSelecionado.ativo = !periodoSelecionado.ativo;
+    }
+
+    day.ativo = day.periods.some(period => period.ativo);
+  }
+
+  obterVigencia() {
+    const meses = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+    const dataAtual = new Date();
+    const mesAtual = dataAtual.getMonth();
+    const anoAtual = dataAtual.getFullYear()
+    this.vigencia = {
+      mes: meses[mesAtual],
+      ano: anoAtual
+    }
+  }
 }

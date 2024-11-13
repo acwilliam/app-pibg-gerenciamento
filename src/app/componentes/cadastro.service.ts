@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Cadastro } from './Cadastro';
-import { catchError, from, map, Observable, switchMap } from 'rxjs';
+import { from, map, Observable, switchMap } from 'rxjs';
 import { Frequencia } from './model/Frequencia';
-import { AvailabilityData, WeeklyAvailability } from './disponibilidade/disponibilidade.component';
+import { DisponibilidadeData } from './disponibilidade/disponibilidade.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CadastroService {
+
 
   constructor(
     private firestore: AngularFirestore
@@ -83,10 +84,39 @@ export class CadastroService {
       });
   }
 
-  cadastrarConfiguracaoDisponibilidade(availabilityData: AvailabilityData) {
+  cadastrarConfiguracaoDisponibilidade(disponibilidadeData: DisponibilidadeData) {
 
-    const cadastroCollection = this.firestore.collection<AvailabilityData>('availabilityData');
-    return cadastroCollection.add(availabilityData);
+    const cadastroCollection = this.firestore.collection<DisponibilidadeData>('disponibilidadeData');
+    return cadastroCollection.add(disponibilidadeData);
   }
 
+  buscarDisponibilidade(emailVoluntario: string, ano: number, mes: string): Observable<boolean> {
+    console.log('passou aqui')
+    return this.firestore.collection<DisponibilidadeData>('disponibilidadeData', ref =>
+      ref.where('emailvoluntario', '==', emailVoluntario)
+        .where('vigencia.ano', '==', ano)
+        .where('vigencia.mes', '==', mes)
+    ).get().pipe(
+      map(snapshot => {
+        console.log('snapshot size', snapshot.size)
+        return !snapshot.empty
+      }))
+  }
+
+  excluirDisponibilidade(emailVoluntario: string, ano: number, mes: string) {
+    return from(this.firestore.collection('disponibilidadeData', ref =>
+      ref.where('emailvoluntario', '==', emailVoluntario)
+        .where('vigencia.ano', '==', ano)
+        .where('vigencia.mes', '==', mes))
+      .get())
+      .pipe(
+        switchMap(snapshot => {
+          if (snapshot.empty) {
+            return [false];
+          }
+          const batch = this.firestore.firestore.batch();
+          snapshot.docs.forEach(doc => batch.delete(doc.ref));
+          return from(batch.commit()).pipe(map(() => true));
+        }));
+  }
 }

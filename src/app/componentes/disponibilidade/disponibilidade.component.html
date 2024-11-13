@@ -1,43 +1,32 @@
-<div class="container">
-  <h2 class="text-xl mb-4">Disponibilidade e data de bloqueio</h2>
+<div class="availability-container">
+  <div class="availability-weekly">
+    <h3>Disponibilidade Semanal</h3>
 
-  <!-- Disponibilidade semanal -->
+    <div class="day-row" *ngFor="let day of weekDays">
+      <div class="day-name">
+        <button class="day-button"
+                [class.active]="day.ativo"
+                (click)="toggleDay(day)">
+          {{day.name}}
+        </button>
+      </div>
 
-  <mat-form-group [formGroup]="availabilityForm">
-    <mat-accordion class="mb-6">
-      <mat-expansion-panel [expanded]="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Disponibilidade Semanal
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-
-        <div *ngFor="let day of weekDays" class="mb-4">
-          <div class="flex items-center justify-between mb-2">
-            <span class="font-medium">{{ day }}</span>
-            <mat-slide-toggle [formControlName]="day.toLowerCase()" color="primary">
-            </mat-slide-toggle>
-          </div>
-
-          <div class="grid grid-cols-4 gap-2">
-            <mat-chip-option color="primary" selected="false">
-              Dia inteiro
-            </mat-chip-option>
-            <mat-chip-option>Manhã</mat-chip-option>
-            <mat-chip-option>Tarde</mat-chip-option>
-            <mat-chip-option>Noite</mat-chip-option>
-          </div>
-        </div>
-      </mat-expansion-panel>
-    </mat-accordion>
-
-  </mat-form-group>
+      <div class="periods">
+        <button *ngFor="let period of day.periods"
+                class="period-button"
+                [class.active]="period.ativo"
+                (click)="togglePeriod(day, period)">
+          {{period.name}}
+        </button>
+      </div>
+    </div>
+  </div>
 
   <!-- Blocos de data -->
 
   <div class="mb-4">
 
-    <h3 class="text-lg mb-2">Bloqueio de dados</h3>
+    <h3 class="text-lg mb-2">Bloqueio de Datas</h3>
     <div *ngFor="let block of dateBlocks" class="mb-2 p-2 border rounded flex justify-between items-center">
       <div>
         <div class="font-medium">Período de ausência {{ dateBlocks.indexOf(block) + 1 }}</div>
@@ -53,10 +42,7 @@
   </div>
 
   <div class="flex gap-2 justificar-fim">
-
-    <button mat-button color="aviso">Excluir </button>
-
+    <button mat-button color="aviso" (click)="excluirDisponibilidade()">Excluir </button>
     <button mat-raised-button cor="primário" (click)="saveToFirestore()"> Salvar </button>
-
   </div>
 </div>
