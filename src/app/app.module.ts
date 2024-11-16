@@ -50,6 +50,8 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatDividerModule } from '@angular/material/divider';
 import { DateBlockDialogComponent } from './componentes/date-block-dialog/date-block-dialog.component';
+import { ReunioesComponent } from './componentes/reunioes/reunioes.component';
+import { CriarReunioesComponent } from './componentes/criar-reunioes/criar-reunioes.component';
 
 
 
@@ -72,7 +74,9 @@ import { DateBlockDialogComponent } from './componentes/date-block-dialog/date-b
     HomeComponent,
     DisponibilidadeComponent,
     RolesComponent,
-    DateBlockDialogComponent
+    DateBlockDialogComponent,
+    ReunioesComponent,
+    CriarReunioesComponent
   ],
   imports: [
     MatExpansionModule,

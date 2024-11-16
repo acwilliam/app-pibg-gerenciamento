@@ -1,0 +1,77 @@
+<mat-icon class="chevron_left" (click)="voltar()">chevron_left</mat-icon>
+<div class="container">
+  <form [formGroup]="reuniaoForm" class="formulario">
+    <div class="form-group">
+      <label>Descrição *</label>
+      <input type="text" formControlName="descricao">
+    </div>
+
+    <div class="form-group">
+      <label>Data *</label>
+      <input type="date" formControlName="data">
+    </div>
+
+    <div class="horarios">
+      <div class="form-group">
+        <label>Início *</label>
+        <input type="time" formControlName="horaInicio">
+      </div>
+
+      <div class="form-group">
+        <label>Fim *</label>
+        <input type="time" formControlName="horaFim">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Faixa etária *</label>
+      <select formControlName="sala">
+        <option *ngFor="let sala of salas" [value]="sala">{{sala}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Evento</label>
+      <select formControlName="evento">
+        <option *ngFor="let evento of eventos" [value]="evento">{{evento}}</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Número máximo de participantes</label>
+      <input type="number" formControlName="numeroMaximo" min="0">
+    </div>
+
+    <div class="form-group switch">
+      <label>Inclui aberta</label>
+      <label class="switch-toggle">
+        <input type="checkbox" formControlName="incluiAberta">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="form-group switch">
+      <label>Repetir Semanalmente</label>
+      <label class="switch-toggle">
+        <input type="checkbox" formControlName="repetirSemanalmente">
+        <span class="slider"></span>
+      </label>
+    </div>
+
+    <div class="form-group quantidade-reunioes" *ngIf="reuniaoForm.get('repetirSemanalmente')?.value">
+      <label>Quantidade de Reuniões *</label>
+      <input type="number" formControlName="quantidadeReunioes" min="1" max="52" placeholder="Quantidade de repetições">
+      <small class="error-message" *ngIf="reuniaoForm.get('quantidadeReunioes')?.errors?.['required'] &&
+                    reuniaoForm.get('quantidadeReunioes')?.touched">
+        Campo obrigatório
+      </small>
+      <small class="error-message" *ngIf="reuniaoForm.get('quantidadeReunioes')?.errors?.['min'] ||
+                    reuniaoForm.get('quantidadeReunioes')?.errors?.['max']">
+        O valor deve estar entre 1 e 52
+      </small>
+    </div>
+    <button class="criar-btn" (click)="criarReuniao()" [disabled]="!reuniaoForm.valid">
+      CRIAR
+    </button>
+  </form>
+</div>

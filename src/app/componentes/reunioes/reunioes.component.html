@@ -1,0 +1,48 @@
+<mat-icon class="chevron_left" (click)="voltar()" >chevron_left</mat-icon>
+<div class="tabs">
+  <div (click)="selecionarAba('aberta')" [class.active]="abaAtiva === 'aberta'">Aberta</div>
+  <div (click)="selecionarAba('prevista')" [class.active]="abaAtiva === 'prevista'">Prevista</div>
+  <div (click)="selecionarAba('fechada')" [class.active]="abaAtiva === 'fechada'">Fechada</div>
+</div>
+
+<div class="content" *ngIf="abaAtiva === 'aberta'">
+  <ng-container *ngIf="reunioesAbertas.length > 0; else noReunioesDisponiveis">
+    <ul>
+      <li *ngFor="let reuniao of reunioesAbertas">
+        {{ reuniao.descricao }}
+      </li>
+    </ul>
+  </ng-container>
+  <ng-template #noReunioesDisponiveis>
+    <p>Não há reuniões abertas disponíveis</p>
+  </ng-template>
+</div>
+
+<div class="content" *ngIf="abaAtiva === 'prevista'">
+  <ng-container *ngIf="reunioesPrevista.length > 0; else noReunioesDisponiveis">
+    <ul>
+      <li *ngFor="let reuniao of reunioesPrevista">
+        {{ reuniao.descricao }}
+      </li>
+    </ul>
+  </ng-container>
+  <ng-template #noReunioesDisponiveis>
+    <p>Não há reunioes previstas disponíveis</p>
+  </ng-template>
+</div>
+
+<div class="content" *ngIf="abaAtiva === 'fechada'">
+  <ng-container *ngIf="reunioesFechadas.length > 0; else noReunioesDisponiveis">
+    <ul>
+      <li *ngFor="let reuniao of reunioesFechadas"> {{ reuniao.descricao }}
+      </li>
+    </ul>
+  </ng-container>
+  <ng-template #noReunioesDisponiveis>
+    <p>Não há reunioes fechadas</p>
+  </ng-template>
+</div>
+
+<button class="fab-button" mat-fab color="primary" routerLink="/criar-reuniao">
+  <mat-icon>add</mat-icon>
+</button>

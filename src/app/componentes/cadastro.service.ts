@@ -5,6 +5,7 @@ import { from, map, Observable, switchMap } from 'rxjs';
 import { Frequencia } from './model/Frequencia';
 import { DisponibilidadeData } from './disponibilidade/disponibilidade.component';
 import { Funcao, Ministerio } from './roles/roles.component';
+import { Reuniao } from './model/reuniao';
 
 @Injectable({
   providedIn: 'root'
@@ -141,4 +142,18 @@ export class CadastroService {
     return this.firestore.collection<Funcao>('funcao')
     .valueChanges({ idField: 'id' });
   }
+
+
+  criarReuniao(reuniao: Reuniao) {
+    console.log('reuniao')
+    const cadastroCollection = this.firestore.collection<Reuniao>('reuniao');
+    return cadastroCollection.add(reuniao)
+  }
+
+  buscarReunioes() {
+    console.log('reuniao')
+    return this.firestore.collection<Reuniao>('reuniao')
+    .valueChanges({ idField: 'id' });
+  }
+
 }
