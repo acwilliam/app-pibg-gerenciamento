@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
-
-interface Role {
+import { MatTableDataSource } from '@angular/material/table';
+import { CadastroService } from './../cadastro.service';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { Location } from '@angular/common';
+export interface Funcao {
   name: string;
-  type: string;
-  active: boolean;
+  ministerio: string;
+  descricao: string;
 }
 
-interface VolunteerGroup {
-  name: string;
-  description: string;
+export interface Ministerio {
+  nome: string;
 }
 
 @Component({
@@ -16,45 +18,69 @@ interface VolunteerGroup {
   templateUrl: './roles.component.html',
   styleUrls: ['./roles.component.css']
 })
-export class RolesComponent {
-  roles: Role[] = [
-    {
-      name: 'Lanche',
-      type: 'Recepção',
-      active: true
-    },
-    {
-      name: 'Violão',
-      type: 'Instrumental',
-      active: true
-    },
-    {
-      name: 'Cantor',
-      type: 'Vocal',
-      active: true
+export class RolesComponent implements OnInit, AfterViewInit {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  displayedColumns: string[] = ['ministerio', 'funcao', 'descricao'];
+  dataSource: MatTableDataSource<Funcao>;
+  ministerrioSelecionado?: string
+  ministerio: Ministerio = { nome: '' }
+  funcao: Funcao = {
+    name: '',
+    ministerio: '',
+    descricao: ''
+  };
+
+
+  ministerios: Ministerio[] = []
+  constructor(
+    private cadastroService: CadastroService,
+    private location: Location
+  ) {
+    this.dataSource = new MatTableDataSource<Funcao>([]);
+  }
+
+  ngOnInit(): void {
+    this.cadastroService.buscarListaDeMinisterios().subscribe(
+      (ministerios: Ministerio[]) => {
+        this.ministerios = ministerios
+      }
+    )
+
+    this.buscarListaDefuncoes()
+  }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  buscarListaDefuncoes() {
+    this.cadastroService.buscarListaDefuncoes().subscribe({
+      next: (dados: Funcao[]) => {
+        this.dataSource = new MatTableDataSource(dados); // Inicializa o MatTableDataSource aqui
+        this.dataSource.paginator = this.paginator; // Configura o paginator
+        console.log('funcoes', dados);
+        console.log('dataSource.data', this.dataSource.data);
+      }
+    });
+  }
+
+
+
+  addFuncao() {
+    if (this.ministerrioSelecionado && this.funcao.name && this.funcao.descricao) {
+      this.funcao.ministerio = this.ministerrioSelecionado
+      this.ministerio.nome = this.ministerrioSelecionado
+      this.cadastroService.cadastrarFuncao(this.funcao);
+
+      this.funcao = { name: '', ministerio: '', descricao: '' }
+      window.alert('Função cadastrada')
+    } else {
+      window.alert('preencha todos os campos')
     }
-  ];
-
-  groups: VolunteerGroup[] = [
-    {
-      name: 'Música',
-      description: 'Grupo musical e vocal'
-    },
-    {
-      name: 'Kids',
-      description: 'Ministério infantil'
-    }
-  ];
-
-  toggleRole(role: Role) {
-    role.active = !role.active;
   }
 
-  addRole() {
-    // Implement add role logic
+  voltar() {
+    this.location.back()
   }
 
-  addGroup() {
-    // Implement add group logic
-  }
 }

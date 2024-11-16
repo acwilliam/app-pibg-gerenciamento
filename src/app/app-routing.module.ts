@@ -78,7 +78,7 @@ export const routes: Routes = [
      component: DisponibilidadeComponent,
      canActivate: [AuthGuardService]
     },
-   { path: 'roles',
+   { path: 'cadastrar-funcao',
     component: RolesComponent
    }
 ];

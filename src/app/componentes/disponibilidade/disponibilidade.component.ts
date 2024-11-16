@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DateBlockDialogComponent } from '../date-block-dialog/date-block-dialog.component';
 import { CadastroService } from '../cadastro.service';
 import { AuthService } from '../auth.service';
-
+import { Location } from '@angular/common';
 interface DateBlock {
   startDate: string;
   endDate: string;
@@ -54,7 +54,8 @@ export class DisponibilidadeComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private cadastroService: CadastroService,
-    private authService: AuthService
+    private authService: AuthService,
+    private location: Location
   ) { }
 
   ngOnInit(): void {
@@ -255,5 +256,9 @@ export class DisponibilidadeComponent implements OnInit {
       mes: meses[mesAtual],
       ano: anoAtual
     }
+  }
+
+  voltar() {
+    this.location.back()
   }
 }

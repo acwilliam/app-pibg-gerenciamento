@@ -4,11 +4,13 @@ import { Cadastro } from './Cadastro';
 import { from, map, Observable, switchMap } from 'rxjs';
 import { Frequencia } from './model/Frequencia';
 import { DisponibilidadeData } from './disponibilidade/disponibilidade.component';
+import { Funcao, Ministerio } from './roles/roles.component';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CadastroService {
+
 
 
   constructor(
@@ -118,5 +120,25 @@ export class CadastroService {
           snapshot.docs.forEach(doc => batch.delete(doc.ref));
           return from(batch.commit()).pipe(map(() => true));
         }));
+  }
+
+  cadastrarFuncao(funcao: Funcao) {
+    const cadastroCollection = this.firestore.collection<Funcao>('funcao');
+    return cadastroCollection.add(funcao);
+  }
+
+  cadastrarMinisterio(ministerio: Ministerio) {
+    const cadastroCollection = this.firestore.collection<Ministerio>('ministerio');
+    return cadastroCollection.add(ministerio);
+  }
+
+  buscarListaDeMinisterios(): Observable<Ministerio[]> {
+    return this.firestore.collection<Ministerio>('ministerio')
+    .valueChanges({ idField: 'id' });
+  }
+
+  buscarListaDefuncoes(): Observable<Funcao[]>  {
+    return this.firestore.collection<Funcao>('funcao')
+    .valueChanges({ idField: 'id' });
   }
 }

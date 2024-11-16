@@ -1,70 +1,51 @@
-<div class="p-4">
-  <h2 class="text-xl mb-4">Funções</h2>
-
-  <!-- Volunteer Roles -->
+<mat-icon class="chevron_left" (click)="voltar()">chevron_left</mat-icon>
+<div class="p-4" class='container'>
   <mat-accordion class="mb-6">
     <mat-expansion-panel [expanded]="true">
       <mat-expansion-panel-header>
         <mat-panel-title>
-          Funções do voluntário
+          Adicionar funções do voluntário
         </mat-panel-title>
       </mat-expansion-panel-header>
+      <div class="funcao">
+        <label for="funcao">Ministerio</label>
+        <select id="ministerio-select" name="ministerio" [(ngModel)]="ministerrioSelecionado">
+          <option *ngFor="let ministerio of ministerios" [value]="ministerio.nome">{{ ministerio.nome }}</option>d
+        </select>
+        <label for="funcao">Nome da função</label>
+        <input type="text" class="input" id="nomeFuncao" name="nomeFuncao" placeholder="digite o nome da função"
+          [(ngModel)]="funcao.name" required>
 
-      <div *ngFor="let role of roles" class="mb-4 p-2 border rounded flex justify-between items-center">
-        <div>
-          <div class="font-medium">{{ role.name }}</div>
-          <div class="text-sm text-gray-600">{{ role.type }}</div>
-        </div>
-        <mat-slide-toggle
-          [checked]="role.active"
-          color="primary"
-          (change)="toggleRole(role)">
-        </mat-slide-toggle>
+        <label for="funcao">Descrição da função</label>
+        <input type="text" class="input" id="descricaoFuncao" name="descricaoeFuncao"
+          placeholder="digite a descrição da função" [(ngModel)]="funcao.descricao" required>
       </div>
 
-      <button
-        mat-stroked-button
-        color="primary"
-        class="w-full mt-4"
-        (click)="addRole()">
+
+      <button mat-stroked-button color="primary" class="w-full mt-4" (click)="addFuncao()">
         <mat-icon>add</mat-icon>
         Adicionar função
       </button>
     </mat-expansion-panel>
   </mat-accordion>
 
-  <!-- Volunteer Groups -->
-  <mat-accordion>
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          Grupos do voluntário
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-
-      <div *ngFor="let group of groups" class="mb-4 p-2 border rounded">
-        <div class="font-medium">{{ group.name }}</div>
-        <div class="text-sm text-gray-600">{{ group.description }}</div>
-      </div>
-
-      <button
-        mat-stroked-button
-        color="primary"
-        class="w-full mt-4"
-        (click)="addGroup()">
-        <mat-icon>add</mat-icon>
-        Adicionar grupo
-      </button>
-    </mat-expansion-panel>
-  </mat-accordion>
-
-  <!-- Action Buttons -->
-  <div class="flex gap-2 justify-end mt-4">
-    <button mat-button color="warn">
-      Excluir
-    </button>
-    <button mat-raised-button color="primary">
-      Salvar
-    </button>
+  <div>
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="ministerio">
+        <th mat-header-cell *matHeaderCellDef> Ministério </th>
+        <td mat-cell *matCellDef="let element">{{ element.ministerio }}</td>
+      </ng-container>
+      <ng-container matColumnDef="funcao">
+        <th mat-header-cell *matHeaderCellDef> Função </th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+      </ng-container>
+      <ng-container matColumnDef="descricao">
+        <th mat-header-cell *matHeaderCellDef> Descrição </th>
+        <td mat-cell *matCellDef="let element"> {{element.descricao}} </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons></mat-paginator>
   </div>
 </div>
