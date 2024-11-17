@@ -78,3 +78,61 @@ p {
   background-color: #c2581a;
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
 }
+.content {
+  padding: 16px;
+}
+
+.reuniao-grupo {
+  margin-bottom: 24px;
+}
+
+.mes-titulo {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.reuniao-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.data-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #673ab7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+}
+
+.dia {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.reuniao-info {
+  flex: 1;
+}
+
+.reuniao-info h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.reuniao-info p {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.chevron-right {
+  color: #999;
+}

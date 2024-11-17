@@ -1,4 +1,4 @@
-<mat-icon class="chevron_left" (click)="voltar()" >chevron_left</mat-icon>
+<mat-icon class="chevron_left" (click)="voltar()">chevron_left</mat-icon>
 <div class="tabs">
   <div (click)="selecionarAba('aberta')" [class.active]="abaAtiva === 'aberta'">Aberta</div>
   <div (click)="selecionarAba('prevista')" [class.active]="abaAtiva === 'prevista'">Prevista</div>
@@ -7,11 +7,20 @@
 
 <div class="content" *ngIf="abaAtiva === 'aberta'">
   <ng-container *ngIf="reunioesAbertas.length > 0; else noReunioesDisponiveis">
-    <ul>
-      <li *ngFor="let reuniao of reunioesAbertas">
-        {{ reuniao.descricao }}
-      </li>
-    </ul>
+    <div class="reuniao-grupo" *ngFor="let grupo of reunioesAbertas | groupby:'mes'">
+      <h3 class="mes-titulo">{{grupo.key}}</h3>
+      <div class="reuniao-item" *ngFor="let reuniao of grupo.value">
+        <div class="data-circle">
+          <span class="dia">{{reuniao.data | date:'dd'}}</span>
+        </div>
+        <div class="reuniao-info">
+          <h4>{{reuniao.descricao}}</h4>
+          <p>{{reuniao.sala}} </p>
+          <p>{{reuniao.horaInicio}} às {{reuniao.horaFim}}</p>
+        </div>
+        <mat-icon class="chevron-right">chevron_right</mat-icon>
+      </div>
+    </div>
   </ng-container>
   <ng-template #noReunioesDisponiveis>
     <p>Não há reuniões abertas disponíveis</p>
@@ -20,11 +29,20 @@
 
 <div class="content" *ngIf="abaAtiva === 'prevista'">
   <ng-container *ngIf="reunioesPrevista.length > 0; else noReunioesDisponiveis">
-    <ul>
-      <li *ngFor="let reuniao of reunioesPrevista">
-        {{ reuniao.descricao }}
-      </li>
-    </ul>
+    <div class="reuniao-grupo" *ngFor="let grupo of reunioesPrevista | groupby:'mes'">
+      <h3 class="mes-titulo">{{grupo.key}}</h3>
+      <div class="reuniao-item" *ngFor="let reuniao of grupo.value">
+        <div class="data-circle">
+          <span class="dia">{{reuniao.data | date:'dd'}}</span>
+        </div>
+        <div class="reuniao-info">
+          <h4>{{reuniao.descricao}}</h4>
+          <p>{{reuniao.sala}} </p>
+          <p>{{reuniao.horaInicio}} às {{reuniao.horaFim}}</p>
+        </div>
+        <mat-icon class="chevron-right">chevron_right</mat-icon>
+      </div>
+    </div>
   </ng-container>
   <ng-template #noReunioesDisponiveis>
     <p>Não há reunioes previstas disponíveis</p>
@@ -33,10 +51,20 @@
 
 <div class="content" *ngIf="abaAtiva === 'fechada'">
   <ng-container *ngIf="reunioesFechadas.length > 0; else noReunioesDisponiveis">
-    <ul>
-      <li *ngFor="let reuniao of reunioesFechadas"> {{ reuniao.descricao }}
-      </li>
-    </ul>
+    <div class="reuniao-grupo" *ngFor="let grupo of reunioesFechadas | groupby:'mes'">
+      <h3 class="mes-titulo">{{grupo.key}}</h3>
+      <div class="reuniao-item" *ngFor="let reuniao of grupo.value">
+        <div class="data-circle">
+          <span class="dia">{{reuniao.data | date:'dd'}}</span>
+        </div>
+        <div class="reuniao-info">
+          <h4>{{reuniao.descricao}}</h4>
+          <p>{{reuniao.sala}} </p>
+          <p>{{reuniao.horaInicio}} às {{reuniao.horaFim}}</p>
+        </div>
+        <mat-icon class="chevron-right">chevron_right</mat-icon>
+      </div>
+    </div>
   </ng-container>
   <ng-template #noReunioesDisponiveis>
     <p>Não há reunioes fechadas</p>

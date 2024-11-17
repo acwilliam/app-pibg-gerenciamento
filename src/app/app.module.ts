@@ -52,6 +52,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { DateBlockDialogComponent } from './componentes/date-block-dialog/date-block-dialog.component';
 import { ReunioesComponent } from './componentes/reunioes/reunioes.component';
 import { CriarReunioesComponent } from './componentes/criar-reunioes/criar-reunioes.component';
+import { GroupbyPipe } from './pipes/groupby.pipe';
 
 
 
@@ -76,7 +77,8 @@ import { CriarReunioesComponent } from './componentes/criar-reunioes/criar-reuni
     RolesComponent,
     DateBlockDialogComponent,
     ReunioesComponent,
-    CriarReunioesComponent
+    CriarReunioesComponent,
+    GroupbyPipe
   ],
   imports: [
     MatExpansionModule,
