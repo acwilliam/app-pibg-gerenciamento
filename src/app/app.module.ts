@@ -53,6 +53,7 @@ import { DateBlockDialogComponent } from './componentes/date-block-dialog/date-b
 import { ReunioesComponent } from './componentes/reunioes/reunioes.component';
 import { CriarReunioesComponent } from './componentes/criar-reunioes/criar-reunioes.component';
 import { GroupbyPipe } from './pipes/groupby.pipe';
+import { ConfirmacaoDialogComponent } from './shared/dialogs/confirmacao-dialog/confirmacao-dialog.component';
 
 
 
@@ -78,7 +79,8 @@ import { GroupbyPipe } from './pipes/groupby.pipe';
     DateBlockDialogComponent,
     ReunioesComponent,
     CriarReunioesComponent,
-    GroupbyPipe
+    GroupbyPipe,
+    ConfirmacaoDialogComponent
   ],
   imports: [
     MatExpansionModule,

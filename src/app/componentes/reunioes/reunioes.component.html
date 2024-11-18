@@ -32,15 +32,20 @@
     <div class="reuniao-grupo" *ngFor="let grupo of reunioesPrevista | groupby:'mes'">
       <h3 class="mes-titulo">{{grupo.key}}</h3>
       <div class="reuniao-item" *ngFor="let reuniao of grupo.value">
-        <div class="data-circle">
-          <span class="dia">{{reuniao.data | date:'dd'}}</span>
+        <div class="reuniao-container">
+          <div class="data-circle">
+            <span class="dia">{{reuniao.data | date:'dd'}}</span>
+          </div>
+          <div class="reuniao-info">
+            <h4>{{reuniao.descricao}}</h4>
+            <p>{{reuniao.sala}} </p>
+            <p>{{reuniao.horaInicio}} às {{reuniao.horaFim}}</p>
+          </div>
+          <mat-checkbox *ngIf="modoSelecao" [checked]="reunioesSelecionadas.includes(reuniao.id)"
+            (change)="toggleSelecao($event, reuniao)">
+          </mat-checkbox>
+          <mat-icon class="chevron-right" (click)="ativarModoSelecao(reuniao)">chevron_right</mat-icon>
         </div>
-        <div class="reuniao-info">
-          <h4>{{reuniao.descricao}}</h4>
-          <p>{{reuniao.sala}} </p>
-          <p>{{reuniao.horaInicio}} às {{reuniao.horaFim}}</p>
-        </div>
-        <mat-icon class="chevron-right">chevron_right</mat-icon>
       </div>
     </div>
   </ng-container>
@@ -71,6 +76,20 @@
   </ng-template>
 </div>
 
-<button class="fab-button" mat-fab color="primary" routerLink="/criar-reuniao">
-  <mat-icon>add</mat-icon>
-</button>
+
+<div class="action-buttons" *ngIf="modoSelecao">
+  <button mat-fab color="warn" class="delete-button" (click)="excluirReunioes()">
+    <mat-icon>delete</mat-icon>
+  </button>
+  <button mat-fab color="primary" class="lock-button" (click)="abrirReunioes()">
+    <mat-icon>lock</mat-icon>
+  </button>
+</div>
+<div>
+  <button class="fab-button" [ngStyle]="{'display': modoSelecao ? 'none' : 'block'}" mat-fab color="primary" routerLink="/criar-reuniao">
+    <mat-icon>add</mat-icon>
+  </button>
+</div>
+
+
+

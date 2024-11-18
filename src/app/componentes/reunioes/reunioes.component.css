@@ -136,3 +136,36 @@ p {
 .chevron-right {
   color: #999;
 }
+.chevron-right:hover {
+  color: #673ab7;
+}
+
+.reuniao-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 12px;
+}
+
+
+.reuniao-container:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.action-buttons {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.delete-button {
+  background-color: #f44336;
+}
+
+.lock-button {
+  background-color: #673ab7;
+}
+

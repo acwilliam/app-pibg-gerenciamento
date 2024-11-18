@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Cadastro } from './Cadastro';
-import { from, map, Observable, switchMap } from 'rxjs';
+import { forkJoin, from, map, Observable, switchMap } from 'rxjs';
 import { Frequencia } from './model/Frequencia';
 import { DisponibilidadeData } from './disponibilidade/disponibilidade.component';
 import { Funcao, Ministerio } from './roles/roles.component';
 import { Reuniao } from './model/reuniao';
+import { doc, writeBatch } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -135,12 +136,12 @@ export class CadastroService {
 
   buscarListaDeMinisterios(): Observable<Ministerio[]> {
     return this.firestore.collection<Ministerio>('ministerio')
-    .valueChanges({ idField: 'id' });
+      .valueChanges({ idField: 'id' });
   }
 
-  buscarListaDefuncoes(): Observable<Funcao[]>  {
+  buscarListaDefuncoes(): Observable<Funcao[]> {
     return this.firestore.collection<Funcao>('funcao')
-    .valueChanges({ idField: 'id' });
+      .valueChanges({ idField: 'id' });
   }
 
 
@@ -153,7 +154,25 @@ export class CadastroService {
   buscarReunioes() {
     console.log('reuniao')
     return this.firestore.collection<Reuniao>('reuniao')
-    .valueChanges({ idField: 'id' });
+      .valueChanges({ idField: 'id' });
+  }
+
+  excluirReunioes(reunioesSelecionadas: number[]): Observable<any> {
+    const delecao = reunioesSelecionadas.map((reu) => {
+      const ref = this.firestore.collection('reuniao').doc(reu.toString());
+      return ref.delete();
+    });
+
+    return forkJoin(delecao);
+  }
+
+  abrirReunioes(reunioesSelecionadas: number[]): Observable<any> {
+    const updates = reunioesSelecionadas.map((reu) => {
+      const ref = this.firestore.collection('reuniao').doc(reu.toString());
+      return ref.update({ incluiAberta: true });
+    });
+
+    return forkJoin(updates);
   }
 
 }

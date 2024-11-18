@@ -4,6 +4,9 @@ import { Router } from '@angular/router';
 import { CadastroService } from '../cadastro.service';
 import { response } from 'express';
 import { Evento } from '../model/Evento';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ConfirmacaoDialogComponent } from '../../shared/dialogs/confirmacao-dialog/confirmacao-dialog.component';
 
 @Component({
   selector: 'app-reunioes',
@@ -11,6 +14,8 @@ import { Evento } from '../model/Evento';
   styleUrl: './reunioes.component.css'
 })
 export class ReunioesComponent {
+  modoSelecao: boolean = false;
+  reunioesSelecionadas: number[] = [];
   evento: Evento = {
     id: '',
     nome: ''
@@ -37,10 +42,101 @@ export class ReunioesComponent {
 
   constructor(
     private router: Router,
-    private cadastroService: CadastroService
+    private cadastroService: CadastroService,
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit(): void {
+      this.carregarReunioes()
+  }
+
+  ativarModoSelecao(reuniao: any) {
+    this.modoSelecao = true;
+    // Já seleciona a reunião clicada
+    if (!this.reunioesSelecionadas.includes(reuniao.id)) {
+      this.reunioesSelecionadas.push(reuniao.id);
+    }
+  }
+
+  toggleSelecao(event: any, reuniao: any) {
+    const index = this.reunioesSelecionadas.indexOf(reuniao.id);
+    if (index === -1) {
+      this.reunioesSelecionadas.push(reuniao.id);
+    } else {
+      this.reunioesSelecionadas.splice(index, 1);
+    }
+
+    // Se não houver mais itens selecionados, desativa o modo seleção
+    if (this.reunioesSelecionadas.length === 0) {
+      this.modoSelecao = false;
+    }
+  }
+
+    // Adicione este método para cancelar a seleção
+    cancelarSelecao() {
+      this.modoSelecao = false;
+      this.reunioesSelecionadas = [];
+    }
+
+    excluirReunioes() {
+      const dialogRef = this.dialog.open(ConfirmacaoDialogComponent, {
+        data: {
+          titulo: 'Confirmar exclusão',
+          mensagem: 'Deseja realmente excluir as reuniões selecionadas?'
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.cadastroService.excluirReunioes(this.reunioesSelecionadas).subscribe({
+            next: () => {
+              this.snackBar.open('Reuniões excluídas com sucesso', 'Fechar', {
+                duration: 3000
+              });
+              this.reunioesSelecionadas = [];
+              this.modoSelecao = false;
+              this.carregarReunioes();
+            },
+            error: () => {
+              this.snackBar.open('Erro ao excluir reuniões', 'Fechar', {
+                duration: 3000
+              });
+            }
+          });
+        }
+      });
+    }
+
+    abrirReunioes() {
+      const dialogRef = this.dialog.open(ConfirmacaoDialogComponent, {
+        data: {
+          titulo: 'Confirmar abertura',
+          mensagem: 'Deseja realmente abrir as reuniões selecionadas?'
+        }
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.cadastroService.abrirReunioes(this.reunioesSelecionadas).subscribe({
+            next: () => {
+              this.snackBar.open('Reuniões abertas com sucesso', 'Fechar', {
+                duration: 3000
+              });
+              this.reunioesSelecionadas = [];
+              this.modoSelecao = false;
+              this.carregarReunioes();
+            },
+            error: () => {
+              this.snackBar.open('Erro ao abrir reuniões', 'Fechar', {
+                duration: 3000
+              });
+            }
+          });
+        }
+      });
+    }
+  carregarReunioes() {
     this.cadastroService.buscarReunioes().subscribe(
       response => {
         if (response) {
@@ -49,9 +145,10 @@ export class ReunioesComponent {
       }
     )
   }
-
   selecionarAba(aba: string) {
     this.abaAtiva = aba;
+    this.modoSelecao = false;
+    this.reunioesSelecionadas = [];
   }
 
   voltar() {
