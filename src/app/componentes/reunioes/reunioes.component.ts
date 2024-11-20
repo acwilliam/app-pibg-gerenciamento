@@ -7,6 +7,7 @@ import { Evento } from '../model/Evento';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ConfirmacaoDialogComponent } from '../../shared/dialogs/confirmacao-dialog/confirmacao-dialog.component';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-reunioes',
@@ -16,6 +17,8 @@ import { ConfirmacaoDialogComponent } from '../../shared/dialogs/confirmacao-dia
 export class ReunioesComponent {
   modoSelecao: boolean = false;
   reunioesSelecionadas: number[] = [];
+  modoSelecaoFechar = false;
+  reunioesSelecionadasParaFechar: number[] = []; // array para guardar IDs das reuniões
   evento: Evento = {
     id: '',
     nome: ''
@@ -51,6 +54,10 @@ export class ReunioesComponent {
       this.carregarReunioes()
   }
 
+  ativarModoSelecaoFechar() {
+    this.modoSelecaoFechar = true;
+  }
+
   ativarModoSelecao(reuniao: any) {
     this.modoSelecao = true;
     // Já seleciona a reunião clicada
@@ -73,13 +80,32 @@ export class ReunioesComponent {
     }
   }
 
-    // Adicione este método para cancelar a seleção
-    cancelarSelecao() {
+  toggleSelecaoFechar(event: MatCheckboxChange, reuniao: any) {
+    if (event.checked) {
+      this.reunioesSelecionadasParaFechar.push(reuniao.id);
+    } else {
+      this.reunioesSelecionadasParaFechar = this.reunioesSelecionadasParaFechar.filter(id => id !== reuniao.id);
+    }
+  }
+
+  fecharReunioes() {
+    this.cadastroService.fecharReunioes(this.reunioesSelecionadasParaFechar).subscribe(
+      () => {
+        this.carregarReunioes();
+        this.modoSelecaoFechar = false;
+        this.reunioesSelecionadasParaFechar = [];
+      },
+      error => {
+        console.error('Erro ao fechar reuniões:', error);
+      }
+    );
+  }
+  cancelarSelecao() {
       this.modoSelecao = false;
       this.reunioesSelecionadas = [];
-    }
+  }
 
-    excluirReunioes() {
+  excluirReunioes() {
       const dialogRef = this.dialog.open(ConfirmacaoDialogComponent, {
         data: {
           titulo: 'Confirmar exclusão',
@@ -106,9 +132,9 @@ export class ReunioesComponent {
           });
         }
       });
-    }
+  }
 
-    abrirReunioes() {
+  abrirReunioes() {
       const dialogRef = this.dialog.open(ConfirmacaoDialogComponent, {
         data: {
           titulo: 'Confirmar abertura',
@@ -135,7 +161,8 @@ export class ReunioesComponent {
           });
         }
       });
-    }
+  }
+
   carregarReunioes() {
     this.cadastroService.buscarReunioes().subscribe(
       response => {
@@ -145,6 +172,7 @@ export class ReunioesComponent {
       }
     )
   }
+
   selecionarAba(aba: string) {
     this.abaAtiva = aba;
     this.modoSelecao = false;

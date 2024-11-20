@@ -7,10 +7,10 @@
 
 <div class="content" *ngIf="abaAtiva === 'aberta'">
   <div class="action-buttons">
-    <button mat-fab color="warn" class="yellow-button">
+    <button mat-fab color="warn" class="yellow-button" (click)="ativarModoSelecaoFechar()">
       <mat-icon>exit_to_app</mat-icon>
     </button>
-    <button [ngStyle]="{'display': modoSelecao ? 'none' : 'block'}" mat-fab color="primary" routerLink="/criar-reuniao">
+    <button [ngStyle]="{'display': modoSelecaoFechar ? 'none' : 'block'}" mat-fab color="primary" routerLink="/criar-reuniao">
       <mat-icon>add</mat-icon>
     </button>
   </div>
@@ -18,15 +18,21 @@
     <div class="reuniao-grupo" *ngFor="let grupo of reunioesAbertas | groupby:'mes'">
       <h3 class="mes-titulo">{{grupo.key}}</h3>
       <div class="reuniao-item" *ngFor="let reuniao of grupo.value">
-        <div class="data-circle">
-          <span class="dia">{{reuniao.data | date:'dd'}}</span>
+        <div class="reuniao-container">
+          <div class="data-circle">
+            <span class="dia">{{reuniao.data | date:'dd'}}</span>
+          </div>
+          <div class="reuniao-info">
+            <h4>{{reuniao.descricao}}</h4>
+            <p>{{reuniao.sala}} </p>
+            <p>{{reuniao.horaInicio}} às {{reuniao.horaFim}}</p>
+          </div>
+          <mat-checkbox *ngIf="modoSelecaoFechar"
+                       [checked]="reunioesSelecionadasParaFechar.includes(reuniao.id)"
+                       (change)="toggleSelecaoFechar($event, reuniao)">
+          </mat-checkbox>
+          <mat-icon *ngIf="!modoSelecaoFechar" class="chevron-right">chevron_right</mat-icon>
         </div>
-        <div class="reuniao-info">
-          <h4>{{reuniao.descricao}}</h4>
-          <p>{{reuniao.sala}} </p>
-          <p>{{reuniao.horaInicio}} às {{reuniao.horaFim}}</p>
-        </div>
-        <mat-icon class="chevron-right">chevron_right</mat-icon>
       </div>
     </div>
   </ng-container>
@@ -34,7 +40,15 @@
     <p>Não há reuniões abertas disponíveis</p>
   </ng-template>
 </div>
-
+<!-- Adicione os botões de ação para fechar reuniões -->
+<div class="action-buttons" *ngIf="modoSelecaoFechar">
+  <button mat-fab color="primary" (click)="fecharReunioes()">
+    <mat-icon>check</mat-icon>
+  </button>
+  <button mat-fab color="warn" (click)="modoSelecaoFechar = false; reunioesSelecionadasParaFechar = []">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
 <div class="content" *ngIf="abaAtiva === 'prevista'">
   <div class="action-buttons">
     <button [ngStyle]="{'display': modoSelecao ? 'none' : 'block'}" mat-fab color="primary" routerLink="/criar-reuniao">

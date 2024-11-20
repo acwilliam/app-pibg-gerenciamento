@@ -13,8 +13,6 @@ import { doc, writeBatch } from 'firebase/firestore';
 })
 export class CadastroService {
 
-
-
   constructor(
     private firestore: AngularFirestore
   ) { }
@@ -170,6 +168,18 @@ export class CadastroService {
     const updates = reunioesSelecionadas.map((reu) => {
       const ref = this.firestore.collection('reuniao').doc(reu.toString());
       return ref.update({ incluiAberta: true });
+    });
+
+    return forkJoin(updates);
+  }
+
+  fecharReunioes(reunioesSelecionadasParaFechar: number[]) {
+    const updates = reunioesSelecionadasParaFechar.map((reu) => {
+      const ref = this.firestore.collection('reuniao').doc(reu.toString());
+      return ref.update({
+        reuniaoFechada: true,
+        incluiAberta: false
+   });
     });
 
     return forkJoin(updates);

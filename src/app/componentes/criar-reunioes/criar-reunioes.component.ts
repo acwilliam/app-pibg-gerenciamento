@@ -77,7 +77,7 @@ export class CriarReunioesComponent {
       this.reuniao = this.reuniaoForm.value;
       const quantidadeRepeticoes = this.reuniao.repetirSemanalmente ? this.reuniao.quantidadeReunioes : 1;
       const addReunioes:any[] = []
-
+      this.reuniao.reuniaoFechada = false
       addReunioes.push(this.reuniao)
       for (let i =0; i < quantidadeRepeticoes; i++) {
         console.log('entrou aqui ', quantidadeRepeticoes)
