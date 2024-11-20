@@ -1,0 +1,118 @@
+<mat-icon class="chevron_left" (click)="voltar()">chevron_left</mat-icon>
+<div class="tabs">
+  <div (click)="selecionarAba('aberta')" [class.active]="abaAtiva === 'aberta'">Aberta</div>
+  <div (click)="selecionarAba('prevista')" [class.active]="abaAtiva === 'prevista'">Prevista</div>
+  <div (click)="selecionarAba('fechada')" [class.active]="abaAtiva === 'fechada'">Fechada</div>
+</div>
+
+<div class="content" *ngIf="abaAtiva === 'aberta'">
+  <div class="action-buttons">
+    <button mat-fab color="warn" class="yellow-button" (click)="ativarModoSelecaoFechar()">
+      <mat-icon>exit_to_app</mat-icon>
+    </button>
+    <button [ngStyle]="{'display': modoSelecaoFechar ? 'none' : 'block'}" mat-fab color="primary" routerLink="/criar-reuniao">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <ng-container *ngIf="reunioesAbertas.length > 0; else noReunioesDisponiveis">
+    <div class="reuniao-grupo" *ngFor="let grupo of reunioesAbertas | groupby:'mes'">
+      <h3 class="mes-titulo">{{grupo.key}}</h3>
+      <div class="reuniao-item" *ngFor="let reuniao of grupo.value">
+        <div class="reuniao-container">
+          <div class="data-circle">
+            <span class="dia">{{reuniao.data | date:'dd'}}</span>
+          </div>
+          <div class="reuniao-info">
+            <h4>{{reuniao.descricao}}</h4>
+            <p>{{reuniao.sala}} </p>
+            <p>{{reuniao.horaInicio}} às {{reuniao.horaFim}}</p>
+          </div>
+          <mat-checkbox *ngIf="modoSelecaoFechar"
+                       [checked]="reunioesSelecionadasParaFechar.includes(reuniao.id)"
+                       (change)="toggleSelecaoFechar($event, reuniao)">
+          </mat-checkbox>
+          <mat-icon *ngIf="!modoSelecaoFechar" class="chevron-right">chevron_right</mat-icon>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #noReunioesDisponiveis>
+    <p>Não há reuniões abertas disponíveis</p>
+  </ng-template>
+</div>
+<div class="action-buttons" *ngIf="modoSelecaoFechar">
+  <button mat-fab color="primary" (click)="fecharReunioes()">
+    <mat-icon>check</mat-icon>
+  </button>
+  <button mat-fab color="warn" (click)="modoSelecaoFechar = false; reunioesSelecionadasParaFechar = []">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<div class="content" *ngIf="abaAtiva === 'prevista'">
+  <div class="action-buttons">
+    <button [ngStyle]="{'display': modoSelecao ? 'none' : 'block'}" mat-fab color="primary" routerLink="/criar-reuniao">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <ng-container *ngIf="reunioesPrevista.length > 0; else noReunioesDisponiveis">
+    <div class="reuniao-grupo" *ngFor="let grupo of reunioesPrevista | groupby:'mes'">
+      <h3 class="mes-titulo">{{grupo.key}}</h3>
+      <div class="reuniao-item" *ngFor="let reuniao of grupo.value">
+        <div class="reuniao-container">
+          <div class="data-circle">
+            <span class="dia">{{reuniao.data | date:'dd'}}</span>
+          </div>
+          <div class="reuniao-info">
+            <h4>{{reuniao.descricao}}</h4>
+            <p>{{reuniao.sala}} </p>
+            <p>{{reuniao.horaInicio}} às {{reuniao.horaFim}}</p>
+          </div>
+          <mat-checkbox *ngIf="modoSelecao" [checked]="reunioesSelecionadas.includes(reuniao.id)"
+            (change)="toggleSelecao($event, reuniao)">
+          </mat-checkbox>
+          <mat-icon class="chevron-right" (click)="ativarModoSelecao(reuniao)">chevron_right</mat-icon>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #noReunioesDisponiveis>
+    <p>Não há reunioes previstas disponíveis</p>
+  </ng-template>
+</div>
+
+<div class="content" *ngIf="abaAtiva === 'fechada'">
+  <div class="action-buttons">
+    <button [ngStyle]="{'display': modoSelecao ? 'none' : 'block'}" mat-fab color="primary" routerLink="/criar-reuniao">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+  <ng-container *ngIf="reunioesFechadas.length > 0; else noReunioesDisponiveis">
+    <div class="reuniao-grupo" *ngFor="let grupo of reunioesFechadas | groupby:'mes'">
+      <h3 class="mes-titulo">{{grupo.key}}</h3>
+      <div class="reuniao-item" *ngFor="let reuniao of grupo.value">
+        <div class="data-circle">
+          <span class="dia">{{reuniao.data | date:'dd'}}</span>
+        </div>
+        <div class="reuniao-info">
+          <h4>{{reuniao.descricao}}</h4>
+          <p>{{reuniao.sala}} </p>
+          <p>{{reuniao.horaInicio}} às {{reuniao.horaFim}}</p>
+        </div>
+        <mat-icon class="chevron-right">chevron_right</mat-icon>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #noReunioesDisponiveis>
+    <p>Não há reunioes fechadas</p>
+  </ng-template>
+</div>
+
+
+<div class="action-buttons" *ngIf="modoSelecao">
+  <button mat-fab color="warn" class="delete-button" (click)="excluirReunioes()">
+    <mat-icon>delete</mat-icon>
+  </button>
+  <button mat-fab color="primary" class="lock-button" (click)="abrirReunioes()">
+    <mat-icon>lock</mat-icon>
+  </button>
+</div>

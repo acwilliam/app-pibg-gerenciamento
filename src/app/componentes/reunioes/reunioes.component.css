@@ -1,0 +1,171 @@
+/* Container das abas */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* Estilo das abas */
+.tabs div {
+  flex-grow: 1;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  color: #c2581a;
+  border-bottom: 2px solid transparent;
+}
+
+/* Aba ativa */
+.tabs div.active {
+  background-color: #e0f7ff;
+  border-bottom: 2px solid #754219;
+}
+
+/* Conteúdo */
+.content {
+  padding: 20px;
+  text-align: center;
+  color: #333333;
+}
+
+/* Estilo das seções e listas */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 10px 0;
+}
+
+
+.titulo {
+  font-size: 14px;
+}
+p {
+  color: #999;
+  font-style: italic;
+}
+
+
+.container {
+  position: relative;
+  min-height: 100vh;
+}
+
+.fab-button {
+  position: fixed;
+  bottom: 30px;
+  right: 20px;
+  z-index: 100;
+  background-color: #754219; /* Cor roxa similar à da imagem */
+  border: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  cursor: pointer;
+  color: white;
+  font-size: 24px;
+}
+
+.fab-button:hover {
+  background-color: #c2581a;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.content {
+  padding: 16px;
+}
+
+.reuniao-grupo {
+  margin-bottom: 24px;
+}
+
+.mes-titulo {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 16px;
+}
+
+.reuniao-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #eee;
+  cursor: pointer;
+}
+
+.data-circle {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #673ab7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 16px;
+}
+
+.dia {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.reuniao-info {
+  flex: 1;
+}
+
+.reuniao-info h4 {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.reuniao-info p {
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.chevron-right {
+  color: #999;
+}
+.chevron-right:hover {
+  color: #673ab7;
+}
+
+.reuniao-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 12px;
+}
+
+
+.reuniao-container:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.action-buttons {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.delete-button {
+  background-color: #f44336;
+}
+
+.lock-button {
+  background-color: #673ab7;
+}
+

@@ -5,7 +5,7 @@ import { CadastroService } from '../cadastro.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { ValidacaoChecksService } from '../services/validacao-checks.service';
 import { StatusCheckinCheckout } from '../model/StatusCheckinCheckout';
-
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-lista-crianca',
@@ -24,7 +24,8 @@ export class ListaCriancaComponent implements OnInit, AfterViewInit{
 
   constructor(
     private cadastroService: CadastroService,
-    private validacaoCheksSerice: ValidacaoChecksService
+    private validacaoCheksSerice: ValidacaoChecksService,
+    private location: Location
   ) {
     this.dataSource = new MatTableDataSource<Cadastro>([]);
   }
@@ -71,5 +72,7 @@ export class ListaCriancaComponent implements OnInit, AfterViewInit{
     });
   }
 
-
+  voltar() {
+    this.location.back()
+  }
 }

@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Cadastro } from './Cadastro';
-import { from, map, Observable, switchMap } from 'rxjs';
+import { forkJoin, from, map, Observable, switchMap } from 'rxjs';
 import { Frequencia } from './model/Frequencia';
 import { DisponibilidadeData } from './disponibilidade/disponibilidade.component';
+import { Funcao, Ministerio } from './roles/roles.component';
+import { Reuniao } from './model/reuniao';
+import { doc, writeBatch } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CadastroService {
-
 
   constructor(
     private firestore: AngularFirestore
@@ -119,4 +121,68 @@ export class CadastroService {
           return from(batch.commit()).pipe(map(() => true));
         }));
   }
+
+  cadastrarFuncao(funcao: Funcao) {
+    const cadastroCollection = this.firestore.collection<Funcao>('funcao');
+    return cadastroCollection.add(funcao);
+  }
+
+  cadastrarMinisterio(ministerio: Ministerio) {
+    const cadastroCollection = this.firestore.collection<Ministerio>('ministerio');
+    return cadastroCollection.add(ministerio);
+  }
+
+  buscarListaDeMinisterios(): Observable<Ministerio[]> {
+    return this.firestore.collection<Ministerio>('ministerio')
+      .valueChanges({ idField: 'id' });
+  }
+
+  buscarListaDefuncoes(): Observable<Funcao[]> {
+    return this.firestore.collection<Funcao>('funcao')
+      .valueChanges({ idField: 'id' });
+  }
+
+
+  criarReuniao(reuniao: Reuniao) {
+    console.log('reuniao')
+    const cadastroCollection = this.firestore.collection<Reuniao>('reuniao');
+    return cadastroCollection.add(reuniao)
+  }
+
+  buscarReunioes() {
+    console.log('reuniao')
+    return this.firestore.collection<Reuniao>('reuniao')
+      .valueChanges({ idField: 'id' });
+  }
+
+  excluirReunioes(reunioesSelecionadas: number[]): Observable<any> {
+    const delecao = reunioesSelecionadas.map((reu) => {
+      const ref = this.firestore.collection('reuniao').doc(reu.toString());
+      return ref.delete();
+    });
+
+    return forkJoin(delecao);
+  }
+
+  abrirReunioes(reunioesSelecionadas: number[]): Observable<any> {
+    const updates = reunioesSelecionadas.map((reu) => {
+      const ref = this.firestore.collection('reuniao').doc(reu.toString());
+      return ref.update({ incluiAberta: true });
+    });
+
+    return forkJoin(updates);
+  }
+
+  fecharReunioes(reunioesSelecionadasParaFechar: number[]) {
+    const updates = reunioesSelecionadasParaFechar.map((reu) => {
+      const ref = this.firestore.collection('reuniao').doc(reu.toString());
+      return ref.update({
+        reuniaoFechada: true,
+        incluiAberta: false
+   });
+    });
+
+    return forkJoin(updates);
+  }
+
 }

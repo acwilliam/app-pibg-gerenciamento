@@ -69,6 +69,9 @@ export class PaginaPrincipalComponent  {
     this.menuItems = [
       { label: 'cadastro', route:`/cadastro/${email}`, icon: 'home', visible: true },
       { label: 'perfil-usuario', route: '/usuario-kids', icon: 'home', visible: true },
+      { label: 'disponibilidade', route: '/disponibilidade', icon: 'home', visible: true },
+      { label: 'cadastrar função', route: '/cadastrar-funcao', icon: 'home', visible: true },
+      { label: 'Reuniões', route: '/reunioes', icon: 'home', visible: true },
       { label: 'Crianças', route: '/lista-crianca', icon: 'shopping_basket', visible: this.isAdmin || this.isVoluntario },
       { label: 'sair', callback: () => this.logout(), icon: 'exit_to_app', visible: true },
     ];

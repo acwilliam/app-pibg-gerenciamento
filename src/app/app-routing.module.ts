@@ -14,6 +14,8 @@ import { InscricoesComponent } from './componentes/inscricoes/inscricoes.compone
 import { HomeComponent } from './componentes/home/home.component';
 import { DisponibilidadeComponent } from './componentes/disponibilidade/disponibilidade.component';
 import { RolesComponent } from './componentes/roles/roles.component';
+import { ReunioesComponent } from './componentes/reunioes/reunioes.component';
+import { CriarReunioesComponent } from './componentes/criar-reunioes/criar-reunioes.component';
 
 export const routes: Routes = [
 
@@ -78,8 +80,14 @@ export const routes: Routes = [
      component: DisponibilidadeComponent,
      canActivate: [AuthGuardService]
     },
-   { path: 'roles',
+   { path: 'cadastrar-funcao',
     component: RolesComponent
+   },
+   { path: 'reunioes',
+    component: ReunioesComponent
+   },
+   { path: 'criar-reuniao',
+    component: CriarReunioesComponent
    }
 ];
 
