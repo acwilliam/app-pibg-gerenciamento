@@ -31,7 +31,7 @@
                        [checked]="reunioesSelecionadasParaFechar.includes(reuniao.id)"
                        (change)="toggleSelecaoFechar($event, reuniao)">
           </mat-checkbox>
-          <mat-icon *ngIf="!modoSelecaoFechar" class="chevron-right">chevron_right</mat-icon>
+          <mat-icon *ngIf="!modoSelecaoFechar" class="chevron-right" (click)="navegarParaDetalhesSala(reuniao)">chevron_right</mat-icon>
         </div>
       </div>
     </div>
