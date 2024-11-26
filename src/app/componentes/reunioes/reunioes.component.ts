@@ -196,6 +196,7 @@ export class ReunioesComponent {
   }
 
   navegarParaDetalhesSala(reuniao: any) {
+    console.log('passou aqui')
     this.router.navigate(['/sala', reuniao.id]);
   }
 }

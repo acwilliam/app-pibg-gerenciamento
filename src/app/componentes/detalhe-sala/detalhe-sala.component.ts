@@ -23,13 +23,14 @@ export class DetalheSalaComponent implements OnInit {
   }
 
   carregarDetalhesSala(id: string) {
-    /*this.seuServico.obterDetalhesSala(id).subscribe(
+    this.cadastroservice.buscarReuniao(id).subscribe(
       (dados) => {
         this.sala = dados;
-        this.criancas = dados.criancas;
+        console.log('sala', this.sala)
+      //  this.criancas = dados.criancas;
         this.totalCriancas = this.criancas.length;
       }
-    );*/
+    );
   }
 
   fecharSala() {
