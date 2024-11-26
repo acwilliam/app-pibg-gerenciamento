@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="header">
+    <mat-icon class="back-button" routerLink="/reunioes">chevron_left</mat-icon>
+    <h1>{{sala?.sala}}</h1>
+  </div>
+
+  <div class="event-details">
+    <p>{{sala?.data}}</p>
+    <p>{{sala?.horaInicio}} às {{sala?.horaFim}}</p>
+  </div>
+
+  <div class="action-buttons">
+    <button mat-button class="fechar-button" (click)="fecharSala()">
+      FECHAR SALA
+    </button>
+    <button mat-button class="checkin-button" (click)="checkInSala()">
+      CHECK-IN NA SALA
+    </button>
+  </div>
+
+  <div class="icon-actions">
+    <div class="icon-item">
+      <button mat-icon-button>
+        <mat-icon>edit</mat-icon>
+      </button>
+      <span>Editar reunião</span>
+    </div>
+    <div class="icon-item">
+      <button mat-icon-button>
+        <mat-icon>mail</mat-icon>
+      </button>
+      <span>Enviar reunião</span>
+    </div>
+    <div class="icon-item">
+      <button mat-icon-button>
+        <mat-icon>info</mat-icon>
+      </button>
+      <span>Informações</span>
+    </div>
+  </div>
+
+  <div class="criancas-section">
+    <h2>Total de crianças: {{totalCriancas}}</h2>
+    <mat-form-field class="search-field">
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput placeholder="Nome/cód.etiq">
+    </mat-form-field>
+
+    <div class="criancas-lista">
+      <div class="crianca-item" *ngFor="let crianca of criancas">
+        <div class="crianca-avatar">
+          <img [src]="crianca.avatar" alt="Avatar">
+        </div>
+        <div class="crianca-info">
+          <h3>{{crianca.nome}}</h3>
+          <p>{{crianca.idade}} anos</p>
+        </div>
+        <button mat-icon-button>
+          <mat-icon>info</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

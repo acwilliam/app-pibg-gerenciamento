@@ -179,10 +179,15 @@ export class CadastroService {
       return ref.update({
         reuniaoFechada: true,
         incluiAberta: false
-   });
+      });
     });
 
     return forkJoin(updates);
+  }
+
+  buscarReuniao(id: string): Observable<any> {
+    console.log('passou aqui')
+    return this.firestore.doc<Reuniao>(`reuniao/${id}`).valueChanges();
   }
 
 }

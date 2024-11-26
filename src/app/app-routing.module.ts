@@ -16,6 +16,7 @@ import { DisponibilidadeComponent } from './componentes/disponibilidade/disponib
 import { RolesComponent } from './componentes/roles/roles.component';
 import { ReunioesComponent } from './componentes/reunioes/reunioes.component';
 import { CriarReunioesComponent } from './componentes/criar-reunioes/criar-reunioes.component';
+import { DetalheSalaComponent } from './componentes/detalhe-sala/detalhe-sala.component';
 
 export const routes: Routes = [
 
@@ -88,7 +89,9 @@ export const routes: Routes = [
    },
    { path: 'criar-reuniao',
     component: CriarReunioesComponent
-   }
+   },
+   { path: 'sala/:id',
+    component:  DetalheSalaComponent }
 ];
 
 @NgModule({

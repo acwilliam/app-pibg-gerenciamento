@@ -194,4 +194,9 @@ export class ReunioesComponent {
   get reunioesFechadas(): Reuniao[] {
     return this.reunioes.filter(reuniao => reuniao.reuniaoFechada);
   }
+
+  navegarParaDetalhesSala(reuniao: any) {
+    console.log('passou aqui')
+    this.router.navigate(['/sala', reuniao.id]);
+  }
 }
