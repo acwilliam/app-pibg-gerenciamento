@@ -39,37 +39,49 @@ export class PdfService {
 
   generatePdf(qrCode: string, nome: string, idade: Number): Promise<Blob> {
     return new Promise((resolve, reject) => {
-        const pageWidth = 55; // 5cm em mm
-        const pageHeight = 31; // 3cm em mm
+        const pageWidth = 29;
+        const pageHeight = 90;
         const pdf = new jsPDF({
-            orientation: 'landscape',
+            orientation: 'portrait',
             unit: 'mm',
             format: [pageWidth, pageHeight]
         });
 
-        const qrCodeX = 2; // Posição x do QR Code
-        const qrCodeY = 1; // Posição y do QR Code
-        const qrCodeWidth = 27; // Largura do QR Code
-        const qrCodeHeight = 27; // Altura do QR Code
-        pdf.setFontSize(9);
+        // Ajuste da posição e tamanho do QR Code
+        const qrCodeX = 1;
+        const qrCodeY = 1;
+        const qrCodeWidth = 30;
+        const qrCodeHeight = 30;
+
         pdf.addImage(qrCode, 'PNG', qrCodeX, qrCodeY, qrCodeWidth, qrCodeHeight);
 
-        const textX = qrCodeX + qrCodeWidth; // Posição x do texto
-        const textY =  qrCodeHeight - 21
+        // Formatação do texto
+        pdf.setFont('Arial', 'normal'); // Define a fonte
+        pdf.setFontSize(12); // Define o tamanho da fonte
 
-        pdf.text(nome + ', ' + idade + ' Anos', textX, textY);
+        // Ajuste da posição do texto
+        const textX = qrCodeX + qrCodeWidth - 8;
+        const textY = qrCodeY + qrCodeHeight / 2 + 13; // Centralizado verticalmente
+
+        pdf.text(nome + ', ' + idade + ' Anos', textX, textY,
+          { align: 'left', angle: -90 });
 
         const logoImage = new Image();
-        logoImage.src = 'LOGO.png'; // Ajustar o caminho da imagem
+        logoImage.src = 'LOGO.png';
         logoImage.onload = () => {
-            pdf.addImage(logoImage, 'PNG', qrCodeX + 26, qrCodeY+7 , 22, 19);
-            resolve(pdf.output('blob')); // Resolve a promise com o blob do PDF
+            // Ajuste da posição e tamanho do logo
+            const logoX = qrCodeX ;
+            const logoY = qrCodeY + qrCodeHeight + 20;
+            const logoWidth = 20;
+            const logoHeight = 35;
+
+            pdf.addImage(logoImage, 'PNG', logoX, logoY, logoWidth, logoHeight);
+            resolve(pdf.output('blob'));
         };
         logoImage.onerror = (error) => {
-            reject(error); // Reject a promise em caso de erro ao carregar a imagem
+            reject(error);
         };
     });
-}
-
+  }
 
 }

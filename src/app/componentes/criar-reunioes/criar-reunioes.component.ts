@@ -1,10 +1,14 @@
+import { map } from 'rxjs';
 import { Reuniao } from './../model/reuniao';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CadastroService } from '../cadastro.service';
 import { Evento } from '../model/Evento';
-import { forkJoin, from, Observable } from 'rxjs';
+
+export interface sala {
+  faixaEtaria: string
+}
 
 @Component({
   selector: 'app-criar-reunioes',
@@ -13,9 +17,9 @@ import { forkJoin, from, Observable } from 'rxjs';
 })
 export class CriarReunioesComponent {
   reuniaoForm!: FormGroup;
-  salas = ['Sala 0 a 4 Anos']; // Adicione mais salas conforme necessário
+  salas: any[] = [];
   eventos = ['Sem evento']; // Adicione mais eventos conforme necessário
-  evento: Evento= {
+  evento: Evento = {
     id: '',
     nome: ''
   }
@@ -37,7 +41,7 @@ export class CriarReunioesComponent {
     private fb: FormBuilder,
     private router: Router,
     private cadastroService: CadastroService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.reuniaoForm = this.fb.group({
@@ -50,7 +54,7 @@ export class CriarReunioesComponent {
       numeroMaximo: [0],
       incluiAberta: [false],
       repetirSemanalmente: [false],
-      quantidadeReunioes: [{value: '', disabled: true}, [Validators.min(1), Validators.max(52)]]
+      quantidadeReunioes: [{ value: '', disabled: true }, [Validators.min(1), Validators.max(52)]]
     });
 
     // Observer para as mudanças no checkbox repetirSemanalmente
@@ -65,6 +69,13 @@ export class CriarReunioesComponent {
       }
       quantidadeReunioesControl?.updateValueAndValidity();
     });
+
+    const ret = this.cadastroService.buscarSalas().pipe(
+      map((salas) =>
+        salas.map((sala) =>
+          sala.faixaEtaria))
+    )
+    console.log('retorno', ret)
   }
 
   voltar() {
@@ -76,19 +87,19 @@ export class CriarReunioesComponent {
     if (this.reuniaoForm.valid) {
       this.reuniao = this.reuniaoForm.value;
       const quantidadeRepeticoes = this.reuniao.repetirSemanalmente ? this.reuniao.quantidadeReunioes : 1;
-      const addReunioes:any[] = []
+      const addReunioes: any[] = []
       this.reuniao.reuniaoFechada = false
       addReunioes.push(this.reuniao)
-      for (let i =0; i < quantidadeRepeticoes; i++) {
+      for (let i = 0; i < quantidadeRepeticoes; i++) {
         console.log('entrou aqui ', quantidadeRepeticoes)
         //clonando objeto
         const novaReuniao = { ...this.reuniao };
-        if ( i> 0) {
+        if (i > 0) {
           const dataOriginal = new Date(this.reuniaoForm.value.data);
-        let novaData = new Date(dataOriginal);
-        novaData.setDate(dataOriginal.getDate() + (7 * i));
-        novaReuniao.data = novaData.toISOString().split('T')[0];
-        addReunioes.push(novaReuniao);
+          let novaData = new Date(dataOriginal);
+          novaData.setDate(dataOriginal.getDate() + (7 * i));
+          novaReuniao.data = novaData.toISOString().split('T')[0];
+          addReunioes.push(novaReuniao);
         }
       }
 
@@ -99,6 +110,5 @@ export class CriarReunioesComponent {
       window.alert('reunioes cadastradas')
     }
   }
-
 
 }
