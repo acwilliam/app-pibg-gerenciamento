@@ -190,4 +190,8 @@ export class CadastroService {
     return this.firestore.doc<Reuniao>(`reuniao/${id}`).valueChanges();
   }
 
+  buscarSalas(): Observable<any[]> {
+    return this.firestore.collection('sala').valueChanges({ idField: 'id' });
+  }
+
 }
