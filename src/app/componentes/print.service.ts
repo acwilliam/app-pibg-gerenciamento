@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-
+import printJS from 'print-js';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +17,7 @@ export class PrintService {
       this.printUsingBrowser(fileUrl);
     });
   }
-  addPdf(pdf: Blob): void {
+  addPdf1(pdf: Blob): void {
       const file = new File([pdf], 'document.pdf', { type: 'application/pdf' });
       const fileUrl = URL.createObjectURL(file);
       console.log('passou aqui para enviar para impressora');
@@ -49,6 +49,24 @@ export class PrintService {
       alert('Não foi possível abrir a janela de impressão. Verifique se o bloqueador de pop-ups está habilitado.');
       URL.revokeObjectURL(fileUrl);
     }
+  }
+
+  addPdf(pdf: Blob): void {
+    const file = new File([pdf], 'document.pdf', { type: 'application/pdf' });
+    const fileUrl = URL.createObjectURL(file);
+    console.log('passou aqui para enviar para impressora');
+    this.printUsingPrintJS(fileUrl);
+  }
+
+  private printUsingPrintJS(fileUrl: string): void {
+    printJS({
+      printable: fileUrl,
+      type: 'pdf',
+      showModal: false, // Mostra um modal de carregamento
+      onPrintDialogClose: () => {
+        URL.revokeObjectURL(fileUrl); // Libera o URL após a impressão
+      }
+    });
   }
 
 }
