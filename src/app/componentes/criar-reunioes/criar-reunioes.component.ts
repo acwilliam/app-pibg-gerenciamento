@@ -6,7 +6,8 @@ import { Router } from '@angular/router';
 import { CadastroService } from '../cadastro.service';
 import { Evento } from '../model/Evento';
 
-export interface sala {
+export interface Sala {
+  id: string;
   faixaEtaria: string
 }
 
@@ -17,7 +18,7 @@ export interface sala {
 })
 export class CriarReunioesComponent {
   reuniaoForm!: FormGroup;
-  salas: any[] = [];
+  salas: Sala [] = [];
   eventos = ['Sem evento']; // Adicione mais eventos conforme necessário
   evento: Evento = {
     id: '',
@@ -70,12 +71,9 @@ export class CriarReunioesComponent {
       quantidadeReunioesControl?.updateValueAndValidity();
     });
 
-    const ret = this.cadastroService.buscarSalas().pipe(
-      map((salas) =>
-        salas.map((sala) =>
-          sala.faixaEtaria))
-    )
-    console.log('retorno', ret)
+    this.cadastroService.buscarSalas().subscribe((salas) => {
+      this.salas = salas;
+    });
   }
 
   voltar() {
@@ -91,7 +89,6 @@ export class CriarReunioesComponent {
       this.reuniao.reuniaoFechada = false
       addReunioes.push(this.reuniao)
       for (let i = 0; i < quantidadeRepeticoes; i++) {
-        console.log('entrou aqui ', quantidadeRepeticoes)
         //clonando objeto
         const novaReuniao = { ...this.reuniao };
         if (i > 0) {

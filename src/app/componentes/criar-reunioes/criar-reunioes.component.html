@@ -26,7 +26,7 @@
     <div class="form-group">
       <label>Faixa etária *</label>
       <select formControlName="sala">
-        <option *ngFor="let sala of salas" [value]="sala">{{sala}}</option>
+        <option *ngFor="let sala of salas" [value]="sala.faixaEtaria">{{sala.faixaEtaria}}</option>
       </select>
     </div>
 

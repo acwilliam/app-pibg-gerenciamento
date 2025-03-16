@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Reuniao } from '../model/reuniao';
 import { Router } from '@angular/router';
 import { CadastroService } from '../cadastro.service';
-import { response } from 'express';
 import { Evento } from '../model/Evento';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
