@@ -1,4 +1,4 @@
-<body class="corpo">
+<!--<body class="corpo">
   <nav class="menu">
     <button class="hamburger" (click)="toggleMenu()">
       <span class="material-icons">menu</span>
@@ -13,11 +13,24 @@
       </li>
     </ul>
   </nav>
-  <!--
+
   <iframe width="600" height="450"
     src="https://lookerstudio.google.com/embed/reporting/e76c5af1-cd7e-4b2b-b9c3-64b8bc034812/page/By7SE" frameborder="0"
     style="border:0" allowfullscreen
     sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
-  </iframe>-->
-</body>
+  </iframe>
+</body>-->
 
+<body class="corpo">
+  <nav class="navbar">
+    <ng-container *ngFor="let item of menuItems">
+      <a *ngIf="item.visible"
+         [routerLink]="item.route"
+         class="nav-item"
+         (click)="item.callback ? item.callback() : navigateToRoute()">
+        <span class="material-icons">{{item.icon}}</span>
+        <span class="nav-label">{{item.label}}</span>
+      </a>
+    </ng-container>
+  </nav>
+</body>
