@@ -8,6 +8,8 @@ interface MenuItem {
   icon?: string;
   callback?: () => void;
   visible?: boolean;
+  showDropdown?: boolean;
+  dropdownItems?: { label: string, route: string }[];
 }
 
 
@@ -25,9 +27,24 @@ export class PaginaPrincipalComponent  {
   emailRecebido: string = '';
   role: string = '';
   menuItems: MenuItem[] = [
-    { label: 'cadastro', route: '/cadastro', icon: 'home', visible: true },
-    { label: 'grupos', route: '/cadastro', icon: 'home', visible: true },
-    { label: 'Crianças', route: '/lista-crianca', icon: 'shopping_basket', visible: this.isAdmin || this.isVoluntario },
+    { label: 'Cadastro Criança', route: '/cadastro', icon: 'home', visible: true },
+    {
+      label: 'Grupos',
+      icon: 'groups',
+      visible: true,
+      dropdownItems: [
+        { label: 'Ver todos', route: '/detalhe-grupos' },
+        { label: 'Adicionar grupo', route: '/cadastrar-grupos' },
+        { label: 'Categorias de grupos', route: '/cadastrar-categoria-grupos' },
+        { label: 'Relatórios', route: '/relatorios-grupos' },
+        { label: 'Importar/Exportar', route: '/importar-exportar-grupos' },
+        { label: 'Liderança', route: '' }
+      ]
+    },
+    { label: 'User', route: '/usuario-kids', icon: 'person', visible: true },
+    { label: 'disponibilidade', route: '/disponibilidade', icon: 'event_available', visible: true },
+    { label: 'Reuniões', route: '/reunioes', icon: 'event', visible: true },
+    { label: 'Crianças', route: '/lista-crianca', icon: 'child_care', visible: this.isAdmin || this.isVoluntario },
     { label: 'sair', callback: () => this.logout(), icon: 'exit_to_app', visible: true },
   ];
   menuActive = false;
@@ -69,14 +86,33 @@ export class PaginaPrincipalComponent  {
   private atualizarMenuItems(email: string) {
     this.menuItems = [
       { label: 'Cadastro Criança', route: `/cadastro/${email}`, icon: 'home', visible: true },
-      { label: 'Grupos', icon: 'groups',   route: '/adicionar-grupo',  visible: true     },
+      {
+        label: 'Grupos',
+        icon: 'groups',
+        visible: true,
+        dropdownItems: [
+          { label: 'Ver todos', route: '/detalhe-grupos' },
+          { label: 'Adicionar grupo', route: '/cadastrar-grupos' },
+          { label: 'Categorias de grupos', route: '/cadastrar-categoria-grupos' },
+          { label: 'Relatórios', route: '/relatorios-grupos' },
+          { label: 'Importar/Exportar', route: '/importar-exportar-grupos' },
+          { label: 'Cadastrar função', route: '/cadastrar-funcao' }
+        ]
+      },
       { label: 'User', route: '/usuario-kids', icon: 'person', visible: true },
       { label: 'disponibilidade', route: '/disponibilidade', icon: 'event_available', visible: true },
-      { label: 'Funções', route: '/cadastrar-funcao', icon: 'add_circle_outline', visible: true },
       { label: 'Reuniões', route: '/reunioes', icon: 'event', visible: true },
       { label: 'Crianças', route: '/lista-crianca', icon: 'child_care', visible: this.isAdmin || this.isVoluntario },
       { label: 'sair', callback: () => this.logout(), icon: 'exit_to_app', visible: true },
     ];
+  }
+
+  showDropdown(item: MenuItem) {
+    item.showDropdown = true;
+  }
+
+  hideDropdown(item: MenuItem) {
+    item.showDropdown = false;
   }
 
 

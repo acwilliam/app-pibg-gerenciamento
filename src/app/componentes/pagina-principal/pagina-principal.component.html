@@ -24,13 +24,27 @@
 <body class="corpo">
   <nav class="navbar">
     <ng-container *ngFor="let item of menuItems">
-      <a *ngIf="item.visible"
-         [routerLink]="item.route"
-         class="nav-item"
-         (click)="item.callback ? item.callback() : navigateToRoute()">
-        <span class="material-icons">{{item.icon}}</span>
-        <span class="nav-label">{{item.label}}</span>
-      </a>
+      <div *ngIf="item.visible" class="nav-item" (mouseenter)="showDropdown(item)" (mouseleave)="hideDropdown(item)">
+        <a *ngIf="!item.dropdownItems"
+           [routerLink]="item.route"
+           class="nav-link"
+           (click)="item.callback ? item.callback() : navigateToRoute()">
+          <span class="material-icons">{{item.icon}}</span>
+          <span class="nav-label">{{item.label}}</span>
+        </a>
+        <div *ngIf="item.dropdownItems">
+          <span class="material-icons">{{item.icon}}</span>
+          <span class="nav-label">{{item.label}}</span>
+          <div class="dropdown" *ngIf="item.showDropdown">
+            <a *ngFor="let dropdownItem of item.dropdownItems"
+               [routerLink]="dropdownItem.route"
+               class="dropdown-item"
+               (click)="navigateToRoute()">
+              {{dropdownItem.label}}
+            </a>
+          </div>
+        </div>
+      </div>
     </ng-container>
   </nav>
 </body>
