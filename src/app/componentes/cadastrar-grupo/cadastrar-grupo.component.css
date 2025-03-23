@@ -1,0 +1,139 @@
+.cadastro-grupo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.cadastro-grupo-form-wrapper {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.cadastro-grupo-header {
+  background-color: #e0f7fa;
+  padding: 10px;
+  border-radius: 8px 8px 0 0;
+}
+
+.cadastro-grupo-titulo {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.cadastro-grupo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.cadastro-grupo-card {
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cadastro-grupo-card-header {
+  background-color: #e0f7fa;
+  padding: 10px;
+  border-radius: 8px 8px 0 0;
+}
+
+.cadastro-grupo-card-content {
+  padding: 20px;
+}
+
+.cadastro-grupo-input {
+  margin-bottom: 15px;
+}
+
+.cadastro-grupo-input label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.cadastro-grupo-input input, .cadastro-grupo-input select {
+  width: 90%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.cadastro-grupo-categorias {
+  margin-bottom: 20px;
+}
+
+.cadastro-grupo-categorias label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.cadastro-grupo-botao {
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.input-error {
+  border-color: red;
+}
+
+.anotacoes-textarea {
+  width: 100%;
+  height: 150px;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+/* Estilos para o componente de endereço */
+
+.cep-input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cep-input mat-form-field {
+  margin-right: 10px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.row mat-form-field {
+  width: 48%;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.acoes {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.botao {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cadastro-grupo-botao[disabled] {
+  background-color: gray; /* Cor cinza */
+  color: #ccc; /* Cor do texto (opcional, para melhor contraste) */
+  cursor: not-allowed; /* Altera o cursor para indicar que o botão está desabilitado */
+}

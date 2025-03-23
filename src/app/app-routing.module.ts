@@ -17,6 +17,12 @@ import { RolesComponent } from './componentes/roles/roles.component';
 import { ReunioesComponent } from './componentes/reunioes/reunioes.component';
 import { CriarReunioesComponent } from './componentes/criar-reunioes/criar-reunioes.component';
 import { DetalheSalaComponent } from './componentes/detalhe-sala/detalhe-sala.component';
+import { BuscarCepComponent } from './componentes/buscar-cep/buscar-cep.component';
+import { CategoriaGrupoComponent } from './componentes/categoria-grupo/categoria-grupo.component';
+import { CadastrarGrupoComponent } from './componentes/cadastrar-grupo/cadastrar-grupo.component';
+import { DetalheGrupoComponent } from './componentes/detalhe-grupo/detalhe-grupo.component';
+import { ReuniaoGrupoComponent } from './componentes/reuniao-grupo/reuniao-grupo.component';
+import { ListaGruposComponent } from './componentes/lista-grupos/lista-grupos.component';
 
 export const routes: Routes = [
 
@@ -92,6 +98,31 @@ export const routes: Routes = [
    },
    { path: 'sala/:id',
     component:  DetalheSalaComponent }
+    ,
+    { path: 'cadastrar-endereco',
+     component:  BuscarCepComponent,
+     canActivate: [AuthGuardService]
+    },
+    { path: 'cadastrar-categoria-grupos',
+     component:  CategoriaGrupoComponent,
+     canActivate: [AuthGuardService]
+     },
+     { path: 'cadastrar-grupos',
+      component:  CadastrarGrupoComponent,
+      canActivate: [AuthGuardService]
+    },
+    { path: 'detalhe-grupos',
+     component:  DetalheGrupoComponent,
+     canActivate: [AuthGuardService]
+   },
+   { path: 'cadastro-reuniao-grupo',
+    component:  ReuniaoGrupoComponent,
+    canActivate: [AuthGuardService]
+  },
+  { path: 'lista-grupo',
+   component:  ListaGruposComponent,
+   canActivate: [AuthGuardService]
+ }
 ];
 
 @NgModule({

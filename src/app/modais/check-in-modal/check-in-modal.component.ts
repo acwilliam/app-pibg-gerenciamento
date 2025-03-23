@@ -1,4 +1,3 @@
-import { of } from 'rxjs';
 import { PrintService } from './../../componentes/print.service';
 import { Component, ElementRef, Inject, NgZone, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';

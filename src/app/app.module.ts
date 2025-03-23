@@ -1,4 +1,4 @@
-import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AngularFireModule } from '@angular/fire/compat';
@@ -55,6 +55,15 @@ import { CriarReunioesComponent } from './componentes/criar-reunioes/criar-reuni
 import { GroupbyPipe } from './pipes/groupby.pipe';
 import { ConfirmacaoDialogComponent } from './shared/dialogs/confirmacao-dialog/confirmacao-dialog.component';
 import { DetalheSalaComponent } from './componentes/detalhe-sala/detalhe-sala.component';
+import { provideHttpClient } from '@angular/common/http';
+import { BuscarCepComponent } from './componentes/buscar-cep/buscar-cep.component';
+import { CategoriaGrupoComponent } from './componentes/categoria-grupo/categoria-grupo.component';
+import { CadastrarGrupoComponent } from './componentes/cadastrar-grupo/cadastrar-grupo.component';
+import { DetalheGrupoComponent } from './componentes/detalhe-grupo/detalhe-grupo.component';
+import { ReuniaoGrupoComponent } from './componentes/reuniao-grupo/reuniao-grupo.component';
+import { CriarReunioesGrupoComponent } from './modais/criar-reunioes-grupo/criar-reunioes-grupo.component';
+import { ListaGruposComponent } from './componentes/lista-grupos/lista-grupos.component';
+
 
 
 
@@ -83,7 +92,14 @@ import { DetalheSalaComponent } from './componentes/detalhe-sala/detalhe-sala.co
     CriarReunioesComponent,
     GroupbyPipe,
     ConfirmacaoDialogComponent,
-    DetalheSalaComponent
+    DetalheSalaComponent,
+    BuscarCepComponent,
+    CategoriaGrupoComponent,
+    CadastrarGrupoComponent,
+    DetalheGrupoComponent,
+    ReuniaoGrupoComponent,
+    CriarReunioesGrupoComponent,
+    ListaGruposComponent
   ],
   imports: [
     MatExpansionModule,
@@ -96,7 +112,6 @@ import { DetalheSalaComponent } from './componentes/detalhe-sala/detalhe-sala.co
     MatCardModule,
     MatIconModule,
     AppRoutingModule,
-    FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     QRCodeModule,
@@ -129,7 +144,7 @@ import { DetalheSalaComponent } from './componentes/detalhe-sala/detalhe-sala.co
       registrationStrategy: 'registerWhenStable:30000'
     })
   ],
-  providers: [],
+  providers: [provideHttpClient()],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

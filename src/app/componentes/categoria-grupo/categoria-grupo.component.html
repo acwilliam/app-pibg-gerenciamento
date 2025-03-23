@@ -1,0 +1,65 @@
+<div class="categorias-grupos-container">
+  <div class="categorias-lista">
+    <div class="categorias-header">
+      <div class="categorias-titulo">
+        Categorias de grupos
+        <span class="categorias-breadcrumbs">Grupos > Categorias</span>
+      </div>
+      <div class="categorias-resultados">
+        Resultados: {{ categorias.length }}
+      </div>
+    </div>
+    <div class="categorias-gerenciar">
+      Gerencie as categorias de grupos
+    </div>
+    <table class="categorias-tabela">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Grupos</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let categoria of categorias">
+          <td>{{ categoria.nome }} <span class="categorias-icone"></span></td>
+          <td><button class="categorias-botao">{{ categoria.grupos }} grupos</button></td>
+          <td>
+            <button class="categorias-botao" (click)="editarCategoria(categoria)">Editar</button>
+            <button class="categorias-botao" (click)="excluirCategoria(categoria)">Excluir</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="categorias-formulario">
+    <div class="categorias-criar">
+      + Criar categoria
+    </div>
+    <div class="categorias-input">
+      <label for="nomeCategoria">Nome da categoria</label>
+      <input type="text" id="nomeCategoria" [(ngModel)]="novaCategoria.nome">
+    </div>
+    <div class="categorias-input">
+      <label for="descricaoCategoria">Descrição</label>
+      <textarea id="descricaoCategoria" [(ngModel)]="novaCategoria.descricao"></textarea>
+    </div>
+    <button class="categorias-botao categorias-criar-botao" (click)="criarCategoria()">Criar</button>
+  </div>
+</div>
+
+<div *ngIf="categoriaEmEdicao" class="modal">
+  <div class="modal-content">
+    <h2>Editar Categoria</h2>
+    <div class="categorias-input">
+      <label for="editarNomeCategoria">Nome da categoria</label>
+      <input type="text" id="editarNomeCategoria" [(ngModel)]="categoriaEmEdicao.nome">
+    </div>
+    <div class="categorias-input">
+      <label for="editarDescricaoCategoria">Descrição</label>
+      <textarea id="editarDescricaoCategoria" [(ngModel)]="categoriaEmEdicao.descricao"></textarea>
+    </div>
+    <button class="categorias-botao" (click)="salvarEdicao()">Salvar</button>
+    <button class="categorias-botao" (click)="cancelarEdicao()">Cancelar</button>
+  </div>
+</div>

@@ -6,16 +6,55 @@ import { Frequencia } from './model/Frequencia';
 import { DisponibilidadeData } from './disponibilidade/disponibilidade.component';
 import { Funcao, Ministerio } from './roles/roles.component';
 import { Reuniao } from './model/reuniao';
-import { doc, writeBatch } from 'firebase/firestore';
+import { Categoria } from './model/categoriaGrupo';
+import { Grupo } from './model/grupo';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CadastroService {
 
+
+
   constructor(
     private firestore: AngularFirestore
   ) { }
+
+  cadastrarGrupo(grupo: Grupo) {
+    const cadastroCollection = this.firestore.collection<Grupo>('grupo_teia');
+    return cadastroCollection.add(grupo);
+  }
+
+  atualizarCaterogiaGrupo(categoria: Categoria) {
+    console.log('atualizado categoria')
+   return this.firestore.collection('categoria_grupo').doc(categoria.id).update(categoria)
+   .then(()=> {
+    console.log('atualizado com sucesso')
+   })
+   .catch((error) =>{
+    console.error('Erro ao atualizar categoria:', error);
+   });
+  }
+  excluirCategoriaGrupo(categoria: Categoria) {
+    this.firestore.collection('categoria_grupo').doc(categoria.id).delete()
+      .then(() => {
+        console.log('Categoria excluída com sucesso!');
+      })
+      .catch((error) => {
+        console.error('Erro ao excluir categoria:', error);
+      });
+  }
+
+  getCategorias(): Observable<Categoria[]> {
+    return this.firestore.collection<Categoria>('categoria_grupo')
+      .valueChanges({ idField: 'id' });
+  }
+
+  criarCategoriaGrupo(novaCategoria: Categoria) {
+    const cadastroCollection = this.firestore.collection<Categoria>('categoria_grupo');
+    return cadastroCollection.add(novaCategoria);
+  }
+
 
   cadastrarCrianca(cadastro: Cadastro) {
     cadastro.sobreNome.toLocaleLowerCase()

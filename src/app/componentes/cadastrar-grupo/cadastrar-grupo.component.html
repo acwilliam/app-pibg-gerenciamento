@@ -1,0 +1,149 @@
+<div class="cadastro-grupo-container">
+  <div class="cadastro-grupo-form-wrapper">
+    <div class="cadastro-grupo-header">
+      <span class="cadastro-grupo-titulo">Adicionar grupo</span>
+    </div>
+    <div class="cadastro-grupo-grid">
+      <div class="cadastro-grupo-card">
+        <div class="cadastro-grupo-card-header">
+          <span class="cadastro-grupo-titulo">Informações</span>
+        </div>
+        <div class="cadastro-grupo-card-content">
+          <div class="cadastro-grupo-input">
+            <label for="nomeGrupo">Nome do grupo</label>
+            <input type="text" id="nomeGrupo" [(ngModel)]="grupo.nome" [ngClass]="{'input-error': nomeGrupoInvalido}">
+          </div>
+          <div class="cadastro-grupo-input">
+            <label for="dataAbertura">Data de abertura</label>
+            <input type="date" id="dataAbertura" [(ngModel)]="grupo.dataAbertura">
+          </div>
+          <div class="cadastro-grupo-input">
+            <label for="diaSemana">Dia da semana</label>
+            <select id="diaSemana" [(ngModel)]="grupo.diaSemana">
+              <option value="segunda">Segunda-feira</option>
+              <option value="terca">Terça-feira</option>
+              <option value="quarta">Quarta-feira</option>
+              <option value="quinta">Quinta-feira</option>
+              <option value="sexta">Sexta-feira</option>
+              <option value="sabado">Sábado</option>
+              <option value="domingo">Domingo</option>
+            </select>
+          </div>
+          <div class="cadastro-grupo-input">
+            <label for="perfil">Perfil</label>
+            <select id="perfil" [(ngModel)]="grupo.perfil">
+              <option value="masculino">Masculino</option>
+              <option value="feminino">Feminino</option>
+              <option value="misto">Misto</option>
+            </select>
+          </div>
+          <div class="cadastro-grupo-input">
+            <label for="periodo">Periodo</label>
+            <select id="periodo" [(ngModel)]="grupo.horario">
+              <option value="manha">Manhã</option>
+              <option value="tarde">Tarde</option>
+              <option value="noite">Noite</option>
+            </select>
+          </div>
+          <div class="cadastro-grupo-categorias">
+            <label>Categorias</label>
+            <div *ngFor="let categoria of categorias">
+              <label>
+                <input type="checkbox" [(ngModel)]="categoria.categoriaSelecionada">
+                {{ categoria.nome }}
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cadastro-grupo-card">
+        <div class="cadastro-grupo-card-header">
+          <span class="cadastro-grupo-titulo">Liderança</span>
+        </div>
+        <div class="cadastro-grupo-card-content">
+          <div class="cadastro-grupo-input">
+            <label for="lider1">Lider 1</label>
+            <select id="lider1" [(ngModel)]="grupo.primeiro_lider">
+              <option value="nenhum">Nenhum</option>
+            </select>
+          </div>
+          <div class="cadastro-grupo-input">
+            <label for="lider2">Lider 2</label>
+            <select id="lider2" [(ngModel)]="grupo.segundo_lider">
+              <option value="nanhury">Nanhury</option>
+            </select>
+          </div>
+          <div class="cadastro-grupo-input">
+            <label for="lider3">Lider 3</label>
+            <select id="lider3" [(ngModel)]="grupo.terceiro_lider">
+              <option value="nanhum">Nanhum</option>
+            </select>
+          </div>
+          <div class="cadastro-grupo-input">
+            <label for="lider4">Lider 4</label>
+            <select id="lider4" [(ngModel)]="grupo.quarto_lider">
+              <option value="nenhum">Nenhum</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="cadastro-grupo-card">
+        <div class="cadastro-grupo-card-header">
+          <span class="cadastro-grupo-titulo">Endereço</span>
+        </div>
+        <div class="cadastro-grupo-card-content">
+          <section class="container criar-crianca ff-inter">
+            <div class="cep-input">
+              <mat-form-field appearance="outline">
+                <mat-label>CEP</mat-label>
+                <input matInput type="text" [(ngModel)]="cep" placeholder="Digite o CEP" (input)="onCepInput()"(input)="formatCep($event)" maxlength="9">
+              </mat-form-field>
+            </div>
+            <form>
+              <mat-form-field appearance="outline">
+                <mat-label>Endereço</mat-label>
+                <input matInput type="text" name="logradouro" [(ngModel)]="dadosCep.logradouro" [readonly]="true" required>
+              </mat-form-field>
+              <div class="row">
+                <mat-form-field appearance="outline">
+                  <mat-label>Bairro</mat-label>
+                  <input matInput type="text" name="bairro" [(ngModel)]="dadosCep.bairro" [readonly]="true" required>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Número</mat-label>
+                  <input matInput type="text" name="numero" [(ngModel)]="dadosCep.numero" required>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field appearance="outline">
+                  <mat-label>País</mat-label>
+                  <input matInput type="text" name="pais" [(ngModel)]="dadosCep.pais" [readonly]="true" required>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                  <mat-label>Estado</mat-label>
+                  <input matInput type="text" name="estado" [(ngModel)]="dadosCep.estado" [readonly]="true" required>
+                </mat-form-field>
+              </div>
+              <mat-form-field appearance="outline">
+                <mat-label>Cidade</mat-label>
+                <input matInput type="text" name="cidade" [(ngModel)]="dadosCep.localidade" [readonly]="true" required>
+              </mat-form-field>
+            </form>
+          </section>
+        </div>
+      </div>
+
+      <div class="cadastro-grupo-card">
+        <div class="cadastro-grupo-card-header">
+          <span class="cadastro-grupo-titulo">Anotações</span>
+        </div>
+        <div class="cadastro-grupo-card-content">
+          <textarea class="anotacoes-textarea"></textarea>
+        </div>
+      </div>
+    </div>
+    <button class="cadastro-grupo-botao" [disabled]="!camposPreenchidos()" (click)="cadastrarGrupo()">Cadastrar</button>
+  </div>
+</div>

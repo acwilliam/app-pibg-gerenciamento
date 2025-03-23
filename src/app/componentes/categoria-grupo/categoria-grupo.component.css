@@ -1,0 +1,133 @@
+.categorias-grupos-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  background-color: #f0f4f8;
+}
+
+.categorias-lista {
+  width: 60%;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.categorias-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.categorias-titulo {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.categorias-breadcrumbs {
+  font-size: 14px;
+  color: #888888;
+}
+
+.categorias-resultados {
+  font-size: 16px;
+}
+
+.categorias-gerenciar {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.categorias-tabela {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.categorias-tabela th,
+.categorias-tabela td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #dddddd;
+}
+
+.categorias-tabela th {
+  background-color: #f7f7f7;
+}
+
+.categorias-botao {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.categorias-botao:hover {
+  background-color: #0056b3;
+}
+
+.categorias-formulario {
+  width: 35%;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+}
+
+.categorias-criar {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.categorias-input {
+  margin-bottom: 15px;
+}
+
+.categorias-input label {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.categorias-input input,
+.categorias-input textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.modal-content h2 {
+  margin-bottom: 20px;
+}
+
+.modal-content .categorias-input {
+  margin-bottom: 15px;
+}
+
+.modal-content .categorias-botao {
+  margin-right: 10px;
+}
