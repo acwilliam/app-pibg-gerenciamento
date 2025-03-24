@@ -1,0 +1,58 @@
+<div class="detalhes-grupo-container">
+  <app-adicionar-pessoa-modal [pessoas]="pessoasDisponiveis" (pessoaAdicionada)="adicionarPessoa($event)"></app-adicionar-pessoa-modal>
+  <div class="detalhes-header">
+    <span class="detalhes-titulo">Detalhes do grupo</span>
+    <span class="detalhes-breadcrumbs">Grupos > Detalhes do grupo</span>
+  </div>
+  <div class="detalhes-content">
+    <div class="detalhes-left">
+      <div class="detalhes-imagem">
+        <img src="imagem-grupo.jpg" alt="Imagem do grupo">
+      </div>
+      <div class="detalhes-nome">
+        {{ grupo.nome }}
+      </div>
+      <div class="detalhes-lideranca">
+        Liderança:
+      </div>
+      <div class="detalhes-lider">
+        <img src="user.jpg" alt="Imagem do líder">
+      </div>
+    </div>
+    <div class="detalhes-middle">
+      <div class="detalhes-pessoas-header">
+        Pessoas ({{ pessoas.length }})
+        <button class="detalhes-adicionar-pessoa" (click)="buscarPessoas()">+ Adicionar</button>
+      </div>
+      <div class="detalhes-pessoas-busca">
+        <input type="text" placeholder="Buscar...">
+      </div>
+      <div class="detalhes-pessoas-lista">
+        <div class="detalhes-pessoa" *ngFor="let pessoa of pessoas">
+          <img src="user.jpg" alt="Imagem da pessoa">
+          <span>{{ pessoa.nome }}</span>
+          <button class="detalhes-remover-pessoa" (click)="removerPessoa(pessoa.email)">-</button>
+        </div>
+      </div>
+    </div>
+    <div class="detalhes-right">
+      <div class="detalhes-informacoes-header">
+        Informações
+        <button class="detalhes-editar" (click)="editarGrupo()">Editar</button>
+      </div>
+      <div class="detalhes-informacoes">
+        <p>Nome da teia: {{ grupo.nome }}</p>
+        <p>Data de abertura: {{ grupo.dataAbertura | date: 'dd/MM/yyyy' }}</p>
+        <p>Dia da semana: {{ grupo.diaSemana }} ({{ grupo.horario }})</p>
+        <p>Perfil: {{ grupo.perfil }}</p>
+        <p>Categorias: {{ grupo.categorias.join(', ') }}</p>
+        <p>Líder 1: {{ grupo.primeiro_lider }}</p>
+        <p>Líder 2: {{ grupo.segundo_lider }}</p>
+        <p>Líder 3: {{ grupo.terceiro_lider }}</p>
+        <p>Líder 4: {{ grupo.quarto_lider }}</p>
+        <p>Endereço: {{ endereco }}</p>
+      </div>
+    </div>
+  </div>
+  <app-reuniao-grupo></app-reuniao-grupo>
+</div>

@@ -8,6 +8,9 @@ import { Funcao, Ministerio } from './roles/roles.component';
 import { Reuniao } from './model/reuniao';
 import { Categoria } from './model/categoriaGrupo';
 import { Grupo } from './model/grupo';
+import { Pessoa } from './Pessoa';
+import { FieldValue } from 'firebase/firestore';
+import { arrayUnion } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -15,11 +18,42 @@ import { Grupo } from './model/grupo';
 export class CadastroService {
 
 
-
   constructor(
     private firestore: AngularFirestore
   ) { }
 
+  removerPessoaDoGrupo(grupo: Grupo, email: string) {
+    if (grupo && grupo['pessoas']) {
+      const pessoasAtualizadas = grupo['pessoas'].filter((pessoa: any) => pessoa.email !== email);
+      console.log("pessoas antes de atualizar", grupo.pessoas)
+      console.log("pessoas atualizadas", pessoasAtualizadas)
+      return this.firestore.collection('grupo_teia').doc(grupo.id).update({ pessoas: pessoasAtualizadas });
+    } else {
+      return Promise.reject('Grupo não encontrado ou lista de pessoas ausente.');
+    }
+  }
+
+  atualizarGrupo(idGrupo: string, grupo: Grupo) {
+    return this.firestore.collection('grupo_teia').doc(idGrupo).update(grupo);
+  }
+
+  adicionarPessoaAoGrupo(pessoa: Pessoa, id: string | undefined) {
+    console.log('atualizado adicionando pessoa ao grupo')
+    return this.firestore.collection('grupo_teia').doc(id).update({
+      pessoas: arrayUnion(pessoa)
+    })
+    .then(() => {
+      console.log('Pessoa adicionada ao grupo com sucesso');
+    })
+    .catch((error) => {
+      console.error('Erro ao adicionar pessoa:', error);
+    });
+  }
+
+  getGrupo(id: string) : Observable<Grupo | undefined>{
+    console.log('id', id)
+    return this.firestore.collection<Grupo>('grupo_teia').doc(id).valueChanges();
+  }
   cadastrarGrupo(grupo: Grupo) {
     const cadastroCollection = this.firestore.collection<Grupo>('grupo_teia');
     return cadastroCollection.add(grupo);

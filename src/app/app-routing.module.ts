@@ -111,7 +111,7 @@ export const routes: Routes = [
       component:  CadastrarGrupoComponent,
       canActivate: [AuthGuardService]
     },
-    { path: 'detalhe-grupos',
+    { path: 'detalhe-grupo/:id',
      component:  DetalheGrupoComponent,
      canActivate: [AuthGuardService]
    },
@@ -122,7 +122,11 @@ export const routes: Routes = [
   { path: 'lista-grupo',
    component:  ListaGruposComponent,
    canActivate: [AuthGuardService]
- }
+ },
+ { path: 'cadastrar-grupos/:id',
+  component: CadastrarGrupoComponent,
+  canActivate: [AuthGuardService]
+  },
 ];
 
 @NgModule({

@@ -91,8 +91,8 @@ export class PaginaPrincipalComponent  {
         icon: 'groups',
         visible: true,
         dropdownItems: [
-          { label: 'Ver todos', route: '/detalhe-grupos' },
-          { label: 'Adicionar grupo', route: '/cadastrar-grupos' },
+          { label: 'Ver grupos', route: '/lista-grupo' },
+          { label: 'Cadastrar grupo', route: '/cadastrar-grupos' },
           { label: 'Categorias de grupos', route: '/cadastrar-categoria-grupos' },
           { label: 'Relatórios', route: '/relatorios-grupos' },
           { label: 'Importar/Exportar', route: '/importar-exportar-grupos' },

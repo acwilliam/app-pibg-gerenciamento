@@ -1,0 +1,20 @@
+<div class="modal" [ngStyle]="{'display': displayStyle}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Adicionar pessoa</h5>
+        <button type="button" class="close" aria-label="Close" (click)="closeModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <select class="form-control" [(ngModel)]="pessoaSelecionada">
+          <option *ngFor="let pessoa of pessoas" [ngValue]="pessoa">{{ pessoa.nome }} {{ pessoa.sobrenome }}</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="salvarPessoa()">Salvar</button>
+      </div>
+    </div>
+  </div>
+</div>

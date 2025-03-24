@@ -144,6 +144,8 @@
         </div>
       </div>
     </div>
-    <button class="cadastro-grupo-botao" [disabled]="!camposPreenchidos()" (click)="cadastrarGrupo()">Cadastrar</button>
+    <button class="cadastro-grupo-botao" [disabled]="!camposPreenchidos()" (click)="cadastrarGrupo()">
+      {{ modoEdicao ? 'Salvar alterações' : 'Cadastrar' }}
+    </button>
   </div>
 </div>

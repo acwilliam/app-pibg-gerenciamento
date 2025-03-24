@@ -5,6 +5,7 @@ import { Grupo } from '../model/grupo';
 import { BuscarCepService } from '../services/buscar-cep.service';
 import { DadoUsuario } from '../model/dadoUsuario';
 import { Cep } from '../model/cep';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-cadastrar-grupo',
@@ -12,9 +13,8 @@ import { Cep } from '../model/cep';
   styleUrl: './cadastrar-grupo.component.css'
 })
 export class CadastrarGrupoComponent implements OnInit {
-cancelar() {
-throw new Error('Method not implemented.');
-}
+  modoEdicao: boolean = false;
+  idGrupo: string = '';
 
   categorias: Categoria[] = [
     {id: '', nome: '', grupos: 0, descricao: '', categoriaSelecionada: false }
@@ -32,6 +32,7 @@ throw new Error('Method not implemented.');
     pais: 'Brasil'
   }
   grupo: Grupo = {
+    id:'',
     nome: '',
     dataAbertura: new Date(),
     diaSemana: '',
@@ -48,12 +49,28 @@ throw new Error('Method not implemented.');
   nomeGrupoInvalido: boolean = false;
 
   constructor(private cadastroService: CadastroService,
-    private buscarCepService: BuscarCepService
+    private buscarCepService: BuscarCepService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
   }
   ngOnInit(): void {
     this.cadastroService.getCategorias().subscribe(categorias => this.categorias = categorias);
-
+    this.route.params.subscribe(params => {
+    if (params['id']) {
+      this.modoEdicao = true;
+      this.idGrupo = params['id'];
+      this.cadastroService.getGrupo(this.idGrupo).subscribe(grupo => {
+        if(grupo) {
+          this.grupo = grupo;
+          this.dadosCep = grupo.dadoEndereco;
+          this.categorias.forEach(categoria => {
+            categoria.categoriaSelecionada = grupo?.categorias.includes(categoria.nome);
+          });
+        }
+      });
+    }
+  });
   }
 
 
@@ -68,9 +85,24 @@ throw new Error('Method not implemented.');
       .filter(categoria => categoria.categoriaSelecionada)
       .map(categoria => categoria.nome);
     this.grupo.dadoEndereco = this.dadosCep;
-    console.log('Grupo cadastrado:', this.grupo);
-    this.cadastroService.cadastrarGrupo(this.grupo);
 
+    if (this.modoEdicao) {
+      this.cadastroService.atualizarGrupo(this.idGrupo, this.grupo)
+        .then(() => {
+          this.router.navigate(['/detalhe-grupo', this.idGrupo]);
+        })
+        .catch(error => {
+          console.error('Erro ao atualizar grupo:', error);
+        });
+    } else {
+      this.cadastroService.cadastrarGrupo(this.grupo)
+        .then(docRef => {
+          this.router.navigate(['/detalhe-grupo', docRef.id]);
+        })
+        .catch(error => {
+          console.error('Erro ao cadastrar grupo:', error);
+        });
+    }
   }
 
   onCepInput() {
@@ -114,10 +146,15 @@ throw new Error('Method not implemented.');
   }
 
   formatCep(event: any): void {
-    let value = event.target.value.replace(/\D/g, ''); 
+    let value = event.target.value.replace(/\D/g, '');
     if (value.length > 5) {
       value = value.substring(0, 5) + '-' + value.substring(5, 9);
     }
     this.cep = value;
   }
+
+  cancelar() {
+    throw new Error('Method not implemented.');
+  }
+
 }

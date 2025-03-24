@@ -63,7 +63,7 @@ import { DetalheGrupoComponent } from './componentes/detalhe-grupo/detalhe-grupo
 import { ReuniaoGrupoComponent } from './componentes/reuniao-grupo/reuniao-grupo.component';
 import { CriarReunioesGrupoComponent } from './modais/criar-reunioes-grupo/criar-reunioes-grupo.component';
 import { ListaGruposComponent } from './componentes/lista-grupos/lista-grupos.component';
-
+import { AdicionarPessoaModalComponent } from './modais/adicionar-pessoa-modal/adicionar-pessoa-modal.component';
 
 
 
@@ -99,7 +99,8 @@ import { ListaGruposComponent } from './componentes/lista-grupos/lista-grupos.co
     DetalheGrupoComponent,
     ReuniaoGrupoComponent,
     CriarReunioesGrupoComponent,
-    ListaGruposComponent
+    ListaGruposComponent,
+    AdicionarPessoaModalComponent
   ],
   imports: [
     MatExpansionModule,

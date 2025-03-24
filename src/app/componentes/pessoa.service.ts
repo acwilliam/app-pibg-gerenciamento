@@ -28,4 +28,8 @@ export class PessoaService {
       );
   }
 
+  buscarAllPessoas(): Observable<Pessoa[]> {
+    return this.firestore.collection<Pessoa>('pessoa').valueChanges();
+  }
+
 }

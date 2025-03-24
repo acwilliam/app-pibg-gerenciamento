@@ -1,0 +1,141 @@
+.detalhes-grupo-container {
+  padding: 20px;
+}
+
+.detalhes-header {
+  margin-bottom: 20px;
+}
+
+.detalhes-titulo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.detalhes-breadcrumbs {
+  font-size: 14px;
+  color: #888;
+}
+
+.detalhes-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.detalhes-left, .detalhes-middle, .detalhes-right {
+  width: 30%;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.detalhes-imagem {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.detalhes-imagem img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.detalhes-nome {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.detalhes-lideranca {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.detalhes-lider {
+  text-align: center;
+}
+
+.detalhes-lider img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+}
+
+.detalhes-pessoas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.detalhes-adicionar-pessoa {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.detalhes-pessoas-busca {
+  margin-bottom: 10px;
+}
+
+.detalhes-pessoas-busca input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.detalhes-pessoas-lista {
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.detalhes-pessoa {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.detalhes-pessoa img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 5px;
+}
+
+.detalhes-remover-pessoa {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 5px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.detalhes-informacoes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.detalhes-editar, .detalhes-remover {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.detalhes-remover {
+  background-color: #dc3545;
+}
+
+.detalhes-informacoes p {
+  margin-bottom: 5px;
+}
+
