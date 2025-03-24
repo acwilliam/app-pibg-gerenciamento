@@ -1,0 +1,48 @@
+<h1 mat-dialog-title>Adicionar reunião</h1>
+<div mat-dialog-content>
+  <div class="modal-input">
+    <label>Data da reunião</label>
+    <input type="date" [(ngModel)]="data.reuniao.data" />
+  </div>
+  <div class="modal-input">
+    <label>Assunto</label>
+    <input type="text" [(ngModel)]="data.reuniao.assunto" />
+  </div>
+  <div class="modal-input">
+    <label>Valor total</label>
+    <input type="number" [(ngModel)]="data.reuniao.valorTotal" />
+  </div>
+  <div class="modal-presenca">
+    <div class="modal-participantes">
+      <h2>Lista de presença</h2>
+      <div *ngFor="let participante of data.participantes">
+        <label>
+          <input type="checkbox" [(ngModel)]="participante.presente" />
+          {{ participante.nome }}
+        </label>
+      </div>
+    </div>
+    <div class="modal-visitantes">
+      <h2>Visitantes ({{ data.visitantes.length }})</h2>
+      <button mat-raised-button color="primary" (click)="adicionarVisitante()">
+        + Adicionar visitante
+      </button>
+      <div *ngFor="let visitante of data.visitantes">
+        <div class="modal-visitante">
+          <input type="text" [(ngModel)]="visitante.nome" placeholder="Nome do visitante" />
+          <button mat-icon-button color="warn" (click)="removerVisitante(visitante)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-anotacoes">
+    <label>Anotações da reunião</label>
+    <textarea [(ngModel)]="data.reuniao.anotacoes"></textarea>
+  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="data.reuniao" cdkFocusInitial>Salvar</button>
+</div>

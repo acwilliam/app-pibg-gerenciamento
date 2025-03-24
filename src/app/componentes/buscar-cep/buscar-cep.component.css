@@ -1,0 +1,36 @@
+.cep-input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cep-input mat-form-field {
+  margin-right: 10px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.row mat-form-field {
+  width: 48%;
+}
+
+mat-form-field {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.acoes {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.botao {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

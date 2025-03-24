@@ -1,0 +1,32 @@
+<div class="reunioes-container">
+  <div class="reunioes-header">
+    <span class="reunioes-titulo">Reuniões</span>
+    <button class="reunioes-nova-reuniao" (click)="abrirModalAdicionarReuniao()">
+      + Nova reunião
+    </button>
+  </div>
+  <div class="reunioes-content">
+    <div class="reunioes-lista">
+      <table>
+        <thead>
+          <tr>
+            <th>Data</th>
+            <th>Participantes</th>
+            <th>Visitantes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let reuniao of reunioes">
+            <td>{{ reuniao.data | date: 'dd/MM/yyyy' }}</td>
+            <td>{{ reuniao.participantes }}</td>
+            <td>{{ reuniao.visitantes }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="reunioes-grafico">
+      <span class="reunioes-grafico-titulo">Presentes nas últimas reuniões</span>
+      <canvas id="graficoReunioes"></canvas>
+    </div>
+  </div>
+</div>

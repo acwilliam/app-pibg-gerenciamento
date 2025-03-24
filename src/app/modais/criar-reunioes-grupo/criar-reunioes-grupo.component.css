@@ -1,0 +1,33 @@
+.modal-input {
+  margin-bottom: 10px;
+}
+
+.modal-presenca {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.modal-participantes,
+.modal-visitantes {
+  width: 48%;
+}
+
+.modal-anotacoes textarea {
+  width: 100%;
+  height: 100px;
+}
+
+.modal-visitante {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+
+.modal-visitante input {
+  flex: 1;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 5px;
+}

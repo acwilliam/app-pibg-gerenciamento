@@ -1,0 +1,61 @@
+.reunioes-container {
+  padding: 20px;
+}
+
+.reunioes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.reunioes-titulo {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.reunioes-nova-reuniao {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.reunioes-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.reunioes-lista {
+  width: 40%;
+  background-color: #f0f0f0;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.reunioes-lista table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.reunioes-lista th, .reunioes-lista td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.reunioes-grafico {
+  width: 55%;
+  background-color: #e0f7fa;
+  border-radius: 8px;
+  padding: 20px;
+}
+
+.reunioes-grafico-titulo {
+  display: block;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}

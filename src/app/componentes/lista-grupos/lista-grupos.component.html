@@ -1,0 +1,84 @@
+<div class="container">
+  <div class="grupos">
+    <h2>Resultados: {{ grupos.length }}</h2>
+    <div class="divisor-azul"></div>
+    <div class="grupo" *ngFor="let grupo of gruposPagina">
+      <div class="grupo-imagem-topo">
+        <img src="imagem-grupo.jpg" alt="{{ grupo.nome }}">
+      </div>
+      <div class="grupo-conteudo">
+
+        <h3>{{ grupo.nome }}</h3>
+        <p>{{ grupo.pessoas }} pessoas</p>
+        <p>{{ grupo.lideranca }}</p>
+        <div class="grupo-imagem-perfil">
+          <img src="user.jpg" alt="{{ grupo.nome }}">
+        </div>
+        <button>Visualizar</button>
+      </div>
+    </div>
+    <div class="pagination">
+      <div class="items-per-page">
+        Items per page:
+        <mat-form-field appearance="outline" class="items-per-page-select">
+          <mat-select [(value)]="pageSize" (selectionChange)="changePageSize()">
+            <mat-option value="10">10</mat-option>
+            <mat-option value="20">20</mat-option>
+            <mat-option value="50">50</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="page-info">
+        {{ getPageInfo() }}
+      </div>
+      <div class="page-buttons">
+        <button mat-icon-button (click)="goToFirstPage()" [disabled]="currentPage === 1">
+          <mat-icon>first_page</mat-icon>
+        </button>
+        <button mat-icon-button (click)="previousPage()" [disabled]="currentPage === 1">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <button mat-icon-button (click)="nextPage()" [disabled]="currentPage === totalPages">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+        <button mat-icon-button (click)="goToLastPage()" [disabled]="currentPage === totalPages">
+          <mat-icon>last_page</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="filtros">
+    <button>+ Adicionar grupo</button>
+    <h3>Filtros</h3>
+    <input type="text" placeholder="Pesquisar">
+    <h4>Categorias</h4>
+    <div *ngFor="let categoria of filtros.categorias">
+      <label>
+        <input type="checkbox" [(ngModel)]="categoria.selecionado">
+        {{ categoria.nome }}
+      </label>
+    </div>
+    <h4>Sexo</h4>
+    <div *ngFor="let sexo of filtros.sexo">
+      <label>
+        <input type="checkbox" [(ngModel)]="sexo.selecionado">
+        {{ sexo.nome }}
+      </label>
+    </div>
+    <h4>Dia da semana</h4>
+    <div *ngFor="let dia of filtros.diaSemana">
+      <label>
+        <input type="checkbox" [(ngModel)]="dia.selecionado">
+        {{ dia.nome }}
+      </label>
+    </div>
+    <h4>Horário</h4>
+    <div *ngFor="let horario of filtros.horario">
+      <label>
+        <input type="checkbox" [(ngModel)]="horario.selecionado">
+        {{ horario.nome }}
+      </label>
+    </div>
+    <button (click)="filtrarGrupos()">Filtrar</button>
+  </div>
+</div>
