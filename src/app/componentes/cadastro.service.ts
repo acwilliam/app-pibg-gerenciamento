@@ -1,3 +1,4 @@
+import { ReuniaoGrupo } from './model/reuniao-grupo';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { Cadastro } from './Cadastro';
@@ -9,7 +10,6 @@ import { Reuniao } from './model/reuniao';
 import { Categoria } from './model/categoriaGrupo';
 import { Grupo } from './model/grupo';
 import { Pessoa } from './Pessoa';
-import { FieldValue } from 'firebase/firestore';
 import { arrayUnion } from 'firebase/firestore';
 
 @Injectable({
@@ -22,11 +22,25 @@ export class CadastroService {
     private firestore: AngularFirestore
   ) { }
 
+  buscarReunioesGrupoTeia(id: string){
+   return this.firestore.collection<ReuniaoGrupo>('reuniao_grupo_teia', ref => ref.where('id', '==', id))
+    .valueChanges();
+}
+
+  cadastrarReuniaoGrupo(reuniao: ReuniaoGrupo) {
+    return this.firestore.collection('reuniao_grupo_teia').add(reuniao);
+  }
+
+  buscarParticipantesDoGrupo(id: string): Observable<any[]> {
+    return this.firestore.collection('grupo_teia').doc(id).valueChanges().pipe(
+      map((grupo: any) => grupo && grupo.pessoas ? grupo.pessoas : [])
+    );
+  }
+
+
   removerPessoaDoGrupo(grupo: Grupo, email: string) {
     if (grupo && grupo['pessoas']) {
       const pessoasAtualizadas = grupo['pessoas'].filter((pessoa: any) => pessoa.email !== email);
-      console.log("pessoas antes de atualizar", grupo.pessoas)
-      console.log("pessoas atualizadas", pessoasAtualizadas)
       return this.firestore.collection('grupo_teia').doc(grupo.id).update({ pessoas: pessoasAtualizadas });
     } else {
       return Promise.reject('Grupo não encontrado ou lista de pessoas ausente.');
@@ -166,7 +180,6 @@ export class CadastroService {
   }
 
   buscarDisponibilidade(emailVoluntario: string, ano: number, mes: string): Observable<boolean> {
-    console.log('passou aqui')
     return this.firestore.collection<DisponibilidadeData>('disponibilidadeData', ref =>
       ref.where('emailvoluntario', '==', emailVoluntario)
         .where('vigencia.ano', '==', ano)

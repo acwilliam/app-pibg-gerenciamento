@@ -11,7 +11,7 @@ export class CacularIdadeService {
 
   calcularIdade(cadastro: Cadastro): void {
     const hoje = moment();
-    const dataNasc = moment(cadastro.dataNascimento, 'YYYY/MM/DD'); // Ajustar o formato da data se necessário
+    const dataNasc = moment(cadastro.dataNascimento, 'YYYY/MM/DD');
 
     if (!dataNasc.isValid()) {
         throw new Error('Data de nascimento inválida');

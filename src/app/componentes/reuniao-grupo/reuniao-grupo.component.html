@@ -18,8 +18,8 @@
         <tbody>
           <tr *ngFor="let reuniao of reunioes">
             <td>{{ reuniao.data | date: 'dd/MM/yyyy' }}</td>
-            <td>{{ reuniao.participantes }}</td>
-            <td>{{ reuniao.visitantes }}</td>
+            <td>{{ reuniao.total_participante }}</td>
+            <td>{{ reuniao.total_visitante }}</td>
           </tr>
         </tbody>
       </table>

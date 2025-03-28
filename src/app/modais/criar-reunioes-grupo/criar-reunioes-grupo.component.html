@@ -9,8 +9,8 @@
     <input type="text" [(ngModel)]="data.reuniao.assunto" />
   </div>
   <div class="modal-input">
-    <label>Valor total</label>
-    <input type="number" [(ngModel)]="data.reuniao.valorTotal" />
+    <label>Total de pessoas: </label>
+    <span>{{ totalPessoas }}</span>
   </div>
   <div class="modal-presenca">
     <div class="modal-participantes">
@@ -36,13 +36,31 @@
         </div>
       </div>
     </div>
+    <div class="modal-visitantes">
+      <h2>Crianças ({{ data.criancas.length }})</h2>
+      <button mat-raised-button color="primary" (click)="adicionarCrianca()">
+        + Adicionar Criança
+      </button>
+      <div *ngFor="let crianca of data.criancas">
+        <div class="modal-visitante">
+          <input type="text" [(ngModel)]="crianca.nome" placeholder="Nome da criança" />
+          <button mat-icon-button color="warn" (click)="removerCrianca(crianca)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="modal-anotacoes">
-    <label>Anotações da reunião</label>
-    <textarea [(ngModel)]="data.reuniao.anotacoes"></textarea>
+    <label>Relate algo que acha necessário para supervisão?</label>
+    <textarea [(ngModel)]="data.reuniao.relato_supervisao"></textarea>
+  </div>
+  <div class="modal-anotacoes">
+    <label>E você lider, como você está? relate se precisa de ajuda se quiser dar alguma sugestão ou reclamação?</label>
+    <textarea [(ngModel)]="data.reuniao.observacao"></textarea>
   </div>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onNoClick()">Cancelar</button>
-  <button mat-button [mat-dialog-close]="data.reuniao" cdkFocusInitial>Salvar</button>
+  <button mat-button [mat-dialog-close]="data.reuniao" cdkFocusInitial (click)="salvarReuniao()">Salvar</button>
 </div>

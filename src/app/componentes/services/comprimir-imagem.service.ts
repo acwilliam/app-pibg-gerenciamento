@@ -19,8 +19,6 @@ export class ComprimirImagemService {
 
       const sizeBeforeCompress = this.imageCompress.byteCount(imageDataUrl);
       console.log('Tamanho antes da compressão:', sizeBeforeCompress, 'bytes');
-      // ratio: 50 = reduz pela metade o tamanho da imagem
-      // qualidade: 50 = mantém 50% da qualidade original
       const compressedImage = await this.imageCompress.compressFile(imageDataUrl, -1, 50, 50);
 
       const sizeAfterCompress = this.imageCompress.byteCount(compressedImage);
